@@ -1,5 +1,7 @@
 package uff.br.pse.destroythenuduhake;
 
+
+//V de viadÃ£o
 //TESTANDO O COMMIT UOOOOOOOW IGNOREM ESTE COMMENT!
 import android.os.Bundle;
 
@@ -18,7 +20,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
-		//BOTÃO TESTE
+		//BOTï¿½O TESTE
 		Button b = (Button) findViewById(R.id.button1);
 		b.setOnClickListener(new OnClickListener()
 		{
