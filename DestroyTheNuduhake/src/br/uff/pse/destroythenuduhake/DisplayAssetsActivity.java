@@ -1,4 +1,4 @@
-package uff.br.pse.destroythenuduhake;
+package br.uff.pse.destroythenuduhake;
 
 
 

@@ -1,8 +1,7 @@
-package uff.br.pse.destroythenuduhake;
+package br.uff.pse.destroythenuduhake;
 
 
 //V de viadão
-//TESTANDO O COMMIT UOOOOOOOW IGNOREM ESTE COMMENT!
 import android.os.Bundle;
 
 import android.app.Activity;

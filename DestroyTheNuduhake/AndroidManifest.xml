@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="uff.br.pse.destroythenuduhake"
+    package="br.uff.pse.destroythenuduhake"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,25 +14,35 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:label="@string/app_name"
-            android:name="uff.br.pse.destroythenuduhake.MainActivity" >
-            <intent-filter >
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="Destroy The Nuduhake - DTN"
+            android:name="br.uff.pse.destroythenuduhake.MainActivity" >
             <intent-filter >
         		<action android:name="de.tubs.ibr.dtn.intent.DTNAPP" />
        			<category android:name="android.intent.category.DEFAULT" />
     </intent-filter>
         </activity>
-        <activity android:name="uff.br.pse.destroythenuduhake.DisplayAssetsActivity"></activity>
         
+        <activity
+            android:label="Destroy The Nuduhake - Main"
+            android:name="br.uff.pse.destroythenuduhake.Main" >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         
-        <service android:name="uff.br.pse.destroythenuduhake.DTNService" />
+        <activity android:name="br.uff.pse.destroythenuduhake.DisplayAssetsActivity"></activity>
+        
+        <activity 
+            android:label="Destroy The Nuduhake - GAME"
+            android:name="br.uff.pse.destroythenuduhake.game.Main">
+        </activity>
+        
+        <service android:name="br.uff.pse.destroythenuduhake.DTNService" />
         
 	    <receiver
 	        android:enabled="true"
-	        android:name="uff.br.pse.destroythenuduhake.DTNReceiver"
+	        android:name="br.uff.pse.destroythenuduhake.DTNReceiver"
 	        android:exported="true"
 	        android:permission="de.tubs.ibr.dtn.permission.DTN_SERVER">
 	        <!-- Add intent filter for notification of incoming bundles -->
