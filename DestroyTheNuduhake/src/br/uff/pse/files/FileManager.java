@@ -44,7 +44,7 @@ public class FileManager extends Activity
 	public static void writeAsset(Asset asset, String fileName, Context ctx) 
 	{
 		loadListFile(ctx);
-		fileName = writeValidation(fileName,ctx);					
+		fileName = writeValidation(fileName,ctx,1);					
 		try
 		{
 			FileOutputStream fOut = ctx.openFileOutput(fileName, Context.MODE_PRIVATE);
@@ -122,14 +122,28 @@ public class FileManager extends Activity
 		filesPaths.clear();
 		saveListFile(ctx);
 	}
-	public static String writeValidation(String filename,Context ctx)
+	public static String writeValidation(String filename,Context ctx, int num)
 	{
 		loadListFile(ctx);
 		for(int i = 0;i<filesPaths.size();i++)
 		{
 			if(filename.equals(filesPaths.get(i)))		
 			{
-				return writeValidation(filename+"(Copy)",ctx);
+				if(num ==1)
+					return writeValidation(filename+"("+num+")",ctx,++num);
+				else
+				{
+					try
+					{
+					String file = filename.substring(0, filename.indexOf("("));
+					return writeValidation(file+"("+num+")",ctx,++num);
+					}
+					catch(Exception e)
+					{
+						System.out.print(e);
+					}
+					
+				}
 			}
 		}
 		return filename;
