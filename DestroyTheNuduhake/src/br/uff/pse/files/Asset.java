@@ -8,10 +8,12 @@ public class Asset implements Serializable
 	/**
 	 * @param args
 	 */
-	public String teste;
-	public Asset(String teste)
+	public String name;
+	public String type;
+	public Asset(String name, String type)
 	{
-		this.teste = teste;
+		this.name = name;
+		this.type = type;
 	}
 
 }

@@ -2,17 +2,15 @@ package br.uff.pse.destroythenuduhake;
 
 
 //V de viadÃ£o
+
 import br.uff.pse.files.Asset;
 import br.uff.pse.files.FileManager;
 import android.os.Bundle;
-
 import android.app.Activity;
-
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,7 +23,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		tx = (TextView)findViewById(R.id.textView1);
 		
 		//BOTï¿½O TESTE
 		Button b = (Button) findViewById(R.id.button1);
@@ -44,6 +41,27 @@ public class MainActivity extends Activity {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+			}
+		});
+		Button b2 = (Button) findViewById(R.id.button2);
+		b2.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{				
+				Asset um = new Asset("Capacete1","Capacete");
+				Asset dois = new Asset("Ombreira2","Ombreira");
+				FileManager.writeAsset(um, um.name, MainActivity.this);
+				FileManager.writeAsset(dois, dois.name, MainActivity.this);
+			}
+		});
+		Button b3 = (Button) findViewById(R.id.button3);
+		b3.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{				
+				FileManager.deleteAllFiles(MainActivity.this);
 			}
 		});
 	}
@@ -67,17 +85,11 @@ public class MainActivity extends Activity {
 	}
 	public void testFileManager() throws NameNotFoundException
 	{
+		
+		Intent intent = new Intent(MainActivity.this, DisplayAssetsActivity.class);
+		startActivity(intent);
 
-		Asset asset = new Asset("TESTANDO ALOW ALOW! RIAIRAIRIARA");
-		FileManager.writeAsset(asset, "teste", this);
-		FileManager.deleteAsset("teste", this);
-		Asset asset2 = FileManager.readAsset("teste", this);
-		if(asset2 != null)
-			tx.setText(asset2.teste);
-		else
-		{
-			tx.setText("Asset null");
-		}
+
 		
 		
 	}
