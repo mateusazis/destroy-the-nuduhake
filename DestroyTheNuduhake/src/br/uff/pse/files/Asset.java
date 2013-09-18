@@ -10,10 +10,12 @@ public class Asset implements Serializable
 	 */
 	public String name;
 	public String type;
-	public Asset(String name, String type)
+	public String author;
+	public Asset(String name, String type, String author)
 	{
 		this.name = name;
 		this.type = type;
+		this.author = author;
 	}
 
 }

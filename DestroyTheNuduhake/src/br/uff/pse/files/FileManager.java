@@ -28,6 +28,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.uff.pse.destroythenuduhake.Header;
+import br.uff.pse.destroythenuduhake.Item;
+import br.uff.pse.destroythenuduhake.ListItem;
 import de.tubs.ibr.dtn.util.Base64.OutputStream;
 import android.app.Activity;
 import android.content.Context;
@@ -39,11 +42,13 @@ public class FileManager extends Activity
 {
 	// Lista que conterï¿½ o nome dos assets
 	private static ArrayList<String> filesPaths = new ArrayList<String>();
-	private static String assetFilePath ="/data/data/br.uff.pse.dest/assets/";
-	
+	private static ArrayList<Boolean> checkedAssets = new ArrayList<Boolean>();
+	//private static String assetFilePath ="/data/data/br.uff.pse.dest/assets/";
+
 	public static void writeAsset(Asset asset, String fileName, Context ctx) 
 	{
 		loadListFile(ctx);
+		loadCheckListFile(ctx);
 		fileName = writeValidation(fileName,ctx,1);					
 		try
 		{
@@ -54,7 +59,12 @@ public class FileManager extends Activity
 			{													
 						output.writeObject(asset);	
 						filesPaths.add(fileName);
+						if(asset.type.equals("Default"))
+							checkedAssets.add(true);
+						else
+							checkedAssets.add(false);
 						saveListFile(ctx);
+						saveCheckListFile(ctx);
 			}
 			catch (Exception e)
 			{
@@ -76,6 +86,7 @@ public class FileManager extends Activity
 	public static Asset readAsset(String fileName, Context ctx) 
 	{
 		loadListFile(ctx);
+		loadCheckListFile(ctx);
 		Asset asset = null;
 		try
 		{
@@ -108,9 +119,26 @@ public class FileManager extends Activity
 	public static void deleteAsset(String fileName,Context ctx)
 	{
 		loadListFile(ctx);
-		ctx.deleteFile(fileName);
-		filesPaths.remove(fileName);
+		loadCheckListFile(ctx);
+		int pos = getAssetListPosition(fileName);
+		if(pos != -1)
+		{
+			checkedAssets.remove(pos);
+			ctx.deleteFile(fileName);
+		//	filesPaths.remove(fileName);
+			filesPaths.remove(pos);
+		}
 		saveListFile(ctx);
+		saveCheckListFile(ctx);
+	}
+	public static int getAssetListPosition(String filename)
+	{
+		for(int i = 0 ; i < filesPaths.size();i++)
+		{
+			if(filesPaths.get(i).equals(filename))
+				return i;
+		}
+		return -1;
 	}
 	public static void deleteAllFiles(Context ctx)
 	{
@@ -120,7 +148,9 @@ public class FileManager extends Activity
 			ctx.deleteFile(filesPaths.get(i));
 		}
 		filesPaths.clear();
+		checkedAssets.clear();
 		saveListFile(ctx);
+		saveCheckListFile(ctx);
 	}
 	public static String writeValidation(String filename,Context ctx, int num)
 	{
@@ -148,11 +178,54 @@ public class FileManager extends Activity
 		}
 		return filename;
 	}
-	public static String[] readAllFilesNames(Context ctx)
+	public static ArrayList<Item> readAllFilesNames(Context ctx)
 	{		
 		loadListFile(ctx);
-		String[] array = filesPaths.toArray(new String[filesPaths.size()]);
-		return array;
+		loadCheckListFile(ctx);
+		ArrayList<Item> items = new ArrayList<Item>();
+		ArrayList<Item> capacetes = new ArrayList<Item>();
+		ArrayList<Item> ombreiras = new ArrayList<Item>();
+		ArrayList<Item> terrenos = new ArrayList<Item>();
+		capacetes.add(new Header("Capacetes"));
+		ombreiras.add(new Header("Ombreiras"));
+		terrenos.add(new Header("Terrenos"));
+		for(int i = 0; i< filesPaths.size();i++)
+		{
+			Asset a = readAsset(filesPaths.get(i),ctx); 
+			if(a.type.equals("Capacete"))
+				capacetes.add(new ListItem(a.author,filesPaths.get(i),ctx));
+			if(a.type.equals("Ombreira"))
+				ombreiras.add(new ListItem(a.author,filesPaths.get(i),ctx));
+			if(a.type.equals("Terreno"))
+				terrenos.add(new ListItem(a.author,filesPaths.get(i),ctx));
+		}
+	/*	items.add(new Header("Terrain Asset"));
+        items.add(new ListItem("Default", "Terrain"));
+        items.add(new ListItem("Zézinho", "Terreno de fogo"));
+        items.add(new ListItem("Jurema", "Terreno de gelo"));
+
+		items.add(new Header("Enemy Asset"));
+        items.add(new ListItem("Default", "Enemy"));
+        items.add(new ListItem("Zézinho", "Inimigo de fogo"));
+        items.add(new ListItem("Jurema", "Inimigo de gelo"));
+
+		items.add(new Header("Hero Asset"));
+        items.add(new ListItem("Default", "Hero"));
+        items.add(new ListItem("Cláudio", "Herói boladão"));
+        items.add(new ListItem("Jeremias", "Obi Juan"));
+        items.add(new ListItem("Francis", "Megaman"));
+
+		items.add(new Header("Background Asset"));
+        items.add(new ListItem("Default", "Background"));
+        items.add(new ListItem("Emanuelle", "Chaos"));
+        items.add(new ListItem("Maximillian", "Armageddon"));
+    */    
+
+		ArrayList<Item> combined = new ArrayList<Item>();
+		combined.addAll(capacetes);
+		combined.addAll(ombreiras);
+		combined.addAll(terrenos);
+		return combined;
 	}
 	public static void saveListFile(Context ctx)
 	{
@@ -181,7 +254,7 @@ public class FileManager extends Activity
 	}
 	public static void loadListFile(Context ctx)
 	{
-		ArrayList<String> list = null;
+		ArrayList<String> list = new ArrayList<String>();
 		try
 		{
 		      //use buffering
@@ -206,6 +279,72 @@ public class FileManager extends Activity
 	     ex.printStackTrace();
 	    }
 		filesPaths = list;
+		
+	}
+	public static void saveCheckListFile(Context ctx)
+	{
+		try
+		{
+			FileOutputStream fOut = ctx.openFileOutput("CheckListArchive", Context.MODE_PRIVATE);
+			BufferedOutputStream buffer = new BufferedOutputStream (fOut);
+			ObjectOutput output = new ObjectOutputStream ( buffer);
+			try
+			{													
+						output.writeObject(checkedAssets);	
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			finally
+			{
+				output.close();
+			}
+		}			
+		catch(IOException ex)
+		{
+		    ex.printStackTrace();
+		}	
+	}
+	public static void loadCheckListFile(Context ctx)
+	{
+		ArrayList<Boolean> list = new ArrayList<Boolean>();
+		try
+		{
+		      //use buffering
+		      FileInputStream file = ctx.openFileInput("CheckListArchive");
+		      BufferedInputStream buffer = new BufferedInputStream( file );
+		      ObjectInput input = new ObjectInputStream ( buffer );
+		      try
+		      {
+		        list = (ArrayList<Boolean>) input.readObject();
+		      }
+		      finally
+		      {
+		        input.close();
+		      }
+	    }
+	    catch(ClassNotFoundException ex)
+	    {
+	      ex.printStackTrace();
+	    }
+	    catch(IOException ex)
+	    {
+	     ex.printStackTrace();
+	    }
+		checkedAssets = list;
+		
+	}
+	public static boolean getCheckOptionFromFile(String fileName,Context ctx)
+	{
+		loadListFile(ctx);
+		loadCheckListFile(ctx);
+		int pos = getAssetListPosition(fileName);
+		if(pos != -1)
+		{
+			return checkedAssets.get(pos);
+		}
+		return false;
 		
 	}
 	

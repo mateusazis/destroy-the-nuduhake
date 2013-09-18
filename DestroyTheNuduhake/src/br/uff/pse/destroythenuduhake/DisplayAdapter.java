@@ -29,28 +29,50 @@ public class DisplayAdapter extends ArrayAdapter<String>
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		View rowView = convertView;
-
-		if(rowView == null)
+		try
 		{
-			LayoutInflater inflater = LayoutInflater.from(context);
-        	rowView = inflater.inflate(layoutID, parent, false);
+			if(values[position].equals("Categoria"))
+			{
+				View rowView = convertView;
+	
+				if(rowView == null)
+				{
+					LayoutInflater inflater = LayoutInflater.from(context);
+		        	rowView = inflater.inflate(R.layout.headerlayout, parent, false);
+				}
+		        
+				
+	
+				TextView textView = (TextView) rowView.findViewById(R.id.textView1);
+				textView.setText("Categoria");
+				
+				return rowView;
+	
+			}
+			else
+			{
+				View rowView = convertView;
+	
+				if(rowView == null)
+				{
+					LayoutInflater inflater = LayoutInflater.from(context);
+		        	rowView = inflater.inflate(layoutID, parent, false);
+				}
+		        
+				
+	
+				TextView textView = (TextView) rowView.findViewById(R.id.label);
+				ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+				textView.setText(values[position]);
+				
+				return rowView;
+			}
+		}	
+		catch(Exception e)
+		{
+			
 		}
-        
-		
-
-		TextView textView = (TextView) rowView.findViewById(R.id.label);
-		ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-		textView.setText(values[position]);
-
-
-//		imageView.setImageResource(R.drawable.square);
-//		imageView.setAlpha(1);
-
-//		float percent = (float) position / (float) values.length;
-//		imageView.setBackgroundColor((int) interpolateColor(Color.GREEN, Color.RED, percent));
-
-		return rowView;
+		return null;
 	}
 
 

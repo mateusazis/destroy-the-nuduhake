@@ -49,8 +49,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v)
 			{				
-				Asset um = new Asset("Capacete1","Capacete");
-				Asset dois = new Asset("Ombreira2","Ombreira");
+				Asset um = new Asset("Capacete1","Capacete","Jurema");
+				Asset dois = new Asset("Ombreira2","Ombreira","Zé");
+				Asset tres = new Asset("Terreno Boladex","Terreno","Dieguin");
 				FileManager.writeAsset(um, um.name, MainActivity.this);
 				FileManager.writeAsset(dois, dois.name, MainActivity.this);
 			}

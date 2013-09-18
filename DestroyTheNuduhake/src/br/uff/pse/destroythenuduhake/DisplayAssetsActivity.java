@@ -2,6 +2,9 @@ package br.uff.pse.destroythenuduhake;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.uff.pse.files.FileManager;
 import android.app.Activity;
 import android.content.Intent;
@@ -30,21 +33,36 @@ public class DisplayAssetsActivity extends Activity implements OnItemClickListen
 		String payload = intent.getStringExtra("payload");
 		listView = (ListView)findViewById(R.id.listView1);
 		showContents();
+		
+		
+		
+		
 	}
 	private void showContents()
 	{
 		// ImageView icon = (ImageView)findViewById(R.id.icon);
 		try
 		{
-			values = FileManager.readAllFilesNames(this);
-
+			
+	//		values = FileManager.readAllFilesNames(this);
+//			String[] values = {"Categoria","teste1","teste2","Categoria","teste3","Categoria","teste1","teste2","Categoria","teste3"};
+			
 			// Use your own layout
 			// ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 			// R.layout.displayactivitymenu, R.id.label, values);
 
-			DisplayAdapter adapter = new DisplayAdapter(R.layout.rowlayout ,values,this);
-			listView.setAdapter(adapter);
-			listView.setOnItemClickListener(this);
+//			DisplayAdapter adapter = new DisplayAdapter(R.layout.rowlayout,values,this);
+//			listView.setAdapter(adapter);
+//			listView.setOnItemClickListener(this);
+			
+			
+			List<Item> items = FileManager.readAllFilesNames(this);
+
+
+	        TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(this, items);
+	        listView.setAdapter(adapter);
+			
+			
 		}
 		catch (Exception e)
 		{
@@ -54,7 +72,8 @@ public class DisplayAssetsActivity extends Activity implements OnItemClickListen
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View v, int position, long id) 
 	{
-
+		
 		
 	}
+
 }
