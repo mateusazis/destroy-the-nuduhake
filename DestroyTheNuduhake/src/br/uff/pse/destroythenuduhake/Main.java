@@ -7,17 +7,17 @@ import android.util.Log;
 
 public class Main extends Activity {
 
-	boolean loadDTN = true;
+	boolean loadDTN = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		Class<? extends Activity> c;
+		Class<? extends Activity> c = null;
 		if(loadDTN)
 			c = MainActivity.class;
 		else
-			c = br.uff.pse.destroythenuduhake.game.Main.class;
+			c = br.uff.pse.destroythenuduhake.game.MainAndroid.class;
 		
 		Intent i = new Intent(this, c);
 		startActivity(i);

@@ -35,7 +35,9 @@
         
         <activity 
             android:label="Destroy The Nuduhake - GAME"
-            android:name="br.uff.pse.destroythenuduhake.game.Main">
+            android:name="br.uff.pse.destroythenuduhake.game.MainAndroid"
+            android:screenOrientation="landscape">
+            
         </activity>
         
         <service android:name="br.uff.pse.destroythenuduhake.DTNService" />
