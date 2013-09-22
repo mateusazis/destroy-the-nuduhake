@@ -8,6 +8,7 @@
     
     <!-- To communication with the DTN service we need the permission to do so -->
     <uses-permission android:name="de.tubs.ibr.dtn.permission.DTN_COMMUNICATION"/>
+    <uses-feature android:glEsVersion="0x00020000" android:required="true" />
     
     <application
         android:allowBackup="true"

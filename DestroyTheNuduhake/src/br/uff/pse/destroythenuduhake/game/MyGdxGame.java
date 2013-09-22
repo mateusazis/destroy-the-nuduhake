@@ -29,11 +29,8 @@ public class MyGdxGame implements ApplicationListener {
 		float h = Gdx.graphics.getHeight();
 		Texture.setEnforcePotImages(false);
 
-		w = 480; h = 320;
-//		camera = new OrthographicCamera(1, h / w);
-		camera = new OrthographicCamera(w, h);
-//		camera.setToOrtho(false, w, h);
-//		camera.position.set(w/2, h/2, 0);
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 800, 480);
 		
 		raiTexture = new Texture(Gdx.files.internal("images/rai.png"));
 		raiTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -44,7 +41,7 @@ public class MyGdxGame implements ApplicationListener {
 		choiceSound = Gdx.audio.newSound(Gdx.files.internal("sounds/choice.mp3"));
 
 		rai = new Rectangle();
-		rai.x = w / 2 - 64 / 2;
+		rai.x = 800 / 2 - 64 / 2;
 		rai.y = 20;
 		rai.width = 64;
 		rai.height = 64;

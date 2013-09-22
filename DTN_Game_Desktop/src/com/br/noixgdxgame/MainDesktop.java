@@ -11,7 +11,7 @@ public class MainDesktop {
 		cfg.title = "Rai is late again";
 		cfg.useGL20 = false;
 		cfg.width = 800;
-		cfg.height = 800;
+		cfg.height = 480;
 		
 		new LwjglApplication(new MyGdxGame(), cfg);
 	}
