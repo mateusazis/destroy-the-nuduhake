@@ -6,13 +6,16 @@ public class TestLevel extends Level{
 	private LevelObject raiObject;
 	
 	@Override
-	public void create() {
-		super.create();
+	public void createWithAssetBundle(AssetBundle b) {
+		super.createWithAssetBundle(b);
 		
-		raiTex = new GraphicAsset("images/mario.png");
+		raiTex = b.getGraphicAsset(AssetIDs.MARIO);
 		raiObject = new LevelObject(800/2 - 64/2, 20, raiTex);
 		
+		
 		addObject(raiObject);
+		
+		addObject(new LevelObject(0, 0, b.getGraphicAsset(AssetIDs.SHELL)));
 	}
 
 	@Override

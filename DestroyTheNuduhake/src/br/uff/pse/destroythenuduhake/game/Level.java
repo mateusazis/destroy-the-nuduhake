@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public abstract class Level extends Stage implements ApplicationListener{
 	
 	private List<LevelObject> objects;
+	private AssetBundle usedBundle;
 	
 	public Level(){
 		super();
@@ -25,15 +26,24 @@ public abstract class Level extends Stage implements ApplicationListener{
 	}
 	
 	@Override
-	public void create() {
+	public final void create() {
+		createWithAssetBundle(DefaultBundle.getInstance());
+	}
+	
+	public void createWithAssetBundle(AssetBundle bundle){
 		objects = new ArrayList<LevelObject>();
+		usedBundle = bundle;
+		bundle.load();
 	}
 
 	@Override
 	public void dispose() {
+		super.dispose();
+		usedBundle.dispose();
 		objects.clear();
 		getActors().clear();
 		objects = null;
+		usedBundle = null;
 	}
 
 	@Override

@@ -22,7 +22,8 @@ public class Game implements ApplicationListener {
 		if(currentLevel != null)
 			currentLevel.dispose();
 		currentLevel = levels.get(levelNumber);
-		currentLevel.create();
+//		currentLevel.create();
+		currentLevel.createWithAssetBundle(new TestBundle());
 	}
 
 	@Override

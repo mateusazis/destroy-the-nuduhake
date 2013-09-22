@@ -1,23 +1,22 @@
 package br.uff.pse.destroythenuduhake.game;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.Gdx;
 
 public class GraphicAsset extends Asset{
 
 	private Texture texture;
 	
-	public GraphicAsset(String path){
-		this(Gdx.files.internal(path));
+	public GraphicAsset(int id){
+		super(id);
 	}
 	
-	public GraphicAsset(FileHandle handle){
-		texture = new Texture(handle);
+	@Override
+	public void load(String bundlePath) {
+		texture = new Texture(getFileHandle(bundlePath));
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-	}
+	};
 	
 	@Override
 	public void dispose() {
@@ -28,4 +27,8 @@ public class GraphicAsset extends Asset{
 		batch.draw(texture, x, y);
 	}
 	
+	@Override
+	public String getFolderPath() {
+		return "images/";
+	}
 }

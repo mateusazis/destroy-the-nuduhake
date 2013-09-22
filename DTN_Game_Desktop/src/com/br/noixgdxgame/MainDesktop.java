@@ -1,7 +1,6 @@
 package com.br.noixgdxgame;
 
 import br.uff.pse.destroythenuduhake.game.Game;
-import br.uff.pse.destroythenuduhake.game.MyGdxGame;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
