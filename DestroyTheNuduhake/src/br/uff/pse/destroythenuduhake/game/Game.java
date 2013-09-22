@@ -7,12 +7,14 @@ import java.util.List;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Game implements ApplicationListener {
 	private Level currentLevel;
 	private List<Level> levels;
 	
 	public Game(){
+		Texture.setEnforcePotImages(false);
 		levels = new ArrayList<Level>();
 	}
 	

@@ -1,5 +1,6 @@
 package com.br.noixgdxgame;
 
+import br.uff.pse.destroythenuduhake.game.Game;
 import br.uff.pse.destroythenuduhake.game.MyGdxGame;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -13,6 +14,7 @@ public class MainDesktop {
 		cfg.width = 800;
 		cfg.height = 480;
 		
-		new LwjglApplication(new MyGdxGame(), cfg);
+//		new LwjglApplication(new MyGdxGame(), cfg);
+		new LwjglApplication(new Game(), cfg);
 	}
 }
