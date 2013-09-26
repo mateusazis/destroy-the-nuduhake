@@ -28,9 +28,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.uff.pse.destroythenuduhake.BundleReceiver;
 import br.uff.pse.destroythenuduhake.Header;
 import br.uff.pse.destroythenuduhake.Item;
 import br.uff.pse.destroythenuduhake.ListItem;
+import br.uff.pse.destroythenuduhake.game.AssetBundle;
 import de.tubs.ibr.dtn.util.Base64.OutputStream;
 import android.app.Activity;
 import android.content.Context;
@@ -38,7 +40,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 
-public class FileManager extends Activity
+public class FileManager extends Activity implements BundleReceiver
 {
 	// Lista que conter� o nome dos assets
 	private static ArrayList<String> filesPaths = new ArrayList<String>();
@@ -345,6 +347,11 @@ public class FileManager extends Activity
 			return checkedAssets.get(pos);
 		}
 		return false;
+		
+	}
+	@Override
+	public void onReceive(AssetBundle[] bundles) {
+		// TODO Auto-generated method stub
 		
 	}
 	
