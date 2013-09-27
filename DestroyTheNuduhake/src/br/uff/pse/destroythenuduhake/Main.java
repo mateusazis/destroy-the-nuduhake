@@ -20,6 +20,7 @@ public class Main extends Activity {
 			c = br.uff.pse.destroythenuduhake.game.MainAndroid.class;
 		
 		Intent i = new Intent(this, c);
+		i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		startActivity(i);
 	}
 	

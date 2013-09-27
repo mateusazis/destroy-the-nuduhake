@@ -1,7 +1,9 @@
 package br.uff.pse.destroythenuduhake.game;
 
+import br.uff.pse.destroythenuduhake.game.assets.DTNGameBundle;
 
-public class DefaultBundle extends AssetBundle{
+
+public class DefaultBundle extends DTNGameBundle{
 
 	private static DefaultBundle instance;
 	

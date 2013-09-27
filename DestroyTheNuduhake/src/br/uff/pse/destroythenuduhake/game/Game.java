@@ -12,8 +12,14 @@ import com.badlogic.gdx.graphics.Texture;
 public class Game implements ApplicationListener {
 	private Level currentLevel;
 	private List<Level> levels;
+	private AssetBundle usedBundle;
 	
 	public Game(){
+		this(DefaultBundle.getInstance());
+	}
+	
+	public Game(AssetBundle b){
+		this.usedBundle = b;
 		Texture.setEnforcePotImages(false);
 		levels = new ArrayList<Level>();
 	}
@@ -23,7 +29,7 @@ public class Game implements ApplicationListener {
 			currentLevel.dispose();
 		currentLevel = levels.get(levelNumber);
 //		currentLevel.create();
-		currentLevel.createWithAssetBundle(new TestBundle());
+		currentLevel.createWithAssetBundle(usedBundle);
 	}
 
 	@Override

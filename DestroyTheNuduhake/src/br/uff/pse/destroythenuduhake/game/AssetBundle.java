@@ -11,25 +11,22 @@ public class AssetBundle {
 	public AssetBundle(String path){
 		assets = new LinkedList<Asset>();
 		this.path = path;
-		
-
-		addAsset(new GraphicAsset(AssetIDs.MARIO));
-		addAsset(new GraphicAsset(AssetIDs.SHELL));
 	}
 	
 	public void addAsset(Asset newAsset){
 		assets.add(newAsset);
 	}
 	
-	public Asset getAsset(int id){
+	private Asset simpleGetAsset(int id){
 		for(Asset a : assets)
 			if(a.getId() == id)
 				return a;
 		return null;
 	}
 	
-	public GraphicAsset getGraphicAsset(int id){
-		return (GraphicAsset)getAsset(id);
+	@SuppressWarnings("unchecked")
+	public <T extends Asset> T getAsset(int id){
+		return (T)simpleGetAsset(id);
 	}
 	
 	public String getPath(){

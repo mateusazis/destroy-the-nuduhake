@@ -17,6 +17,7 @@ public abstract class Asset implements Disposable{
 	public abstract void load(String bundlePath);
 	public abstract void dispose();
 	public abstract String getFolderPath();
+	public abstract String getAssetPath();
 	
 	public int getId(){
 		return id;
@@ -39,7 +40,7 @@ public abstract class Asset implements Disposable{
 		
 		pathBuilder.append(bundlePath);
 		pathBuilder.append(getFolderPath());
-		pathBuilder.append(AssetIDs.getFileName(getId()));
+		pathBuilder.append(getAssetPath());
 		
 		return Gdx.files.internal(pathBuilder.toString());
 	}

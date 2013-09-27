@@ -1,5 +1,7 @@
 package br.uff.pse.destroythenuduhake.game;
 
+import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
