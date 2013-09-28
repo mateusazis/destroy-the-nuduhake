@@ -22,18 +22,18 @@ public class LevelObject extends Actor{
 		graphic.render(batch, getX(), getY());
 	}
 	
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		
-		if(Gdx.input.isTouched()){
-			float dX = Gdx.input.getX() - getX();
-			float dY = Gdx.graphics.getHeight() - Gdx.input.getY() - getY();
-			
-			float mag = (float)Math.sqrt(dX * dX + dY * dY);
-			float SPEED = 100;
-			
-			super.translate(SPEED * dX * delta / mag , SPEED * dY * delta / mag);
-		}
-	}
+//	@Override
+//	public void act(float delta) {
+//		super.act(delta);
+//		
+//		if(Gdx.input.isTouched()){
+//			float dX = Gdx.input.getX() - getX();
+//			float dY = Gdx.graphics.getHeight() - Gdx.input.getY() - getY();
+//			
+//			float mag = (float)Math.sqrt(dX * dX + dY * dY);
+//			float SPEED = 100;
+//			
+//			super.translate(SPEED * dX * delta / mag , SPEED * dY * delta / mag);
+//		}
+//	}
 }
