@@ -5,12 +5,14 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
 
 public class ControlableEntity extends LevelObject {
 
 	private int life;
 	private int atackPower;	
 	private Vector2 velocity;
+	private Fixture fixture;
 	
 	Rectangle 	bounds = new Rectangle();
 	private State		state = State.IDLE;
@@ -104,6 +106,14 @@ public class ControlableEntity extends LevelObject {
 
 	public void setState(State state) {
 		this.state = state;
+	}
+
+	public Fixture getFixture() {
+		return fixture;
+	}
+
+	public void setFixture(Fixture fixture) {
+		this.fixture = fixture;
 	}
 
 }

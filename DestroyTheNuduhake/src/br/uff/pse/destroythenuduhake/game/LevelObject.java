@@ -2,17 +2,23 @@ package br.uff.pse.destroythenuduhake.game;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class LevelObject extends Actor{
 
 	private GraphicAsset graphic;
+	private BodyDef bodyDef = new BodyDef();
+	private Body body;
 	
 	public LevelObject(float x, float y, GraphicAsset asset){
 		super();
 		setPosition(x, y);
+		getBodyDef().position.set(x, y);
+		bodyDef.type = BodyType.DynamicBody;
 		this.graphic = asset;
 	}
 	
@@ -20,6 +26,22 @@ public class LevelObject extends Actor{
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 		graphic.render(batch, getX(), getY());
+	}
+
+	public BodyDef getBodyDef() {
+		return bodyDef;
+	}
+
+	public void setBodyDef(BodyDef bodyDef) {
+		this.bodyDef = bodyDef;
+	}
+
+	public Body getBody() {
+		return body;
+	}
+
+	public void setBody(Body body) {
+		this.body = body;
 	}
 	
 //	@Override

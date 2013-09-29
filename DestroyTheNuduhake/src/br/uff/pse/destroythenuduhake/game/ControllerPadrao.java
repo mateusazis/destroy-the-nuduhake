@@ -69,7 +69,6 @@ Player player;
 		/** Change Bob's state and parameters based on input controls **/
 		private void processInput() {
 			if (keys.get(Keys.LEFT)) {
-				// left is pressed
 				player.setFacingLeft(true);
 				player.setState(State.WALKING);
 				player.getVelocity().x = Player.SPEED;
@@ -80,11 +79,19 @@ Player player;
 				player.setState(State.WALKING);
 				player.getVelocity().x = Player.SPEED;
 			}
-			// need to check if both or none direction are pressed, then Bob is idle
+			
 			if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT)) ||
 					(!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
 				player.setState(State.IDLE);
 				player.getVelocity().x = 0;
+			}
+			if (keys.get(Keys.JUMP)) {
+				player.setState(State.JUMPING);
+				//player.getBody().applyLinearImpulse(0, 40, player.getX(), player.getY());
+				player.getBody().applyLinearImpulse(0f, 20f, player.getX(), player.getY());
+			}
+			if (!keys.get(Keys.JUMP)){
+				//player.getBody().setLinearVelocity(player.getVelocity().x, 0);
 			}
 		}
 
@@ -125,6 +132,9 @@ Player player;
 		}
 		if(x > player.getX()){
 			leftPressed();
+		}
+		if(y > player.getY()){
+			jumpPressed();
 		}
 		return true;
 	}

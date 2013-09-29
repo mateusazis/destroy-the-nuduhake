@@ -14,12 +14,15 @@ public class Player extends ControlableEntity {
 	public void act(float delta) {
 		if(getVelocity().x > 0){
 			if(isFacingLeft()){
-				setPosition(getX() + getVelocity().x, getY());
+				//setPosition(getX() + getVelocity().x, getY());
+				getBody().setLinearVelocity(50, 0);
 			}
 			else{
 				setPosition(getX() - getVelocity().x, getY());
+				getBody().setLinearVelocity(-50, 0);
 			}
 		}
+		
 	}
 
 }
