@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.w3c.dom.Entity;
 
+import br.uff.pse.destroythenuduhake.game.ControlableEntity.State;
 import br.uff.pse.destroythenuduhake.game.assets.AssetIDs;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
@@ -19,7 +20,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -50,31 +55,24 @@ public class TestLevel extends Level {
 
 		raiTex = b.getAsset(AssetIDs.SPRITE_MARIO);
 		raiObject = new LevelObject(800/8 - 64/2, 80, raiTex);
+		raiObject.getBodyDef().type = BodyType.DynamicBody;
+		addObject(raiObject);
 
 		playerTex = b.getAsset(AssetIDs.SPRITE_SHELL);
 		player = new Player(300, 20, playerTex);
+		addObject(player);
+		
 		controllerPadrao = new DefaultController(player);
 		Gdx.input.setInputProcessor(controllerPadrao);
-		addObject(player);
 
 		// choiceSound = b.getAsset(AssetIDs.SOUND_CHOICE);
 		// music = b.getAsset(AssetIDs.MUSIC_JUNGLE);
 		// music.play();
 
-		addObject(raiObject);
-
 		// addObject(new LevelObject(0, 0,
 		// b.<GraphicAsset>getAsset(AssetIDs.SPRITE_SHELL)));
-
-		camera = new OrthographicCamera();
-		camera.viewportHeight = 320;
-		camera.viewportWidth = 480;
-		camera.position.set(camera.viewportWidth * .5f,
-				camera.viewportHeight * .5f, 0f);
-		camera.update();
 		
-		
-		// Ground body
+		// Chão
 		BodyDef groundBodyDef = new BodyDef();
 		groundBodyDef.position.set(new Vector2(0, 10));
 		Body groundBody = world.createBody(groundBodyDef);
@@ -82,27 +80,31 @@ public class TestLevel extends Level {
 		groundBox.setAsBox((camera.viewportWidth) * 2, 10.0f);
 		groundBody.createFixture(groundBox, 0.0f);
 		
-		
-		// Dynamic Body
-		
 		player.setBody(world.createBody(player.getBodyDef()));
 		player.getBody().setUserData(player);
-		CircleShape dynamicCircle = new CircleShape();
-		dynamicCircle.setRadius(1f);
+		PolygonShape dynamicShape = new PolygonShape();
+		dynamicShape.setAsBox(80, 40, new Vector2(40, 20), 0);
 		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = dynamicCircle;
-		fixtureDef.density = 0.1f;
-		fixtureDef.friction = 0.0f;
+		fixtureDef.shape = dynamicShape;
+		fixtureDef.density = 0.0f;
+		fixtureDef.friction = 8.0f;
 		fixtureDef.restitution = 0;
 		player.getBody().createFixture(fixtureDef);
 		
-		
 		raiObject.setBody(world.createBody(raiObject.getBodyDef()));
 		raiObject.getBody().setUserData(raiObject);
-		raiObject.getBody().createFixture(fixtureDef);
+		dynamicShape = new PolygonShape();
+		dynamicShape.setAsBox(80, 40, new Vector2(40, 20), 0);
+		FixtureDef fixtureDef2 = new FixtureDef();
+		fixtureDef2.shape = dynamicShape;
+		fixtureDef2.density = 0.0f;
+		fixtureDef2.friction = 1.0f;
+		fixtureDef2.restitution = 0;	
 		
+		raiObject.getBody().createFixture(fixtureDef2);
 		//debugRenderer = new Box2DDebugRenderer();
-
+		
+		world.setContactListener(new LevelContactListener());
 	}
 
 	@Override
@@ -111,6 +113,7 @@ public class TestLevel extends Level {
 		controllerPadrao.update();
 		world.step(1 / 300f, 6, 2);
 
+		//System.out.print(player.getState());
 		//debugRenderer.render(world, camera.combined);
 		Iterator<Body> bi = world.getBodies();
 
@@ -145,4 +148,37 @@ public class TestLevel extends Level {
 		super.dispose();
 		raiTex.dispose();
 	}
+	
+	class LevelContactListener implements ContactListener{
+
+		@Override
+		public void preSolve(Contact contact, Manifold oldManifold) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void postSolve(Contact contact, ContactImpulse impulse) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void endContact(Contact contact) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void beginContact(Contact contact) {
+			if(contact.getFixtureA().getBody().getUserData() == raiObject && contact.getFixtureB().getBody().getUserData() == player
+				|| contact.getFixtureA().getBody().getUserData() == player && contact.getFixtureB().getBody().getUserData() == raiObject){
+				raiObject.setGraphic(playerTex);
+			}
+			else{
+				player.touchGround();
+			}
+		}
+	}
 }
+

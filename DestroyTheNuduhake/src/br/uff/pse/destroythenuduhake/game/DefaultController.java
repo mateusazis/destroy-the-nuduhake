@@ -70,28 +70,21 @@ Player player;
 		private void processInput() {
 			if (keys.get(Keys.LEFT)) {
 				player.setFacingLeft(true);
-				if(player.getState() != State.JUMPING)
+				if(player.getState() != State.JUMPING){
 					player.setState(State.WALKING);
-				player.getBody().applyLinearImpulse(Player.SPEED, 0, player.getX(), player.getY());
+					player.getBody().applyLinearImpulse(Player.SPEED, 0, player.getX(), player.getY());
+				}
 			}
 			if (keys.get(Keys.RIGHT)) {
 				player.setFacingLeft(false);
-				if(player.getState() != State.JUMPING)
+				if(player.getState() != State.JUMPING){
 					player.setState(State.WALKING);
-				player.getBody().applyLinearImpulse(-Player.SPEED, 0, player.getX(), player.getY());
-			}
-			
-			if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT)) ||
-					(!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT))) || player.getState() != State.JUMPING) {
-				player.setState(State.IDLE);
+					player.getBody().applyLinearImpulse(-Player.SPEED, 0, player.getX(), player.getY());
+				}
 			}
 			if (keys.get(Keys.JUMP) && player.getState() != State.JUMPING) {
 				player.setState(State.JUMPING);
-				System.out.println("kj");
-				player.getBody().applyLinearImpulse(0.0f, 20.0f, player.getX(), player.getY());
-			}
-			if (!keys.get(Keys.JUMP)){
-				//player.getBody().setLinearVelocity(player.getVelocity().x, 0);
+				player.getBody().applyLinearImpulse(0.0f, 1500.0f, player.getX(), player.getY());
 			}
 		}
 
@@ -133,7 +126,7 @@ Player player;
 		if(x > player.getX() && (400 - y) < (player.getY() + 100) && y > player.getY()){
 			leftPressed();
 		}
-		if(y > player.getY()){
+		if(y < 200){
 			jumpPressed();
 		}
 		return true;

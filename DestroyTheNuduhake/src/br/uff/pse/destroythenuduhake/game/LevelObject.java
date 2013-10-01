@@ -11,21 +11,20 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class LevelObject extends Actor{
 
 	private GraphicAsset graphic;
-	private BodyDef bodyDef = new BodyDef();
-	private Body body;
+	protected BodyDef bodyDef = new BodyDef();
+	protected Body body;
 	
 	public LevelObject(float x, float y, GraphicAsset asset){
 		super();
 		setPosition(x, y);
 		getBodyDef().position.set(x, y);
-		bodyDef.type = BodyType.DynamicBody;
-		this.graphic = asset;
+		this.setGraphic(asset);
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		graphic.render(batch, getX(), getY());
+		getGraphic().render(batch, getX(), getY());
 	}
 
 	public BodyDef getBodyDef() {
@@ -42,6 +41,14 @@ public class LevelObject extends Actor{
 
 	public void setBody(Body body) {
 		this.body = body;
+	}
+
+	public GraphicAsset getGraphic() {
+		return graphic;
+	}
+
+	public void setGraphic(GraphicAsset graphic) {
+		this.graphic = graphic;
 	}
 	
 //	@Override

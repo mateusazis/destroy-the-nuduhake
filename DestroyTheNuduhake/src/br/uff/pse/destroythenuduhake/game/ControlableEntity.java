@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class ControlableEntity extends LevelObject {
 
@@ -32,6 +33,7 @@ public class ControlableEntity extends LevelObject {
 		velocity = new Vector2();
 		velocity.x = 0f;
 		velocity.y = 0f;
+		this.bodyDef.type = BodyType.DynamicBody;
 	}
 	
 	@Override
@@ -50,6 +52,10 @@ public class ControlableEntity extends LevelObject {
 		this.setFacingLeft(false);
 		this.setState(State.WALKING);
 		this.getVelocity().x = SPEED;
+	}
+	
+	public void touchGround(){
+		this.state = State.IDLE;
 	}
 
 	public void jump() {
