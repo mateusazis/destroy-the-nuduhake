@@ -33,12 +33,12 @@ public class TestLevel extends Level {
 	private MusicAsset music;
 	private Player player;
 	private Block block;
-	private ControllerPadrao controllerPadrao;
+	private DefaultController controllerPadrao;
 	OrthographicCamera camera;
 
 	static final float WORLD_TO_BOX = 0.01f;
 	static final float BOX_TO_WORLD = 100f;
-	World world = new World(new Vector2(0, -10000), true);
+	World world = new World(new Vector2(0.0f, -1000.0f), true);
 	Box2DDebugRenderer debugRenderer;
 
 	@Override
@@ -48,12 +48,12 @@ public class TestLevel extends Level {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 
-		// raiTex = b.getAsset(AssetIDs.SPRITE_MARIO);
-		// raiObject = new LevelObject(800/2 - 64/2, 20, raiTex);
+		raiTex = b.getAsset(AssetIDs.SPRITE_MARIO);
+		raiObject = new LevelObject(800/8 - 64/2, 80, raiTex);
 
 		playerTex = b.getAsset(AssetIDs.SPRITE_SHELL);
-		player = new Player(100, 100, playerTex);
-		controllerPadrao = new ControllerPadrao(player);
+		player = new Player(300, 20, playerTex);
+		controllerPadrao = new DefaultController(player);
 		Gdx.input.setInputProcessor(controllerPadrao);
 		addObject(player);
 
@@ -61,7 +61,7 @@ public class TestLevel extends Level {
 		// music = b.getAsset(AssetIDs.MUSIC_JUNGLE);
 		// music.play();
 
-		// addObject(raiObject);
+		addObject(raiObject);
 
 		// addObject(new LevelObject(0, 0,
 		// b.<GraphicAsset>getAsset(AssetIDs.SPRITE_SHELL)));
@@ -88,15 +88,20 @@ public class TestLevel extends Level {
 		player.setBody(world.createBody(player.getBodyDef()));
 		player.getBody().setUserData(player);
 		CircleShape dynamicCircle = new CircleShape();
-		//dynamicCircle.setRadius(5f);
+		dynamicCircle.setRadius(1f);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = dynamicCircle;
-		fixtureDef.density = 200.0f;
+		fixtureDef.density = 0.1f;
 		fixtureDef.friction = 0.0f;
 		fixtureDef.restitution = 0;
 		player.getBody().createFixture(fixtureDef);
 		
-		debugRenderer = new Box2DDebugRenderer();
+		
+		raiObject.setBody(world.createBody(raiObject.getBodyDef()));
+		raiObject.getBody().setUserData(raiObject);
+		raiObject.getBody().createFixture(fixtureDef);
+		
+		//debugRenderer = new Box2DDebugRenderer();
 
 	}
 
@@ -106,7 +111,7 @@ public class TestLevel extends Level {
 		controllerPadrao.update();
 		world.step(1 / 300f, 6, 2);
 
-		debugRenderer.render(world, camera.combined);
+		//debugRenderer.render(world, camera.combined);
 		Iterator<Body> bi = world.getBodies();
 
 		while (bi.hasNext()) {

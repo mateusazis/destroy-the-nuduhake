@@ -5,9 +5,10 @@ import java.util.Map;
 
 import br.uff.pse.destroythenuduhake.game.ControlableEntity.State;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
-public class ControllerPadrao implements InputProcessor {
+public class DefaultController implements InputProcessor {
 
 Player player;
 	
@@ -23,7 +24,7 @@ Player player;
 		keys.put(Keys.FIRE, false);
 	};
 
-	public ControllerPadrao(Player player) {
+	public DefaultController(Player player) {
 		this.player = player;
 	}
 
@@ -63,32 +64,31 @@ Player player;
 
 		public void update() {
 			processInput();
-//			player.update(delta);
 		}
 
 		/** Change Bob's state and parameters based on input controls **/
 		private void processInput() {
 			if (keys.get(Keys.LEFT)) {
 				player.setFacingLeft(true);
-				player.setState(State.WALKING);
-				player.getVelocity().x = Player.SPEED;
+				if(player.getState() != State.JUMPING)
+					player.setState(State.WALKING);
+				player.getBody().applyLinearImpulse(Player.SPEED, 0, player.getX(), player.getY());
 			}
 			if (keys.get(Keys.RIGHT)) {
-				// left is pressed
 				player.setFacingLeft(false);
-				player.setState(State.WALKING);
-				player.getVelocity().x = Player.SPEED;
+				if(player.getState() != State.JUMPING)
+					player.setState(State.WALKING);
+				player.getBody().applyLinearImpulse(-Player.SPEED, 0, player.getX(), player.getY());
 			}
 			
 			if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT)) ||
-					(!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
+					(!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT))) || player.getState() != State.JUMPING) {
 				player.setState(State.IDLE);
-				player.getVelocity().x = 0;
 			}
-			if (keys.get(Keys.JUMP)) {
+			if (keys.get(Keys.JUMP) && player.getState() != State.JUMPING) {
 				player.setState(State.JUMPING);
-				//player.getBody().applyLinearImpulse(0, 40, player.getX(), player.getY());
-				player.getBody().applyLinearImpulse(0f, 20f, player.getX(), player.getY());
+				System.out.println("kj");
+				player.getBody().applyLinearImpulse(0.0f, 20.0f, player.getX(), player.getY());
 			}
 			if (!keys.get(Keys.JUMP)){
 				//player.getBody().setLinearVelocity(player.getVelocity().x, 0);
@@ -127,10 +127,10 @@ Player player;
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		if (x < player.getX()) {
+		if (x < player.getX() && (400 - y) < (player.getY() + 100) && y > player.getY()) {
 			rightPressed();
 		}
-		if(x > player.getX()){
+		if(x > player.getX() && (400 - y) < (player.getY() + 100) && y > player.getY()){
 			leftPressed();
 		}
 		if(y > player.getY()){
@@ -149,6 +149,7 @@ Player player;
 	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
 		leftReleased();
 		rightReleased();
+		jumpReleased();
 		return false;
 	}
 
