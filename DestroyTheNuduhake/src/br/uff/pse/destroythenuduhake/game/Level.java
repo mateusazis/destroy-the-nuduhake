@@ -36,12 +36,19 @@ public abstract class Level extends Stage implements ApplicationListener{
 		bundle.load();
 	}
 
+	public void definitiveDispose(){
+		super.dispose(); 
+		//scene2d's dispose clears a sprite batch.
+		//Only call it if this level is never to be used again
+	}
+	
 	@Override
 	public void dispose() {
-		super.dispose();
-		usedBundle.dispose();
+		//do NOT call super.dispose! It disposes a sprite batch necessary
+		//for rendering! Instead, use definitiveDispose when you are done!
+		super.clear();
 		objects.clear();
-		getActors().clear();
+		usedBundle.dispose();
 		objects = null;
 		usedBundle = null;
 	}

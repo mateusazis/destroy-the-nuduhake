@@ -12,7 +12,8 @@ import com.badlogic.gdx.graphics.Texture;
 public class Game implements ApplicationListener {
 	private Level currentLevel;
 	private List<Level> levels;
-	private AssetBundle usedBundle;
+	public AssetBundle usedBundle;
+	private int nextLevel = -1;
 	
 	public Game(){
 		this(DefaultBundle.getInstance());
@@ -25,15 +26,20 @@ public class Game implements ApplicationListener {
 	}
 	
 	public void changeLevel(int levelNumber){
+		nextLevel = levelNumber;
+	}
+	
+	private void actualChangeLevel(){
 		if(currentLevel != null)
 			currentLevel.dispose();
-		currentLevel = levels.get(levelNumber);
-//		currentLevel.create();
+		currentLevel = levels.get(nextLevel);
 		currentLevel.createWithAssetBundle(usedBundle);
+		nextLevel = -1;
 	}
 
 	@Override
-	public void create() {Level l = new TestLevel();
+	public void create() {
+		Level l = new TestLevel();
 		levels.add(l);
 		changeLevel(0);
 	}
@@ -46,6 +52,9 @@ public class Game implements ApplicationListener {
 
 	@Override
 	public void render() {
+		if(nextLevel != -1)
+			actualChangeLevel();
+		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		

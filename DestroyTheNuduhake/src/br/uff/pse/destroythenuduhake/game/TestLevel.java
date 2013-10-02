@@ -43,13 +43,15 @@ public class TestLevel extends Level {
 
 	static final float WORLD_TO_BOX = 0.01f;
 	static final float BOX_TO_WORLD = 100f;
-	World world = new World(new Vector2(0.0f, -1000.0f), true);
+	private World world;
 	Box2DDebugRenderer debugRenderer;
 
 	@Override
 	public void createWithAssetBundle(AssetBundle b) {
 		super.createWithAssetBundle(b);
 
+		world = new World(new Vector2(0.0f, -1000.0f), true);
+		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 
@@ -72,7 +74,7 @@ public class TestLevel extends Level {
 		// addObject(new LevelObject(0, 0,
 		// b.<GraphicAsset>getAsset(AssetIDs.SPRITE_SHELL)));
 		
-		// Chão
+		// Chï¿½o
 		BodyDef groundBodyDef = new BodyDef();
 		groundBodyDef.position.set(new Vector2(0, 10));
 		Body groundBody = world.createBody(groundBodyDef);
@@ -143,11 +145,11 @@ public class TestLevel extends Level {
 	// }
 	// }
 
-	@Override
-	public void dispose() {
-		super.dispose();
-		raiTex.dispose();
-	}
+//	@Override
+//	public void dispose() {
+//		super.dispose();
+//		raiTex.dispose();
+//	}
 	
 	class LevelContactListener implements ContactListener{
 

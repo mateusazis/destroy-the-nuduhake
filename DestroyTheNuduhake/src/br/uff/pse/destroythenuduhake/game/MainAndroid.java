@@ -15,6 +15,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 public class MainAndroid extends AndroidApplication {
 	
 	private AndroidApplicationConfiguration cfg;
+	private Game g;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,8 +28,8 @@ public class MainAndroid extends AndroidApplication {
         cfg.useAccelerometer = false;
         cfg.useCompass = false;
         
-        
-        initialize(new Game(), cfg);
+        g = new Game();
+        initialize(g, cfg);
 //        initialize(new MyGdxGame(), cfg);
     }
     
@@ -57,8 +58,8 @@ public class MainAndroid extends AndroidApplication {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				AssetBundle b = which == 0 ? DefaultBundle.getInstance() : new TestBundle();
-				
-				initialize(new Game(b), cfg);
+				g.usedBundle = b;
+				g.changeLevel(0);
 			}
 		});
     	
