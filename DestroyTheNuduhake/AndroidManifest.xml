@@ -25,7 +25,8 @@
         
         <activity
             android:label="Destroy The Nuduhake - Main"
-            android:name="br.uff.pse.destroythenuduhake.Main" >
+            android:name="br.uff.pse.destroythenuduhake.Main"
+            android:noHistory="true" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import android.util.Log;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -12,15 +14,16 @@ import com.badlogic.gdx.graphics.Texture;
 public class Game implements ApplicationListener {
 	private Level currentLevel;
 	private List<Level> levels;
-	public AssetBundle usedBundle;
+	private AssetBundle usedBundle, defaultBundle;
 	private int nextLevel = -1;
 	
-	public Game(){
-		this(DefaultBundle.getInstance());
+	public Game(AssetBundle defaultBundle){
+		this(defaultBundle, defaultBundle);
 	}
 	
-	public Game(AssetBundle b){
-		this.usedBundle = b;
+	public Game(AssetBundle usedBundle, AssetBundle defaultBundle){
+		this.usedBundle = usedBundle;
+		this.defaultBundle = defaultBundle;
 		Texture.setEnforcePotImages(false);
 		levels = new ArrayList<Level>();
 	}
@@ -37,17 +40,36 @@ public class Game implements ApplicationListener {
 		nextLevel = -1;
 	}
 
+	private void addLevel(Level l){
+		levels.add(l);
+		l.setParent(this);
+	}
+	
 	@Override
 	public void create() {
 		Level l = new TestLevel();
-		levels.add(l);
+		addLevel(l);
 		changeLevel(0);
+	}
+	
+	public AssetBundle getDefaultBundle(){
+		return defaultBundle;
+	}
+	
+	public void setUsedBundle(AssetBundle newBundle){
+		this.usedBundle = newBundle;
 	}
 
 	@Override
 	public void dispose() {
 		if(currentLevel != null)
 			currentLevel.dispose();
+		for(Level l : levels){
+			l.setParent(null);
+			l.definitiveDispose();
+		}
+		levels.clear();
+		Log.d("", "game disposed");
 	}
 
 	@Override

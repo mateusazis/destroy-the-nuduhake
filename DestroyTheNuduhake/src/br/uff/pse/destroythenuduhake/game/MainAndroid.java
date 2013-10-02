@@ -28,7 +28,7 @@ public class MainAndroid extends AndroidApplication {
         cfg.useAccelerometer = false;
         cfg.useCompass = false;
         
-        g = new Game();
+        g = new Game(DefaultBundle.getInstance());
         initialize(g, cfg);
 //        initialize(new MyGdxGame(), cfg);
     }
@@ -58,7 +58,7 @@ public class MainAndroid extends AndroidApplication {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				AssetBundle b = which == 0 ? DefaultBundle.getInstance() : new TestBundle();
-				g.usedBundle = b;
+				g.setUsedBundle(b);
 				g.changeLevel(0);
 			}
 		});

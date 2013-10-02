@@ -8,7 +8,7 @@ public class DefaultBundle extends DTNGameBundle{
 	private static DefaultBundle instance;
 	
 	private DefaultBundle(){
-		super("");
+		super("default/");
 	}
 	
 	public static DefaultBundle getInstance(){

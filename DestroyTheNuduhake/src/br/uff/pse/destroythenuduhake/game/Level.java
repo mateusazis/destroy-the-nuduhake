@@ -10,9 +10,14 @@ public abstract class Level extends Stage implements ApplicationListener{
 	
 	private List<LevelObject> objects;
 	private AssetBundle usedBundle;
+	private Game parent;
 	
 	public Level(){
 		super();
+	}
+	
+	protected void setParent(Game g){
+		this.parent = g;
 	}
 	
 	public void addObject(LevelObject obj){
@@ -33,7 +38,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 	public void createWithAssetBundle(AssetBundle bundle){
 		objects = new ArrayList<LevelObject>();
 		usedBundle = bundle;
-		bundle.load();
+		bundle.load(parent.getDefaultBundle());
 	}
 
 	public void definitiveDispose(){

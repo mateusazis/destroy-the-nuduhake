@@ -33,15 +33,11 @@ public class AssetBundle {
 		return path;
 	}
 	
-	private String getDefaultPath(){
-		return "default/";
-	}
-	
-	public void load(){
+	public void load(AssetBundle defaultBundle){
 		for(Asset a : assets){
 			String path = getPath();
 			if(!a.exists(path))
-				path = getDefaultPath();
+				path = defaultBundle.getPath();
 			a.load(path);
 		}
 	}
