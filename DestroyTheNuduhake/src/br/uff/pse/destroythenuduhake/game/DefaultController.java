@@ -68,24 +68,12 @@ Player player;
 
 		/** Change Bob's state and parameters based on input controls **/
 		private void processInput() {
-			if (keys.get(Keys.LEFT)) {
-				player.setFacingLeft(true);
-				if(player.getState() != State.JUMPING){
-					player.setState(State.WALKING);
-					player.getBody().applyLinearImpulse(Player.SPEED, 0, player.getX(), player.getY());
-				}
-			}
-			if (keys.get(Keys.RIGHT)) {
-				player.setFacingLeft(false);
-				if(player.getState() != State.JUMPING){
-					player.setState(State.WALKING);
-					player.getBody().applyLinearImpulse(-Player.SPEED, 0, player.getX(), player.getY());
-				}
-			}
-			if (keys.get(Keys.JUMP) && player.getState() != State.JUMPING) {
-				player.setState(State.JUMPING);
-				player.getBody().applyLinearImpulse(0.0f, 1500.0f, player.getX(), player.getY());
-			}
+			if (keys.get(Keys.LEFT)) 
+				player.moveLeft();
+			if (keys.get(Keys.RIGHT)) 
+				player.moveRight();
+			if (keys.get(Keys.JUMP)) 
+				player.jump();
 		}
 
 	@Override

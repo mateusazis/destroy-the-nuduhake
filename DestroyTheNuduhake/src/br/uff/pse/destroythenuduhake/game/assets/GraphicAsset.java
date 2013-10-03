@@ -5,6 +5,7 @@ import br.uff.pse.destroythenuduhake.game.Asset;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class GraphicAsset extends Asset{
 
@@ -19,6 +20,14 @@ public class GraphicAsset extends Asset{
 		texture = new Texture(getFileHandle(bundlePath));
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	};
+	
+	public int getWidth(){
+		return texture.getWidth();
+	}
+	
+	public int getHeight(){
+		return texture.getHeight();
+	} 
 	
 	@Override
 	public void dispose() {

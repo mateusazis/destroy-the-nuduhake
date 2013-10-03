@@ -8,6 +8,7 @@ public class DTNGameBundle extends AssetBundle{
 		super(path);
 		addAsset(new GraphicAsset(AssetIDs.SPRITE_MARIO));
 		addAsset(new GraphicAsset(AssetIDs.SPRITE_SHELL));
+		addAsset(new GraphicAsset(AssetIDs.SPRITE_GROUND));
 		
 		addAsset(new SoundAsset(AssetIDs.SOUND_CHOICE));
 		

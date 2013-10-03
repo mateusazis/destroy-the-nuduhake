@@ -2,11 +2,16 @@ package br.uff.pse.destroythenuduhake.game;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class ControlableEntity extends LevelObject {
 
@@ -37,29 +42,56 @@ public class ControlableEntity extends LevelObject {
 	}
 	
 	@Override
+	public void setupPhysics(World world){
+		Body b = world.createBody(getBodyDef());
+		b.setUserData(this);
+		setBody(b);
+		
+		PolygonShape dynamicShape = new PolygonShape();
+		float w = getWidth(), h = getHeight();
+		float hX = w / 2f, hY = h / 2f;
+		dynamicShape.setAsBox(hX, hY, new Vector2(hX, hY), 0);
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = dynamicShape;
+		fixtureDef.density = 0.0f;
+		fixtureDef.friction = 8.0f;
+		fixtureDef.restitution = 0;
+		getBody().createFixture(fixtureDef);
+	}
+	
+	@Override
 	public void draw(SpriteBatch batch, float parentAlpha){
 		
 		super.draw(batch, parentAlpha);
 	}
 
 	public void moveLeft() {
-		this.setFacingLeft(true);
-		this.setState(State.WALKING);
-		this.getVelocity().x = SPEED;
+		if(getState() != State.JUMPING){
+			this.setFacingLeft(true);
+			this.setState(State.WALKING);
+			getBody().applyLinearImpulse(SPEED, 0, getX(), getY());
+	//		this.getVelocity().x = SPEED;
+		}
 	}
 
 	public void moveRight() {
-		this.setFacingLeft(false);
-		this.setState(State.WALKING);
-		this.getVelocity().x = SPEED;
+		if(getState() != State.JUMPING){
+			this.setFacingLeft(false);
+			this.setState(State.WALKING);
+			getBody().applyLinearImpulse(-SPEED, 0, getX(), getY());
+	//		this.getVelocity().x = SPEED;
+		}
 	}
 	
 	public void touchGround(){
-		this.state = State.IDLE;
+		setState(State.IDLE);
 	}
 
 	public void jump() {
-		
+		if(getState() != State.JUMPING){
+			setState(State.JUMPING);
+			getBody().applyLinearImpulse(0.0f, 1500.0f, getX(), getY());
+		}
 	}
 
 	public void atack() {

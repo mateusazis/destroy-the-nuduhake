@@ -31,79 +31,52 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class TestLevel extends Level {
 
-	private GraphicAsset raiTex;
 	private GraphicAsset playerTex;
-	private LevelObject raiObject;
-	private SoundAsset choiceSound;
-	private MusicAsset music;
+	private GraphicAsset shellTex;
+	private LevelObject ground, ground2;
+	private ControlableEntity shell;
 	private Player player;
 	private Block block;
 	private DefaultController controllerPadrao;
-	OrthographicCamera camera;
 
-	static final float WORLD_TO_BOX = 0.01f;
-	static final float BOX_TO_WORLD = 100f;
+	//physics
+	private static final float WORLD_TO_BOX = 0.01f;
+	private static final float BOX_TO_WORLD = 100f;
 	private World world;
-	Box2DDebugRenderer debugRenderer;
+	private Box2DDebugRenderer debugRenderer;
 
 	@Override
 	public void createWithAssetBundle(AssetBundle b) {
 		super.createWithAssetBundle(b);
 
-		world = new World(new Vector2(0.0f, -1000.0f), true);
+		Vector2 gravity = new Vector2(0.0f, -1000.0f);
+		world = new World(gravity, true);
+
+		//setup assets
+		playerTex = b.getAsset(AssetIDs.SPRITE_MARIO);
+		shellTex = b.getAsset(AssetIDs.SPRITE_SHELL);
 		
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
+		// setup objects
+		ground = new LevelObject(200, 10, b.<GraphicAsset>getAsset(AssetIDs.SPRITE_GROUND));
+		ground.setupPhysics(world);
+		addObject(ground);
+		
+		ground2 = new LevelObject(670, 70, b.<GraphicAsset>getAsset(AssetIDs.SPRITE_GROUND));
+		ground2.setupPhysics(world);
+		addObject(ground2);
+		
+		shell = new ControlableEntity(800/8 - 64/2, 80, shellTex);
+		addObject(shell);
+		shell.setupPhysics(world);
 
-		raiTex = b.getAsset(AssetIDs.SPRITE_MARIO);
-		raiObject = new LevelObject(800/8 - 64/2, 80, raiTex);
-		raiObject.getBodyDef().type = BodyType.DynamicBody;
-		addObject(raiObject);
-
-		playerTex = b.getAsset(AssetIDs.SPRITE_SHELL);
 		player = new Player(300, 20, playerTex);
 		addObject(player);
+		player.setupPhysics(world);
 		
+		//setup input
 		controllerPadrao = new DefaultController(player);
 		Gdx.input.setInputProcessor(controllerPadrao);
-
-		// choiceSound = b.getAsset(AssetIDs.SOUND_CHOICE);
-		// music = b.getAsset(AssetIDs.MUSIC_JUNGLE);
-		// music.play();
-
-		// addObject(new LevelObject(0, 0,
-		// b.<GraphicAsset>getAsset(AssetIDs.SPRITE_SHELL)));
 		
-		// Ch�o
-		BodyDef groundBodyDef = new BodyDef();
-		groundBodyDef.position.set(new Vector2(0, 10));
-		Body groundBody = world.createBody(groundBodyDef);
-		PolygonShape groundBox = new PolygonShape();
-		groundBox.setAsBox((camera.viewportWidth) * 2, 10.0f);
-		groundBody.createFixture(groundBox, 0.0f);
-		
-		player.setBody(world.createBody(player.getBodyDef()));
-		player.getBody().setUserData(player);
-		PolygonShape dynamicShape = new PolygonShape();
-		dynamicShape.setAsBox(80, 40, new Vector2(40, 20), 0);
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = dynamicShape;
-		fixtureDef.density = 0.0f;
-		fixtureDef.friction = 8.0f;
-		fixtureDef.restitution = 0;
-		player.getBody().createFixture(fixtureDef);
-		
-		raiObject.setBody(world.createBody(raiObject.getBodyDef()));
-		raiObject.getBody().setUserData(raiObject);
-		dynamicShape = new PolygonShape();
-		dynamicShape.setAsBox(80, 40, new Vector2(40, 20), 0);
-		FixtureDef fixtureDef2 = new FixtureDef();
-		fixtureDef2.shape = dynamicShape;
-		fixtureDef2.density = 0.0f;
-		fixtureDef2.friction = 1.0f;
-		fixtureDef2.restitution = 0;	
-		
-		raiObject.getBody().createFixture(fixtureDef2);
 		//debugRenderer = new Box2DDebugRenderer();
 		
 		world.setContactListener(new LevelContactListener());
@@ -173,9 +146,9 @@ public class TestLevel extends Level {
 		
 		@Override
 		public void beginContact(Contact contact) {
-			if(contact.getFixtureA().getBody().getUserData() == raiObject && contact.getFixtureB().getBody().getUserData() == player
-				|| contact.getFixtureA().getBody().getUserData() == player && contact.getFixtureB().getBody().getUserData() == raiObject){
-				raiObject.setGraphic(playerTex);
+			if(contact.getFixtureA().getBody().getUserData() == shell && contact.getFixtureB().getBody().getUserData() == player
+				|| contact.getFixtureA().getBody().getUserData() == player && contact.getFixtureB().getBody().getUserData() == shell){
+				shell.setGraphic(shellTex);
 			}
 			else{
 				player.touchGround();

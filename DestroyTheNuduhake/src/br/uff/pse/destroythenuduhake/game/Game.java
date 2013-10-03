@@ -3,9 +3,6 @@ package br.uff.pse.destroythenuduhake.game;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import android.util.Log;
-
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -69,7 +66,7 @@ public class Game implements ApplicationListener {
 			l.definitiveDispose();
 		}
 		levels.clear();
-		Log.d("", "game disposed");
+		Gdx.app.debug("", "game disposed");
 	}
 
 	@Override

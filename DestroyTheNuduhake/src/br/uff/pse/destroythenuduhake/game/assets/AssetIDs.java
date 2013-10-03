@@ -7,6 +7,7 @@ public final class AssetIDs {
 	//sprites
 	public static final int SPRITE_MARIO = 0x0000;
 	public static final int SPRITE_SHELL = 0x0001;
+	public static final int SPRITE_GROUND = 0x0002;
 	
 	//sounds
 	public static final int SOUND_CHOICE = 0x0100;
@@ -24,6 +25,7 @@ public final class AssetIDs {
 			
 			spritePaths.put(AssetIDs.SPRITE_MARIO, "mario.png");
 			spritePaths.put(AssetIDs.SPRITE_SHELL, "shell.png");
+			spritePaths.put(AssetIDs.SPRITE_GROUND, "ground.png");
 			
 			soundPaths.put(AssetIDs.SOUND_CHOICE, "choice.mp3");
 			
