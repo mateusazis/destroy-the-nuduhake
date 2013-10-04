@@ -1,10 +1,11 @@
-package br.uff.pse.destroythenuduhake;
+package br.uff.pse.destroythenuduhake.dtn;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import br.uff.pse.destroythenuduhake.DisplayAssetsActivity;
 import br.uff.pse.destroythenuduhake.game.AssetBundle;
 
 

@@ -1,5 +1,15 @@
 package br.uff.pse.destroythenuduhake.game.assets;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import br.uff.pse.destroythenuduhake.game.Asset;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -47,4 +57,50 @@ public class GraphicAsset extends Asset{
 	public String getAssetPath() {
 		return AssetIDs.getSpritePath(getId());
 	}
+	@Override
+	public int getPayload(byte[] bytes)
+	{
+		int x = 0;
+		try 
+		{
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));
+			ois.readObject();
+			x = ois.read(bytes, 0, bytes.length);
+			ois.close();
+			
+		
+		
+		} 
+		catch(Exception e)
+		{
+			Exception y = e;
+		}
+		return x;
+		
+	}
+	public Bitmap getBitmap()
+	{
+		byte[] bytes = new byte[10000000];
+		int x  = getPayload(bytes);
+		Bitmap ret = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+		return ret;
+	}
+	public void saveBitmap(Bitmap bm)
+	{
+		try 
+		{
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath));
+			oos.writeObject(this);
+			boolean x = bm.compress(Bitmap.CompressFormat.JPEG, 90, oos);
+			oos.flush();
+			oos.close();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 }

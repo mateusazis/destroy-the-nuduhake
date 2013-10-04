@@ -28,11 +28,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.uff.pse.destroythenuduhake.BundleReceiver;
-import br.uff.pse.destroythenuduhake.Header;
-import br.uff.pse.destroythenuduhake.Item;
-import br.uff.pse.destroythenuduhake.ListItem;
+import br.uff.pse.destroythenuduhake.dtn.BundleReceiver;
+import br.uff.pse.destroythenuduhake.game.Asset;
 import br.uff.pse.destroythenuduhake.game.AssetBundle;
+import br.uff.pse.destroythenuduhake.interfacepk.Header;
+import br.uff.pse.destroythenuduhake.interfacepk.Item;
+import br.uff.pse.destroythenuduhake.interfacepk.ListItem;
 import de.tubs.ibr.dtn.util.Base64.OutputStream;
 import android.app.Activity;
 import android.content.Context;
@@ -49,6 +50,7 @@ public class FileManager extends Activity implements BundleReceiver
 
 	public static void writeAsset(Asset asset, String fileName, Context ctx) 
 	{
+		byte[] bytes = new byte[10000000];
 		loadListFile(ctx);
 		loadCheckListFile(ctx);
 		fileName = writeValidation(fileName,ctx,1);					
@@ -60,11 +62,13 @@ public class FileManager extends Activity implements BundleReceiver
 			try
 			{													
 						output.writeObject(asset);	
+						int x = asset.getPayload(bytes);
+						output.write(bytes, 0, x);
 						filesPaths.add(fileName);
-						if(asset.type.equals("Default"))
-							checkedAssets.add(true);
-						else
-							checkedAssets.add(false);
+//						if(asset.type.equals("Default"))
+//							checkedAssets.add(true);
+//						else
+//							checkedAssets.add(false);
 						saveListFile(ctx);
 						saveCheckListFile(ctx);
 			}
@@ -93,8 +97,9 @@ public class FileManager extends Activity implements BundleReceiver
 		try
 		{
 		      //use buffering
-		      FileInputStream file = ctx.openFileInput(fileName);
-		      BufferedInputStream buffer = new BufferedInputStream( file );
+		    //  FileInputStream file = ctx.openFileInput(fileName);
+		    FileInputStream file = new FileInputStream(fileName);
+			  BufferedInputStream buffer = new BufferedInputStream( file );
 		      ObjectInput input = new ObjectInputStream ( buffer );
 		      try
 		      {
@@ -193,13 +198,13 @@ public class FileManager extends Activity implements BundleReceiver
 		terrenos.add(new Header("Terrenos"));
 		for(int i = 0; i< filesPaths.size();i++)
 		{
-			Asset a = readAsset(filesPaths.get(i),ctx); 
+/*			Asset a = readAsset(filesPaths.get(i),ctx); 
 			if(a.type.equals("Capacete"))
 				capacetes.add(new ListItem(a.author,filesPaths.get(i),ctx));
 			if(a.type.equals("Ombreira"))
 				ombreiras.add(new ListItem(a.author,filesPaths.get(i),ctx));
 			if(a.type.equals("Terreno"))
-				terrenos.add(new ListItem(a.author,filesPaths.get(i),ctx));
+				terrenos.add(new ListItem(a.author,filesPaths.get(i),ctx));*/
 		}
 	/*	items.add(new Header("Terrain Asset"));
         items.add(new ListItem("Default", "Terrain"));
@@ -354,6 +359,10 @@ public class FileManager extends Activity implements BundleReceiver
 		// TODO Auto-generated method stub
 		
 	}
+	
+
+
+	
 	
 
 	

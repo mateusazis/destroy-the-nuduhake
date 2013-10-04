@@ -1,14 +1,17 @@
 package br.uff.pse.destroythenuduhake.game;
 
+import java.io.Serializable;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Disposable;
 
-public abstract class Asset implements Disposable{
+public abstract class Asset implements Disposable,Serializable{
 
 	private int id;
 	private int versionNumber;
 	private String author;
+	public String filePath;
 	
 	public Asset(int id){
 		this.id = id;
@@ -20,7 +23,9 @@ public abstract class Asset implements Disposable{
 	public abstract String getAssetPath();
 	
 	public int getId(){
+		
 		return id;
+		
 	}
 	
 	public int getVersionNumber(){
@@ -44,4 +49,10 @@ public abstract class Asset implements Disposable{
 		
 		return Gdx.files.internal(pathBuilder.toString());
 	}
+	public int getPayload(byte[] b)
+	{
+		
+		return 0;
+	}
+	
 }

@@ -42,11 +42,11 @@
             
         </activity>
         
-        <service android:name="br.uff.pse.destroythenuduhake.DTNService" />
+        <service android:name="br.uff.pse.destroythenuduhake.dtn.DTNService" />
         
 	    <receiver
 	        android:enabled="true"
-	        android:name="br.uff.pse.destroythenuduhake.DTNReceiver"
+	        android:name="br.uff.pse.destroythenuduhake.dtn.DTNReceiver"
 	        android:exported="true"
 	        android:permission="de.tubs.ibr.dtn.permission.DTN_SERVER">
 	        <!-- Add intent filter for notification of incoming bundles -->
