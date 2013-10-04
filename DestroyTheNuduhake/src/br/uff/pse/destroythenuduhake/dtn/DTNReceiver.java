@@ -1,4 +1,4 @@
-package br.uff.pse.destroythenuduhake;
+package br.uff.pse.destroythenuduhake.dtn;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

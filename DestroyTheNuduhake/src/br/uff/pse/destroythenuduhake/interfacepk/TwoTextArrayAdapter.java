@@ -1,4 +1,4 @@
-package br.uff.pse.destroythenuduhake;
+package br.uff.pse.destroythenuduhake.interfacepk;
 
 import java.util.List;
 

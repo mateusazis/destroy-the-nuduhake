@@ -9,8 +9,8 @@ public class SoundAsset extends Asset implements AudioAsset{
 
 	private Sound sound;
 	
-	public SoundAsset(int id){
-		super(id);
+	public SoundAsset(int id,String filePath){
+		super(id,filePath);
 	}
 	
 	@Override

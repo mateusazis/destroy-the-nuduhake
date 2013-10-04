@@ -8,9 +8,10 @@ import com.badlogic.gdx.audio.Music;
 public class MusicAsset extends Asset implements AudioAsset{
 
 	private Music music;
+
 	
-	public MusicAsset(int id){
-		super(id);
+	public MusicAsset(int id,String filePath){
+		super(id,filePath);
 	}
 	
 	@Override

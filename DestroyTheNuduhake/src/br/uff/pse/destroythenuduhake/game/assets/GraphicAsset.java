@@ -1,5 +1,10 @@
 package br.uff.pse.destroythenuduhake.game.assets;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import br.uff.pse.destroythenuduhake.game.Asset;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -11,8 +16,10 @@ public class GraphicAsset extends Asset{
 
 	private Texture texture;
 	
-	public GraphicAsset(int id){
-		super(id);
+	public GraphicAsset(int id,String filepath){
+		super(id,filepath);
+		
+		
 	}
 	
 	@Override
@@ -46,5 +53,25 @@ public class GraphicAsset extends Asset{
 	@Override
 	public String getAssetPath() {
 		return AssetIDs.getSpritePath(getId());
+	}
+	public Bitmap getBitmap()
+	{
+		return BitmapFactory.decodeFile(getFilePath()+".png");
+	}
+	public void setBitmap(Bitmap bm)
+	{
+		try 
+		{
+			FileOutputStream fos = new FileOutputStream(getFilePath()+".png");
+			bm.compress(Bitmap.CompressFormat.PNG, 100, fos);
+			fos.flush();
+			fos.close();
+			
+		} 
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

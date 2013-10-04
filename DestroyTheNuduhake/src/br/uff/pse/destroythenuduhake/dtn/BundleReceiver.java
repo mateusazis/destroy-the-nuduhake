@@ -1,4 +1,4 @@
-package br.uff.pse.destroythenuduhake;
+package br.uff.pse.destroythenuduhake.dtn;
 
 import br.uff.pse.destroythenuduhake.game.AssetBundle;
 

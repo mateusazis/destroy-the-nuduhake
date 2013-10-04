@@ -4,40 +4,23 @@ package br.uff.pse.files;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 
-import br.uff.pse.destroythenuduhake.BundleReceiver;
-import br.uff.pse.destroythenuduhake.Header;
-import br.uff.pse.destroythenuduhake.Item;
-import br.uff.pse.destroythenuduhake.ListItem;
-import br.uff.pse.destroythenuduhake.game.AssetBundle;
-import de.tubs.ibr.dtn.util.Base64.OutputStream;
 import android.app.Activity;
+import android.app.LauncherActivity.ListItem;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import br.uff.pse.destroythenuduhake.dtn.BundleReceiver;
+import br.uff.pse.destroythenuduhake.game.Asset;
+import br.uff.pse.destroythenuduhake.game.AssetBundle;
+import br.uff.pse.destroythenuduhake.interfacepk.Header;
+import br.uff.pse.destroythenuduhake.interfacepk.Item;
 
 
 public class FileManager extends Activity implements BundleReceiver
@@ -47,24 +30,26 @@ public class FileManager extends Activity implements BundleReceiver
 	private static ArrayList<Boolean> checkedAssets = new ArrayList<Boolean>();
 	//private static String assetFilePath ="/data/data/br.uff.pse.dest/assets/";
 
-	public static void writeAsset(Asset asset, String fileName, Context ctx) 
+	public static void writeAsset(Asset asset,  Context ctx) 
 	{
 		loadListFile(ctx);
 		loadCheckListFile(ctx);
-		fileName = writeValidation(fileName,ctx,1);					
+		//String fileName = writeValidation(asset.getFilePath(),ctx,1);	
+		String fileName = asset.getFilePath();
 		try
 		{
-			FileOutputStream fOut = ctx.openFileOutput(fileName, Context.MODE_PRIVATE);
+			//FileOutputStream fOut = ctx.openFileOutput(fileName, Context.MODE_PRIVATE);
+			FileOutputStream fOut = new FileOutputStream(fileName);
 			BufferedOutputStream buffer = new BufferedOutputStream (fOut);
 			ObjectOutput output = new ObjectOutputStream ( buffer);
 			try
 			{													
 						output.writeObject(asset);	
 						filesPaths.add(fileName);
-						if(asset.type.equals("Default"))
-							checkedAssets.add(true);
-						else
-							checkedAssets.add(false);
+					//	if(asset.type.equals("Default"))
+					//		checkedAssets.add(true);
+					//	else
+					//		checkedAssets.add(false);
 						saveListFile(ctx);
 						saveCheckListFile(ctx);
 			}
@@ -93,7 +78,8 @@ public class FileManager extends Activity implements BundleReceiver
 		try
 		{
 		      //use buffering
-		      FileInputStream file = ctx.openFileInput(fileName);
+		     // FileInputStream file = ctx.openFileInput(fileName);
+			  FileInputStream file = new FileInputStream(fileName);
 		      BufferedInputStream buffer = new BufferedInputStream( file );
 		      ObjectInput input = new ObjectInputStream ( buffer );
 		      try
@@ -193,13 +179,13 @@ public class FileManager extends Activity implements BundleReceiver
 		terrenos.add(new Header("Terrenos"));
 		for(int i = 0; i< filesPaths.size();i++)
 		{
-			Asset a = readAsset(filesPaths.get(i),ctx); 
-			if(a.type.equals("Capacete"))
-				capacetes.add(new ListItem(a.author,filesPaths.get(i),ctx));
-			if(a.type.equals("Ombreira"))
-				ombreiras.add(new ListItem(a.author,filesPaths.get(i),ctx));
-			if(a.type.equals("Terreno"))
-				terrenos.add(new ListItem(a.author,filesPaths.get(i),ctx));
+	//		Asset a = readAsset(filesPaths.get(i),ctx); 
+	//		if(a.type.equals("Capacete"))
+	//			capacetes.add(new ListItem(a.author,filesPaths.get(i),ctx));
+	//		if(a.type.equals("Ombreira"))
+	//			ombreiras.add(new ListItem(a.author,filesPaths.get(i),ctx));
+	//		if(a.type.equals("Terreno"))
+	//			terrenos.add(new ListItem(a.author,filesPaths.get(i),ctx));
 		}
 	/*	items.add(new Header("Terrain Asset"));
         items.add(new ListItem("Default", "Terrain"));

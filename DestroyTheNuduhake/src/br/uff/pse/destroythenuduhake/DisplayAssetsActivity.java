@@ -5,6 +5,8 @@ package br.uff.pse.destroythenuduhake;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.uff.pse.destroythenuduhake.interfacepk.Item;
+import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter;
 import br.uff.pse.files.FileManager;
 import android.app.Activity;
 import android.content.Intent;
