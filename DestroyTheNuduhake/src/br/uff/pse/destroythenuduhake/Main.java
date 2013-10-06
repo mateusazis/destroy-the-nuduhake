@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class Main extends Activity {
 
-	boolean loadDTN = true;
+	boolean loadDTN = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

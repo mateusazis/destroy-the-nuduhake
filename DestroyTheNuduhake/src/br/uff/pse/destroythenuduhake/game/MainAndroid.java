@@ -26,7 +26,8 @@ public class MainAndroid extends AndroidApplication {
         cfg.useAccelerometer = false;
         cfg.useCompass = false;
         
-        g = new Game(DefaultBundle.getInstance());
+        AssetBundle b = new TestBundle();
+        g = new Game(b);
         initialize(g, cfg);
 //        initialize(new MyGdxGame(), cfg);
     }

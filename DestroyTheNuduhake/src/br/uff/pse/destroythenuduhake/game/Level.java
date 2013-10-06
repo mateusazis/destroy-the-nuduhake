@@ -7,8 +7,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public abstract class Level extends Stage implements ApplicationListener{
-	
-	private List<LevelObject> objects;
 	private AssetBundle usedBundle;
 	private Game parent;
 	
@@ -20,14 +18,8 @@ public abstract class Level extends Stage implements ApplicationListener{
 		this.parent = g;
 	}
 	
-	public void addObject(LevelObject obj){
-		objects.add(obj);
-		addActor(obj);
-	}
-	
-	public void removeObject(LevelObject obj){
-		objects.add(obj);
-		getActors().removeValue(obj, true);
+	public Game getParent(){
+		return parent;
 	}
 	
 	@Override
@@ -36,9 +28,8 @@ public abstract class Level extends Stage implements ApplicationListener{
 	}
 	
 	public void createWithAssetBundle(AssetBundle bundle){
-		objects = new ArrayList<LevelObject>();
 		usedBundle = bundle;
-		bundle.load(parent.getDefaultBundle());
+		bundle.load();
 	}
 
 	public void definitiveDispose(){
@@ -52,9 +43,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 		//do NOT call super.dispose! It disposes a sprite batch necessary
 		//for rendering! Instead, use definitiveDispose when you are done!
 		super.clear();
-		objects.clear();
 		usedBundle.dispose();
-		objects = null;
 		usedBundle = null;
 	}
 

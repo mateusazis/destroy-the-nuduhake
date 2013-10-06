@@ -6,15 +6,17 @@ import java.util.LinkedList;
 public class AssetBundle {
 
 	private List<Asset> assets;
-	private String path;
 	
-	public AssetBundle(String path){
+	public AssetBundle(){
 		assets = new LinkedList<Asset>();
-		this.path = path;
 	}
 	
 	public void addAsset(Asset newAsset){
 		assets.add(newAsset);
+	}
+	
+	public List<Asset> getAllAssets(){
+		return assets;
 	}
 	
 	private Asset simpleGetAsset(int id){
@@ -29,20 +31,12 @@ public class AssetBundle {
 		return (T)simpleGetAsset(id);
 	}
 	
-	public String getPath(){
-		return path;
+	protected void load(){
+		for(Asset a : assets)
+			a.load();
 	}
 	
-	public void load(AssetBundle defaultBundle){
-		for(Asset a : assets){
-			String path = getPath();
-			if(!a.exists(path))
-				path = defaultBundle.getPath();
-			a.load(path);
-		}
-	}
-	
-	public void dispose(){
+	protected void dispose(){
 		for(Asset a : assets)
 			a.dispose();
 	}	

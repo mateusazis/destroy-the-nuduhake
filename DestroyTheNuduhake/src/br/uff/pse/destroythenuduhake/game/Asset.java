@@ -15,13 +15,19 @@ public abstract class Asset implements Disposable,Serializable{
 	
 	public Asset(int id,String filePath){
 		this.id = id;
+		this.versionNumber = 0;
 		this.setFilePath(filePath);
 	}
 	
-	public abstract void load(String bundlePath);
+	public abstract void load();
 	public abstract void dispose();
 	public abstract String getFolderPath();
 	public abstract String getAssetPath();
+	protected abstract String getDataFilePath();
+	
+	protected void markModification(){
+		versionNumber++;
+	}
 	
 	public int getId(){
 		return id;
@@ -35,18 +41,17 @@ public abstract class Asset implements Disposable,Serializable{
 		return author;
 	}
 	
-	public boolean exists(String bundlePath){
-		return getFileHandle(bundlePath).exists();
-	}
 	
-	protected FileHandle getFileHandle(String bundlePath){
-		StringBuilder pathBuilder = new StringBuilder("bundles/");
-		
-		pathBuilder.append(bundlePath);
-		pathBuilder.append(getFolderPath());
-		pathBuilder.append(getAssetPath());
-		
-		return Gdx.files.internal(pathBuilder.toString());
+	
+	protected FileHandle getFileHandle(){
+		return Gdx.files.internal(getDataFilePath());
+//		StringBuilder pathBuilder = new StringBuilder("bundles/");
+//		
+//		pathBuilder.append(bundlePath);
+//		pathBuilder.append(getFolderPath());
+//		pathBuilder.append(getAssetPath());
+//		
+//		return Gdx.files.internal(pathBuilder.toString());
 	}
 
 	public String getFilePath() {

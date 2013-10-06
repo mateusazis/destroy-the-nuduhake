@@ -11,22 +11,21 @@ import com.badlogic.gdx.graphics.Texture;
 public class Game implements ApplicationListener {
 	private Level currentLevel;
 	private List<Level> levels;
-	private AssetBundle usedBundle, defaultBundle;
+	private AssetBundle usedBundle;
 	private int nextLevel = -1;
 	
-	public Game(AssetBundle defaultBundle){
-		this(defaultBundle, defaultBundle);
-	}
-	
-	public Game(AssetBundle usedBundle, AssetBundle defaultBundle){
-		this.usedBundle = usedBundle;
-		this.defaultBundle = defaultBundle;
+	public Game(AssetBundle bundle){
+		this.usedBundle = bundle;
 		Texture.setEnforcePotImages(false);
 		levels = new ArrayList<Level>();
 	}
 	
 	public void changeLevel(int levelNumber){
 		nextLevel = levelNumber;
+	}
+	
+	public int getCurrentLevel(){
+		return levels.indexOf(currentLevel);
 	}
 	
 	private void actualChangeLevel(){
@@ -45,12 +44,10 @@ public class Game implements ApplicationListener {
 	@Override
 	public void create() {
 		Level l = new TestLevel();
+		addLevel(new MainMenu());
 		addLevel(l);
+		
 		changeLevel(0);
-	}
-	
-	public AssetBundle getDefaultBundle(){
-		return defaultBundle;
 	}
 	
 	public void setUsedBundle(AssetBundle newBundle){

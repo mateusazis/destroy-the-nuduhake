@@ -1,6 +1,5 @@
 package br.uff.pse.destroythenuduhake.game.assets;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import android.graphics.Bitmap;
@@ -10,7 +9,6 @@ import br.uff.pse.destroythenuduhake.game.Asset;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 
 public class GraphicAsset extends Asset{
 
@@ -18,13 +16,11 @@ public class GraphicAsset extends Asset{
 	
 	public GraphicAsset(int id,String filepath){
 		super(id,filepath);
-		
-		
 	}
 	
 	@Override
-	public void load(String bundlePath) {
-		texture = new Texture(getFileHandle(bundlePath));
+	public void load() {
+		texture = new Texture(getFileHandle());
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	};
 	
@@ -54,15 +50,22 @@ public class GraphicAsset extends Asset{
 	public String getAssetPath() {
 		return AssetIDs.getSpritePath(getId());
 	}
+	
 	public Bitmap getBitmap()
 	{
-		return BitmapFactory.decodeFile(getFilePath()+".png");
+		return BitmapFactory.decodeFile(getDataFilePath());
 	}
+	
+	@Override
+	protected String getDataFilePath(){
+		return getFilePath() + ".png";
+	}
+	
 	public void setBitmap(Bitmap bm)
 	{
 		try 
 		{
-			FileOutputStream fos = new FileOutputStream(getFilePath()+".png");
+			FileOutputStream fos = new FileOutputStream(getDataFilePath());
 			bm.compress(Bitmap.CompressFormat.PNG, 100, fos);
 			fos.flush();
 			fos.close();

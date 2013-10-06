@@ -59,18 +59,18 @@ public class TestLevel extends Level {
 		// setup objects
 		ground = new LevelObject(200, 10, b.<GraphicAsset>getAsset(AssetIDs.SPRITE_GROUND));
 		ground.setupPhysics(world);
-		addObject(ground);
+		addActor(ground);
 		
 		ground2 = new LevelObject(670, 70, b.<GraphicAsset>getAsset(AssetIDs.SPRITE_GROUND));
 		ground2.setupPhysics(world);
-		addObject(ground2);
+		addActor(ground2);
 		
 		shell = new ControlableEntity(800/8 - 64/2, 80, shellTex);
-		addObject(shell);
+		addActor(shell);
 		shell.setupPhysics(world);
 
 		player = new Player(300, 20, playerTex);
-		addObject(player);
+		addActor(player);
 		player.setupPhysics(world);
 		
 		//setup input

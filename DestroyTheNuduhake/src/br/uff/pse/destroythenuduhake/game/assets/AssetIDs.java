@@ -8,6 +8,7 @@ public final class AssetIDs {
 	public static final int SPRITE_MARIO = 0x0000;
 	public static final int SPRITE_SHELL = 0x0001;
 	public static final int SPRITE_GROUND = 0x0002;
+	public static final int SPRITE_DRAGON = 0x0003;
 	
 	//sounds
 	public static final int SOUND_CHOICE = 0x0100;

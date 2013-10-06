@@ -14,13 +14,18 @@ public class SoundAsset extends Asset implements AudioAsset{
 	}
 	
 	@Override
-	public void load(String bundlePath) {
-		sound = Gdx.audio.newSound(getFileHandle(bundlePath));
+	public void load() {
+		sound = Gdx.audio.newSound(getFileHandle());
 	};
 	
 	@Override
 	public void dispose() {
 		sound.dispose();
+	}
+	
+	@Override
+	protected String getDataFilePath(){
+		return getFilePath() + ".mp3";
 	}
 	
 	@Override

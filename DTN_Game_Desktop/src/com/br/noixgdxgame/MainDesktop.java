@@ -1,7 +1,8 @@
 package com.br.noixgdxgame;
 
-import br.uff.pse.destroythenuduhake.game.DefaultBundle;
+import br.uff.pse.destroythenuduhake.game.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.Game;
+import br.uff.pse.destroythenuduhake.game.TestBundle;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -15,6 +16,10 @@ public class MainDesktop {
 		cfg.height = 480;
 		
 //		new LwjglApplication(new MyGdxGame(), cfg);
-		new LwjglApplication(new Game(DefaultBundle.getInstance()), cfg);
+		AssetBundle b = new TestBundle();
+	    
+		new LwjglApplication(new Game(b), cfg);
+		
+		
 	}
 }
