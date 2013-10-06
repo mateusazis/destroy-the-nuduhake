@@ -1,23 +1,21 @@
 package br.uff.pse.drawing;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
+
+import yuku.ambilwarna.AmbilWarnaDialog;
+import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
-import android.text.method.MovementMethod;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.SeekBar;
 
 public class DrawView extends View implements OnTouchListener {
 	private static final String TAG = "DrawView";
@@ -30,15 +28,14 @@ public class DrawView extends View implements OnTouchListener {
 //	List<Point> points = new ArrayList<Point>();
 	Paint paint = new Paint();
 	Random gen;
-	int col_mode;
-	int wid_mode;
+	int bgColor = Color.BLACK;
+	int wid;
 	float x = 0;
 	float y = 0;
 	
 	
 	public DrawView(Context context) {
 		super(context);
-		
 		// set default colour to white
 //		col_mode = 0;
 		paint.setStyle(Paint.Style.STROKE);
@@ -47,7 +44,7 @@ public class DrawView extends View implements OnTouchListener {
 	    paint.setStrokeWidth(5);
 
 		// set default width to 7px
-		wid_mode = 10;
+		wid = 10;
 		
 		setFocusable(true);
 		setFocusableInTouchMode(true);
@@ -81,14 +78,42 @@ public class DrawView extends View implements OnTouchListener {
 	}
 	
 	// used to set drawing colour
-	public void changeColour (int col_in) {
-		col_mode = col_in;
-		paint.setColor(col_mode);
+	
+	public void colorPicker() {
+		AmbilWarnaDialog dialog = new AmbilWarnaDialog(getContext(), paint.getColor(), new OnAmbilWarnaListener() {
+			
+			@Override
+			public void onOk(AmbilWarnaDialog dialog, int color) {
+				paint.setColor(color);
+			} 	
+			
+			@Override
+			public void onCancel(AmbilWarnaDialog arg0) {
+				// TODO Auto-generated method stub
+			}
+		});
+		dialog.show();
+	}
+	
+	public void bgColorPicker() {
+		AmbilWarnaDialog dialog = new AmbilWarnaDialog(getContext(), bgColor, new OnAmbilWarnaListener() {
+			
+			@Override
+			public void onOk(AmbilWarnaDialog dialog, int color) {
+				bgColor = color;
+				setBackgroundColor(bgColor);
+			} 	
+			
+			@Override
+			public void onCancel(AmbilWarnaDialog arg0) {
+				// TODO Auto-generated method stub
+			}
+		});	
+		dialog.show();
 	}
 
 	// used to set drawing width
-	public void changeWidth (int wid_in) {
-		wid_mode = wid_in;
+	public void changeWidth() {
 	}
 	
 	@Override
@@ -99,52 +124,7 @@ public class DrawView extends View implements OnTouchListener {
 	}
 		
 	public boolean onTouch(View view, MotionEvent event) {
-		
-		int new_col = 0;
-		if (col_mode < 0) {
-			gen = new Random();
-			col_mode = gen.nextInt( 8 );
-		}
-		// This if statement may be redundant now
-		if (col_mode >= 0) {
-			switch (col_mode) {
-				case 0 : {
-					new_col = Color.WHITE;
-					break;
-				}
-				case 1 : {
-					new_col = Color.BLUE;
-					break;
-				}
-				case 2 : {
-					new_col = Color.CYAN;
-					break;
-				}
-				case 3 : {
-					new_col = Color.GREEN;
-					break;
-				}
-				case 4 : {
-					new_col = Color.MAGENTA;
-					break;
-				}
-				case 5 : {
-					new_col = Color.RED;
-					break;
-				}
-				case 6 : {
-					new_col = Color.YELLOW;
-					break;
-				}
-				case 7 : {
-					new_col = Color.BLACK;
-					break;
-				}
-			}
-			paint.setColor(new_col);
-		}
-		
-		paint.setStrokeWidth(wid_mode);
+		paint.setStrokeWidth(wid);
 		
 	    x = event.getX();
 	    y = event.getY();
@@ -153,7 +133,9 @@ public class DrawView extends View implements OnTouchListener {
 	        pathList.add(new Path());
 	        paintList.add(new Paint(paint));
 	        path = pathList.get(pathList.size()-1);
-	        path.moveTo(x, y);
+	        path.setLastPoint(--x, y);
+	        path.lineTo(x, y);
+	        
 	        break;
 	    case MotionEvent.ACTION_MOVE:
 	        path.lineTo(x, y);

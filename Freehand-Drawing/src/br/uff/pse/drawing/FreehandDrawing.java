@@ -56,7 +56,19 @@ public class FreehandDrawing extends Activity {
     		drawView.undo();
     		return true;
     	}
-    	case R.id.p_white_id : {
+    	case R.id.change_color_id: {
+    		drawView.colorPicker();
+    		return true;
+    	}
+    	case R.id.change_bg_color_id: {
+    		drawView.bgColorPicker();
+    		return true;
+    	}
+    	case R.id.change_width_id: {
+    		drawView.changeWidth();
+    		return true;
+    	}
+/**    	case R.id.p_white_id : {
     		drawView.changeColour(0);
     		return true;
     	}
@@ -147,7 +159,7 @@ public class FreehandDrawing extends Activity {
     	case R.id.w_xlarge : {
     		drawView.changeWidth(20);
     		return true;
-    	}
+    	}*/
     	default : {
     		return true;
     	}
