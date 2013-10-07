@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -45,6 +44,7 @@ public class FileChooser extends Activity {
 		
 		if (mPath.exists()) {
 			FilenameFilter filter = new FilenameFilter() {
+				@Override
 				public boolean accept(File dir, String filename) {
 					File sel = new File(dir, filename);
 					return filename.contains(JPG) || filename.contains(JPEG) || filename.contains(PNG) || sel.isDirectory();
@@ -56,6 +56,7 @@ public class FileChooser extends Activity {
 		}
 	}
 	
+	@Override
 	protected Dialog onCreateDialog(int id) {
 		Dialog dialog = null;
 		AlertDialog.Builder builder = new Builder(this);
@@ -69,6 +70,7 @@ public class FileChooser extends Activity {
 				return dialog;
 			}
 			builder.setItems(mFileList, new DialogInterface.OnClickListener(){
+				@Override
 				public void onClick(DialogInterface dialog, int which){
 					mChosenFile = mFileList[which];
 					// do other shit with file

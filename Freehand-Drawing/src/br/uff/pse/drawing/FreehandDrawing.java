@@ -4,21 +4,33 @@ import br.uff.pse.drawing.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.MediaStore.MediaColumns;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
 public class FreehandDrawing extends Activity {
 	private static final String TAG = "FingerPaint";
 	DrawView drawView;
+	SeekBar seekBar;
 	
     /** Called when the activity is first created. */
     @Override
@@ -31,10 +43,53 @@ public class FreehandDrawing extends Activity {
         // lock screen orientation (stops screen clearing when rotating phone)
         setRequestedOrientation(getResources().getConfiguration().orientation);
         
-        drawView = new DrawView(this);
-        setContentView(drawView);
+        setContentView(R.layout.main);
+        drawView = (DrawView)findViewById(R.id.draw_view);
         drawView.setBackgroundColor(Color.BLACK);
         drawView.requestFocus();
+        seekBar = (SeekBar)findViewById(R.id.seek_bar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){ 
+
+        	   @Override 
+        	   public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        		   drawView.changeWidth(progress);
+        	   } 
+
+        	   @Override 
+        	   public void onStartTrackingTouch(SeekBar seekBar) { 
+        	   } 
+
+        	   @Override 
+        	   public void onStopTrackingTouch(SeekBar seekBar) { 
+        	    // TODO Auto-generated method stub 
+        	   } 
+        	       });
+
+        seekBar.setMax(100);
+        seekBar.setProgress(1);
+        seekBar.setVisibility(View.INVISIBLE);
+//        seekBar.setBackgroundColor(Color.BLUE);
+//
+//        LayoutParams lp = new LayoutParams(200, 50);
+//        seekBar.setLayoutParams(lp);
+//        seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+//
+//            public void onStopTrackingTouch(SeekBar arg0) {
+//                // TODO Auto-generated method stub
+//                System.out.println(".....111.......");
+//            }
+//
+//            public void onStartTrackingTouch(SeekBar arg0) {
+//                // TODO Auto-generated method stub
+//                System.out.println(".....222.......");
+//            }
+//
+//            public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
+//                // TODO Auto-generated method stub
+//                System.out.println(".....333......."+arg1);
+//            }
+//        });
+//        //setContentView(seekBar);
     }
     
     @Override
@@ -65,7 +120,10 @@ public class FreehandDrawing extends Activity {
     		return true;
     	}
     	case R.id.change_width_id: {
-    		drawView.changeWidth();
+    		if(!seekBar.isShown())
+    			seekBar.setVisibility(View.VISIBLE);
+    		else
+    			seekBar.setVisibility(View.INVISIBLE);
     		return true;
     	}
 /**    	case R.id.p_white_id : {
@@ -221,12 +279,12 @@ public class FreehandDrawing extends Activity {
     
     // used when trying to get an image path from the URI returned by the Gallery app
     public String getGalleryPath(Uri uri) {
-    	String[] projection = { MediaStore.Images.Media.DATA };
+    	String[] projection = { MediaColumns.DATA };
     	Cursor cursor = managedQuery(uri, projection, null, null, null);
     	
     	if (cursor != null)
     	{
-    		int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+    		int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
     		cursor.moveToFirst();
     		return cursor.getString(column_index);
     	}

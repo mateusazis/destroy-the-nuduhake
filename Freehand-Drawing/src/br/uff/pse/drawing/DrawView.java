@@ -12,10 +12,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.SeekBar;
 
 public class DrawView extends View implements OnTouchListener {
 	private static final String TAG = "DrawView";
@@ -26,26 +26,19 @@ public class DrawView extends View implements OnTouchListener {
 	//HashMap<Path, Paint> pathList = new LinkedHashMap<Path, Paint>();
 //	List<List<Point>> drawing = new ArrayList<List<Point>>();
 //	List<Point> points = new ArrayList<Point>();
-	Paint paint = new Paint();
+	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	Random gen;
 	int bgColor = Color.BLACK;
-	int wid;
 	float x = 0;
 	float y = 0;
 	
-	
-	public DrawView(Context context) {
-		super(context);
+	public DrawView(Context context, AttributeSet attrs) {
+		super(context, attrs);
 		// set default colour to white
 //		col_mode = 0;
 		paint.setStyle(Paint.Style.STROKE);
 	    paint.setColor(Color.WHITE);
 	    paint.setStrokeCap(Paint.Cap.ROUND);
-	    paint.setStrokeWidth(5);
-
-		// set default width to 7px
-		wid = 10;
-		
 		setFocusable(true);
 		setFocusableInTouchMode(true);
 		
@@ -113,7 +106,8 @@ public class DrawView extends View implements OnTouchListener {
 	}
 
 	// used to set drawing width
-	public void changeWidth() {
+	public void changeWidth(int progress) {
+		paint.setStrokeWidth(progress);
 	}
 	
 	@Override
@@ -123,11 +117,11 @@ public class DrawView extends View implements OnTouchListener {
 		}
 	}
 		
+	@Override
 	public boolean onTouch(View view, MotionEvent event) {
-		paint.setStrokeWidth(wid);
-		
 	    x = event.getX();
 	    y = event.getY();
+	    
 	    switch (event.getAction()) {
 	    case MotionEvent.ACTION_DOWN:
 	        pathList.add(new Path());
@@ -135,7 +129,6 @@ public class DrawView extends View implements OnTouchListener {
 	        path = pathList.get(pathList.size()-1);
 	        path.setLastPoint(--x, y);
 	        path.lineTo(x, y);
-	        
 	        break;
 	    case MotionEvent.ACTION_MOVE:
 	        path.lineTo(x, y);
