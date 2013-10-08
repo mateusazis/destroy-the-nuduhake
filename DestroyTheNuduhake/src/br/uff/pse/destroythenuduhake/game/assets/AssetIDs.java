@@ -14,7 +14,7 @@ public final class AssetIDs {
 	public static final int SOUND_CHOICE = 0x0100;
 	
 	//musics
-	public static final int MUSIC_JUNGLE = 0x0200;
+	public static final int MUSIC_OPENING = 0x0200;
 	
 	private static HashMap<Integer, String> spritePaths, soundPaths, musicPaths;
 	
@@ -30,7 +30,7 @@ public final class AssetIDs {
 			
 			soundPaths.put(AssetIDs.SOUND_CHOICE, "choice.mp3");
 			
-			musicPaths.put(AssetIDs.MUSIC_JUNGLE, "jungle.mp3");
+			musicPaths.put(AssetIDs.MUSIC_OPENING, "opening.aif");
 		}
 	}
 	

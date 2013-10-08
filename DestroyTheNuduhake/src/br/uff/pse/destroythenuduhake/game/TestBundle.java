@@ -20,6 +20,8 @@ public class TestBundle extends DTNGameBundle{
 		addAsset(new GraphicAsset(AssetIDs.SPRITE_GROUND, "images/ground"));
 		addAsset(new GraphicAsset(AssetIDs.SPRITE_DRAGON, "images/dragon"));
 		
+		addAsset(new MusicAsset(AssetIDs.MUSIC_OPENING, "musics/opening"));
+		
 //		addAsset(new GraphicAsset(AssetIDs.SPRITE_MARIO,"kibe"));
 //		addAsset(new GraphicAsset(AssetIDs.SPRITE_SHELL,"kibe"));
 //		addAsset(new GraphicAsset(AssetIDs.SPRITE_GROUND,"kibe"));

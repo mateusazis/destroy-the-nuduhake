@@ -102,29 +102,20 @@ public class FreehandDrawing extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	// Handle item selection
-    	switch (item.getItemId()) {
-    	case R.id.clear_id : {
+    	int itemID = item.getItemId();
+    	if(itemID == R.id.clear_id)
     		drawView.clearScreen();
-    		return true;
-    	}
-    	case R.id.undo_id : {
+    	if(itemID == R.id.undo_id)
     		drawView.undo();
-    		return true;
-    	}
-    	case R.id.change_color_id: {
+    	if(itemID == R.id.change_color_id)
     		drawView.colorPicker();
-    		return true;
-    	}
-    	case R.id.change_bg_color_id: {
+    	if(itemID == R.id.change_bg_color_id)
     		drawView.bgColorPicker();
-    		return true;
-    	}
-    	case R.id.change_width_id: {
+    	if(itemID == R.id.change_width_id){
     		if(!seekBar.isShown())
     			seekBar.setVisibility(View.VISIBLE);
     		else
     			seekBar.setVisibility(View.INVISIBLE);
-    		return true;
     	}
 /**    	case R.id.p_white_id : {
     		drawView.changeColour(0);
@@ -218,10 +209,10 @@ public class FreehandDrawing extends Activity {
     		drawView.changeWidth(20);
     		return true;
     	}*/
-    	default : {
+//    	default : {
     		return true;
-    	}
-    	}
+//    	}
+//    	}
     }
     
     void setCustomBackground(DrawView v) {

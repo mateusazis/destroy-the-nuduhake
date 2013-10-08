@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import br.uff.pse.destroythenuduhake.game.assets.AssetIDs;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,6 +14,7 @@ public class MainMenu extends Level implements TextListener{
 
 	private Text title, startText, editText, dtnText;
 	private LevelObject bg;
+	private MusicAsset music;
 	
 	@Override
 	public void createWithAssetBundle(AssetBundle bundle){
@@ -26,15 +28,16 @@ public class MainMenu extends Level implements TextListener{
 		addActor(bg);
 		
 		title = new Text(f, "Destroy The Nuduhake", middle, 350);
-		startText = new Text(0, f, "Start", middle, 200, this);
+		startText = new Text(0, f, "Start", middle, 225, this);
 		editText = new Text(1, f, "Edit Assets", middle, 150, this);
-		dtnText = new Text(2, f, "Config DTN", middle, 100, this);
+		dtnText = new Text(2, f, "Config DTN", middle, 80, this);
 		addActor(title);
 		addActor(startText);
 		addActor(editText);
 		addActor(dtnText);
 		
-		
+		music = bundle.<MusicAsset>getAsset(AssetIDs.MUSIC_OPENING);
+		music.play();
 	}	
 	
 	public void startGame(){
@@ -43,12 +46,13 @@ public class MainMenu extends Level implements TextListener{
 	}
 	
 	public void editAssets(){
-		Gdx.app.log("", "edit assets");
-		
+//		Gdx.app.log("", "edit assets");
+		getParent().openAssetModule();
 	}
 	
 	public void doDTN(){
-		Gdx.app.log("", "do dtn");
+//		Gdx.app.log("", "do dtn");
+		getParent().openDTNModule();
 	}
 
 	@Override

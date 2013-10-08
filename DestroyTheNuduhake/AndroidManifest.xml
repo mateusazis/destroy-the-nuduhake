@@ -22,7 +22,7 @@
        			<category android:name="android.intent.category.DEFAULT" />
     </intent-filter>
         </activity>
-        
+        <activity android:name="br.uff.pse.drawing.FreehandDrawing"></activity>
         <activity
             android:label="Destroy The Nuduhake - Main"
             android:name="br.uff.pse.destroythenuduhake.Main"
@@ -41,6 +41,8 @@
             android:screenOrientation="landscape">
             
         </activity>
+        
+        
         
         <service android:name="br.uff.pse.destroythenuduhake.dtn.DTNService" />
         

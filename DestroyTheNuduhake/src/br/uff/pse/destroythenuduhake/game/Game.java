@@ -20,6 +20,14 @@ public class Game implements ApplicationListener {
 		levels = new ArrayList<Level>();
 	}
 	
+	public void openDTNModule(){
+		MainAndroid.instance.openDTNModule();
+	}
+	
+	public void openAssetModule(){
+		MainAndroid.instance.openDrawModule();
+	}
+	
 	public void changeLevel(int levelNumber){
 		nextLevel = levelNumber;
 	}
