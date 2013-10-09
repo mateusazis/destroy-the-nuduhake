@@ -1,4 +1,4 @@
-package br.uff.pse.destroythenuduhake.game;
+package br.uff.pse.destroythenuduhake.game.control;
 
 import java.util.List;
 import java.util.LinkedList;

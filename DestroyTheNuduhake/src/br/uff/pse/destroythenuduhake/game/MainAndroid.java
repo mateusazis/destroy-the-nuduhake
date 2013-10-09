@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import br.uff.pse.destroythenuduhake.MainActivity;
+import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
+import br.uff.pse.destroythenuduhake.game.control.Game;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -49,13 +51,13 @@ public class MainAndroid extends AndroidApplication {
     	showDialog(0);
     }
     
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-    	// TODO Auto-generated method stub
-    	showDialog(0);
-    	return false;
-    	
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//    	// TODO Auto-generated method stub
+//    	showDialog(0);
+//    	return false;
+//    	
+//    }
     
     public void openDTNModule(){
     	Class<? extends Activity> c = br.uff.pse.destroythenuduhake.MainActivity.class;
@@ -68,21 +70,21 @@ public class MainAndroid extends AndroidApplication {
     	startActivity(i);
     }
     
-    @Override
-    protected Dialog onCreateDialog(int id, Bundle args) {
-    	AlertDialog.Builder b = new AlertDialog.Builder(this);
-    	
-    	b.setTitle("Escolha um bundle").setItems(new String[]{"Padrão", "Teste"}, new DialogInterface.OnClickListener() {
-			
-    		
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				AssetBundle b = which == 0 ? DefaultBundle.getInstance() : new TestBundle();
-				g.setUsedBundle(b);
-				g.changeLevel(0);
-			}
-		});
-    	
-    	return b.show();
-    }
+//    @Override
+//    protected Dialog onCreateDialog(int id, Bundle args) {
+//    	AlertDialog.Builder b = new AlertDialog.Builder(this);
+//    	
+//    	b.setTitle("Escolha um bundle").setItems(new String[]{"Padrão", "Teste"}, new DialogInterface.OnClickListener() {
+//			
+//    		
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				AssetBundle b = which == 0 ? DefaultBundle.getInstance() : new TestBundle();
+//				g.setUsedBundle(b);
+//				g.changeLevel(0);
+//			}
+//		});
+//    	
+//    	return b.show();
+//    }
 }

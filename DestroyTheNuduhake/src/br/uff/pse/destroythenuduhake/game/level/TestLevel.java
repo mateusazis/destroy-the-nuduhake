@@ -1,14 +1,17 @@
-package br.uff.pse.destroythenuduhake.game;
+package br.uff.pse.destroythenuduhake.game.level;
 
 import java.util.Iterator;
 
 import org.w3c.dom.Entity;
 
-import br.uff.pse.destroythenuduhake.game.ControlableEntity.State;
 import br.uff.pse.destroythenuduhake.game.assets.AssetIDs;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
+import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
+import br.uff.pse.destroythenuduhake.game.control.Level;
+import br.uff.pse.destroythenuduhake.game.control.LevelObject;
+import br.uff.pse.destroythenuduhake.game.level.ControlableEntity.State;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;

@@ -1,6 +1,6 @@
 package br.uff.pse.destroythenuduhake.game.assets;
 
-import br.uff.pse.destroythenuduhake.game.Asset;
+import br.uff.pse.destroythenuduhake.game.control.Asset;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;

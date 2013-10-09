@@ -1,4 +1,4 @@
-package br.uff.pse.destroythenuduhake.game;
+package br.uff.pse.destroythenuduhake.game.control;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -31,6 +31,7 @@ public class Text extends Actor{
 		this.content = content;
 		this.bounds = font.getBounds(content);
 		this.listener = listener;
+		
 		setBounds(centerX - bounds.width / 2f, centerY - bounds.height / 2f, bounds.width, bounds.height);
 		
 //		setPosition(x, y);
@@ -51,20 +52,24 @@ public class Text extends Actor{
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		bounds = font.draw(batch, content, getX(), getY());
-		
 	}
 	
 	private int i = 0;
 	
 	@Override
 	public void act(float delta) {
+		
 		if(bounds != null && Gdx.input.justTouched()){
 			int x = Gdx.input.getX(), y = Gdx.input.getY();
-			float leftX = x - getX(), upY = Gdx.graphics.getHeight() - y - getY() + bounds.height;
-			if(leftX >= 0 && leftX < bounds.width && upY >= 0 && upY < bounds.height){
-				if(listener != null)
-					listener.onTouched(id);
-			}
+			
+			Actor hitActor = hit(x - getX(), Gdx.graphics.getHeight() - y - getY() + getHeight(), false);
+			if(hitActor == this && listener != null)
+				listener.onTouched(id);
+//			float leftX = x - getX(), upY = Gdx.graphics.getHeight() - y - getY() + bounds.height;
+//			if(leftX >= 0 && leftX < bounds.width && upY >= 0 && upY < bounds.height){
+//				if(listener != null)
+//					listener.onTouched(id);
+//			}
 		}
 		
 //		if(Gdx.input.isTouched() && (hit(Gdx.input.getX(), Gdx.input.getY(), true) == this) && listener != null)

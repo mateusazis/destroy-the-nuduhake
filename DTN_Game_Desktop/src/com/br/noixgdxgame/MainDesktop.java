@@ -1,8 +1,8 @@
 package com.br.noixgdxgame;
 
-import br.uff.pse.destroythenuduhake.game.AssetBundle;
-import br.uff.pse.destroythenuduhake.game.Game;
 import br.uff.pse.destroythenuduhake.game.TestBundle;
+import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
+import br.uff.pse.destroythenuduhake.game.control.Game;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;

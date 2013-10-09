@@ -1,16 +1,11 @@
 package br.uff.pse.destroythenuduhake.game;
 
-import com.badlogic.gdx.Gdx;
-
-import android.content.Context;
 import br.uff.pse.destroythenuduhake.game.assets.AssetIDs;
-import br.uff.pse.destroythenuduhake.game.assets.DTNGameBundle;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
-import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
-import br.uff.pse.files.FileManager;
+import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 
-public class TestBundle extends DTNGameBundle{
+public class TestBundle extends AssetBundle{
 
 	public TestBundle(){
 		super();

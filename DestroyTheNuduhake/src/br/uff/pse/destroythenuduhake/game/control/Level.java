@@ -1,4 +1,4 @@
-package br.uff.pse.destroythenuduhake.game;
+package br.uff.pse.destroythenuduhake.game.control;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 	
 	@Override
 	public final void create() {
-		createWithAssetBundle(DefaultBundle.getInstance());
+//		createWithAssetBundle(DefaultBundle.getInstance());
 	}
 	
 	public void createWithAssetBundle(AssetBundle bundle){

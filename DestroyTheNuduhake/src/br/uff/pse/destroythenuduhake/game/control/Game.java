@@ -1,7 +1,11 @@
-package br.uff.pse.destroythenuduhake.game;
+package br.uff.pse.destroythenuduhake.game.control;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.uff.pse.destroythenuduhake.game.MainAndroid;
+import br.uff.pse.destroythenuduhake.game.level.TestLevel;
+import br.uff.pse.destroythenuduhake.game.mainmenu.MainMenu;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;

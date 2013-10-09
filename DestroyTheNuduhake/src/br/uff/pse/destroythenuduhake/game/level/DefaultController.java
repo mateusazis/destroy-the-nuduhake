@@ -1,9 +1,9 @@
-package br.uff.pse.destroythenuduhake.game;
+package br.uff.pse.destroythenuduhake.game.level;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import br.uff.pse.destroythenuduhake.game.ControlableEntity.State;
+import br.uff.pse.destroythenuduhake.game.level.ControlableEntity.State;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;

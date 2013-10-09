@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.uff.pse.destroythenuduhake.DisplayAssetsActivity;
-import br.uff.pse.destroythenuduhake.game.AssetBundle;
+import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 
 
 

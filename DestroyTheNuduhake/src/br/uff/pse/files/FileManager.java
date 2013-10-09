@@ -17,8 +17,8 @@ import android.app.Activity;
 import android.app.LauncherActivity.ListItem;
 import android.content.Context;
 import br.uff.pse.destroythenuduhake.dtn.BundleReceiver;
-import br.uff.pse.destroythenuduhake.game.Asset;
-import br.uff.pse.destroythenuduhake.game.AssetBundle;
+import br.uff.pse.destroythenuduhake.game.control.Asset;
+import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.interfacepk.Header;
 import br.uff.pse.destroythenuduhake.interfacepk.Item;
 
@@ -189,17 +189,17 @@ public class FileManager extends Activity implements BundleReceiver
 		}
 	/*	items.add(new Header("Terrain Asset"));
         items.add(new ListItem("Default", "Terrain"));
-        items.add(new ListItem("Zézinho", "Terreno de fogo"));
+        items.add(new ListItem("Zï¿½zinho", "Terreno de fogo"));
         items.add(new ListItem("Jurema", "Terreno de gelo"));
 
 		items.add(new Header("Enemy Asset"));
         items.add(new ListItem("Default", "Enemy"));
-        items.add(new ListItem("Zézinho", "Inimigo de fogo"));
+        items.add(new ListItem("Zï¿½zinho", "Inimigo de fogo"));
         items.add(new ListItem("Jurema", "Inimigo de gelo"));
 
 		items.add(new Header("Hero Asset"));
         items.add(new ListItem("Default", "Hero"));
-        items.add(new ListItem("Cláudio", "Herói boladão"));
+        items.add(new ListItem("Clï¿½udio", "Herï¿½i boladï¿½o"));
         items.add(new ListItem("Jeremias", "Obi Juan"));
         items.add(new ListItem("Francis", "Megaman"));
 

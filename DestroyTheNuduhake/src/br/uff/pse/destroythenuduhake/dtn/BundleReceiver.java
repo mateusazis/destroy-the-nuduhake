@@ -1,6 +1,6 @@
 package br.uff.pse.destroythenuduhake.dtn;
 
-import br.uff.pse.destroythenuduhake.game.AssetBundle;
+import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 
 public interface BundleReceiver
 {

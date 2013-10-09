@@ -1,6 +1,7 @@
-package br.uff.pse.destroythenuduhake.game;
+package br.uff.pse.destroythenuduhake.game.level;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

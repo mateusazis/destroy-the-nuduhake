@@ -1,10 +1,16 @@
-package br.uff.pse.destroythenuduhake.game;
+package br.uff.pse.destroythenuduhake.game.mainmenu;
 
 import java.util.ArrayList;
 
 import br.uff.pse.destroythenuduhake.game.assets.AssetIDs;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
+import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
+import br.uff.pse.destroythenuduhake.game.control.Game;
+import br.uff.pse.destroythenuduhake.game.control.Level;
+import br.uff.pse.destroythenuduhake.game.control.LevelObject;
+import br.uff.pse.destroythenuduhake.game.control.Text;
+import br.uff.pse.destroythenuduhake.game.control.TextListener;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -28,6 +34,8 @@ public class MainMenu extends Level implements TextListener{
 		addActor(bg);
 		
 		title = new Text(f, "Destroy The Nuduhake", middle, 350);
+		title.setScale(2.0f);
+		
 		startText = new Text(0, f, "Start", middle, 225, this);
 		editText = new Text(1, f, "Edit Assets", middle, 150, this);
 		dtnText = new Text(2, f, "Config DTN", middle, 80, this);

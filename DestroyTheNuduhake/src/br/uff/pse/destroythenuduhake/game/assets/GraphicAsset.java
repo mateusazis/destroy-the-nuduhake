@@ -4,7 +4,7 @@ import java.io.FileOutputStream;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import br.uff.pse.destroythenuduhake.game.Asset;
+import br.uff.pse.destroythenuduhake.game.control.Asset;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
