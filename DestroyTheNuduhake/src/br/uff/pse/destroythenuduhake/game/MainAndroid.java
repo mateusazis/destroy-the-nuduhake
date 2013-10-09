@@ -64,8 +64,7 @@ public class MainAndroid extends AndroidApplication {
     }
     
     public void openDrawModule(){
-    	Class<? extends Activity> c = br.uff.pse.drawing.FreehandDrawing.class;
-    	Intent i = new Intent(this, c);
+    	Intent i = new Intent("br.uff.pse.drawing.FreehandDrawing");
     	startActivity(i);
     }
     

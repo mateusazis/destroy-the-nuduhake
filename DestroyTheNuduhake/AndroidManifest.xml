@@ -22,7 +22,12 @@
        			<category android:name="android.intent.category.DEFAULT" />
     </intent-filter>
         </activity>
-        <activity android:name="br.uff.pse.drawing.FreehandDrawing"></activity>
+        <activity android:name="br.uff.pse.drawing.FreehandDrawing">
+            <intent-filter> 
+	       		<action android:name="br.uff.pse.drawing.FreehandDrawing" />  
+				<category android:name="android.intent.category.DEFAULT" />  
+			</intent-filter>   
+        </activity>
         <activity
             android:label="Destroy The Nuduhake - Main"
             android:name="br.uff.pse.destroythenuduhake.Main"

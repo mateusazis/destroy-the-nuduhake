@@ -43,7 +43,7 @@ public class FreehandDrawing extends Activity {
         // lock screen orientation (stops screen clearing when rotating phone)
         setRequestedOrientation(getResources().getConfiguration().orientation);
         
-        setContentView(R.layout.main);
+        setContentView(R.layout.freehand_drawing_main);
         drawView = (DrawView)findViewById(R.id.draw_view);
         drawView.setBackgroundColor(Color.BLACK);
         drawView.requestFocus();
