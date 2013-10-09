@@ -5,14 +5,17 @@ package br.uff.pse.destroythenuduhake;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.uff.pse.destroythenuduhake.interfacepk.ListItem;
 import br.uff.pse.destroythenuduhake.interfacepk.Item;
 import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter;
 import br.uff.pse.files.FileManager;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -22,8 +25,33 @@ public class DisplayAssetsActivity extends Activity implements OnItemClickListen
 {
 
 
+
 	private ListView listView;
-	private String[] values;
+	private List<Item> values;	
+
+	
+	private OnItemClickListener listener = new OnItemClickListener()
+	{
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1,
+				int arg2, long arg3) {
+			try
+			{
+			boolean checked = ((ListItem)(values.get(arg2))).getChecked();
+			//Intent intent = new Intent(DisplayActivity.this, ShowContentActivity.class);
+			//intent.putExtra("filepath", filepath);
+			//startActivity(intent);
+
+			}
+			catch(Exception e)
+			{
+				
+			}
+
+		}
+		
+	};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)

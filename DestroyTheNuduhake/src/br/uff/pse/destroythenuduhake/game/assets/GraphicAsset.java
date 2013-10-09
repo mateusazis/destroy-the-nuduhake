@@ -1,5 +1,6 @@
 package br.uff.pse.destroythenuduhake.game.assets;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 
 import android.graphics.Bitmap;
@@ -14,8 +15,8 @@ public class GraphicAsset extends Asset{
 
 	private Texture texture;
 	
-	public GraphicAsset(int id,String filepath){
-		super(id,filepath);
+	public GraphicAsset(int id,String filepath,String a,boolean b){
+		super(id,filepath,a,b);
 	}
 	
 	@Override
@@ -76,5 +77,25 @@ public class GraphicAsset extends Asset{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public byte[] getBitmapBytes()
+	{
+		byte[] byteArray = null;
+		try 
+		{
+			Bitmap bm = getBitmap();
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+			byteArray = stream.toByteArray();
+			
+			
+		} 
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return byteArray;
+		
 	}
 }

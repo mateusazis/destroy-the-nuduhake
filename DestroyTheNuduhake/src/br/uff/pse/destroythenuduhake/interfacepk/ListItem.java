@@ -14,11 +14,11 @@ import android.widget.TextView;
 public class ListItem implements Item {
     private final String         str1;
     private final String         str2;
-    private final Context        ctx;
-    public ListItem( String text1, String text2,Context ctx) {
+    private  boolean        checked;;
+    public ListItem( String text1, String text2,boolean c) {
         this.str1 = text1;
         this.str2 = text2;
-        this.ctx = ctx;
+       	this.checked = c;
     }
 
     @Override
@@ -39,10 +39,19 @@ public class ListItem implements Item {
         TextView text1 = (TextView) view.findViewById(R.id.list_content1);
         TextView text2 = (TextView) view.findViewById(R.id.list_content2);
         CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox1);
-        cb.setChecked(FileManager.getCheckOptionFromFile(str2,ctx));
+        cb.setChecked(checked);
+        //cb.setChecked(FileManager.getCheckOptionFromFile(str2,ctx));
         text1.setText(str1);
         text2.setText(str2);
 
         return view;
+    }
+    public boolean getChecked()
+    {
+    	return checked;
+    }
+    public void setChecked(boolean b)
+    {
+    	checked = b;
     }
 }

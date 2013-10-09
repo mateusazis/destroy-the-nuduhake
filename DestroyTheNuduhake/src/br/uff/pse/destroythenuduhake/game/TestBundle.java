@@ -10,12 +10,12 @@ public class TestBundle extends AssetBundle{
 	public TestBundle(){
 		super();
 
-		addAsset(new GraphicAsset(AssetIDs.SPRITE_MARIO, "images/mario"));
-		addAsset(new GraphicAsset(AssetIDs.SPRITE_SHELL, "images/shell"));
-		addAsset(new GraphicAsset(AssetIDs.SPRITE_GROUND, "images/ground"));
-		addAsset(new GraphicAsset(AssetIDs.SPRITE_DRAGON, "images/dragon"));
+		addAsset(new GraphicAsset(AssetIDs.SPRITE_MARIO, "images/mario","autor",true));
+		addAsset(new GraphicAsset(AssetIDs.SPRITE_SHELL, "images/shell","autor",true));
+		addAsset(new GraphicAsset(AssetIDs.SPRITE_GROUND, "images/ground","autor",true));
+		addAsset(new GraphicAsset(AssetIDs.SPRITE_DRAGON, "images/dragon","autor",true));
 		
-		addAsset(new MusicAsset(AssetIDs.MUSIC_OPENING, "musics/opening"));
+		addAsset(new MusicAsset(AssetIDs.MUSIC_OPENING, "musics/opening","autor",true));
 		
 //		addAsset(new GraphicAsset(AssetIDs.SPRITE_MARIO,"kibe"));
 //		addAsset(new GraphicAsset(AssetIDs.SPRITE_SHELL,"kibe"));

@@ -58,11 +58,14 @@ public class MainActivity extends Activity {
 				//Asset tres = new Asset("Terreno Boladex","Terreno","Dieguin");
 				//FileManager.writeAsset(um, um.name, MainActivity.this);
 				//FileManager.writeAsset(dois, dois.name, MainActivity.this);
-				GraphicAsset kibe = new GraphicAsset(0,getFilesDir() + "/teste");
+				GraphicAsset kibe = new GraphicAsset(0,getFilesDir() + "/teste","Autor Bolado",true);
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
-				FileManager.writeAsset(kibe,  MainActivity.this);
 				
-				GraphicAsset chapoca = (GraphicAsset) FileManager.readAsset(kibe.getFilePath(), MainActivity.this);
+				//FileManager.writeAsset(kibe,  MainActivity.this);
+				byte[] b = FileManager.prepareContentToSend(kibe);
+		
+				FileManager.writeAssetFromBytes(b, MainActivity.this);
+				GraphicAsset chapoca = (GraphicAsset) FileManager.getAssetFromBytes(b, MainActivity.this);
 				imview.setImageBitmap(chapoca.getBitmap());
 			}
 		});

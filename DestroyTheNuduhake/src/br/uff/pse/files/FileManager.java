@@ -4,6 +4,8 @@ package br.uff.pse.files;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,22 +13,26 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.LauncherActivity.ListItem;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import br.uff.pse.destroythenuduhake.dtn.BundleReceiver;
+import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.interfacepk.Header;
 import br.uff.pse.destroythenuduhake.interfacepk.Item;
+import br.uff.pse.destroythenuduhake.interfacepk.ListItem;
 
 
 public class FileManager extends Activity implements BundleReceiver
 {
 	// Lista que conterï¿½ o nome dos assets
-	private static ArrayList<String> filesPaths = new ArrayList<String>();
+	private static ArrayList<Component> filesPaths = new ArrayList<Component>();
 	private static ArrayList<Boolean> checkedAssets = new ArrayList<Boolean>();
 	//private static String assetFilePath ="/data/data/br.uff.pse.dest/assets/";
 
@@ -45,7 +51,8 @@ public class FileManager extends Activity implements BundleReceiver
 			try
 			{													
 						output.writeObject(asset);	
-						filesPaths.add(fileName);
+						Component cmp = new Component(asset.getFilePath(),asset.getVersionNumber(),asset.getAuthor(),asset.isDefault());
+						filesPaths.add(cmp);
 					//	if(asset.type.equals("Default"))
 					//		checkedAssets.add(true);
 					//	else
@@ -133,7 +140,7 @@ public class FileManager extends Activity implements BundleReceiver
 		loadListFile(ctx);
 		for(int i = 0; i < filesPaths.size() ; i++)
 		{
-			ctx.deleteFile(filesPaths.get(i));
+			ctx.deleteFile(filesPaths.get(i).getFilepath());
 		}
 		filesPaths.clear();
 		checkedAssets.clear();
@@ -179,9 +186,9 @@ public class FileManager extends Activity implements BundleReceiver
 		terrenos.add(new Header("Terrenos"));
 		for(int i = 0; i< filesPaths.size();i++)
 		{
-	//		Asset a = readAsset(filesPaths.get(i),ctx); 
+ 
 	//		if(a.type.equals("Capacete"))
-	//			capacetes.add(new ListItem(a.author,filesPaths.get(i),ctx));
+			capacetes.add(new ListItem("Version: "+String.valueOf(filesPaths.get(i).getVersionNumber()),filesPaths.get(i).getAuthor(),filesPaths.get(i).isChecked()));
 	//		if(a.type.equals("Ombreira"))
 	//			ombreiras.add(new ListItem(a.author,filesPaths.get(i),ctx));
 	//		if(a.type.equals("Terreno"))
@@ -242,7 +249,7 @@ public class FileManager extends Activity implements BundleReceiver
 	}
 	public static void loadListFile(Context ctx)
 	{
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<Component> list = new ArrayList<Component>();
 		try
 		{
 		      //use buffering
@@ -251,7 +258,7 @@ public class FileManager extends Activity implements BundleReceiver
 		      ObjectInput input = new ObjectInputStream ( buffer );
 		      try
 		      {
-		        list = (ArrayList<String>) input.readObject();
+		        list = (ArrayList<Component>) input.readObject();
 		      }
 		      finally
 		      {
@@ -339,6 +346,128 @@ public class FileManager extends Activity implements BundleReceiver
 	public void onReceive(AssetBundle[] bundles) {
 		// TODO Auto-generated method stub
 		
+	}
+	public static byte[] prepareContentToSend(Asset c)
+	{
+		//byte[] 0 a 1023 vai ter o Content, o resto será a imagem
+		
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutput out = null;
+		byte[] cBytes = new byte[1024];
+		byte[] bmBytes = null;
+		try 
+		{
+		  out = new ObjectOutputStream(bos);   
+		  out.writeObject(c);
+		  cBytes = bos.toByteArray();
+		  byte[] intBytes = ByteBuffer.allocate(4).putInt(cBytes.length).array();
+		  int x = byteArrayToInt(intBytes);
+		  if( c instanceof GraphicAsset)
+			  bmBytes = ((GraphicAsset) c).getBitmapBytes();
+		  else
+		  {
+			//pegar bytes do som
+		  }
+			  
+		  
+		  byte[] retBytes = new byte[cBytes.length + bmBytes.length + intBytes.length];
+		  System.arraycopy(intBytes, 0, retBytes, 0, intBytes.length);
+		  System.arraycopy(cBytes, 0, retBytes, intBytes.length, cBytes.length);
+		  System.arraycopy(bmBytes, 0, retBytes, intBytes.length + cBytes.length, bmBytes.length);
+		  return retBytes;
+		
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+		return null;
+	}
+	public static void writeAssetFromBytes(byte[] b, Context ctx)
+	{
+		byte[] tam = new byte[4];
+		tam[0] = b[0];
+		tam[1] = b[1];
+		tam[2] = b[2];
+		tam[3] = b[3];
+		int contentSize = byteArrayToInt(tam);
+		byte[] contentBytes = new byte[contentSize];
+		System.arraycopy(b, 4 , contentBytes, 0, contentBytes.length);
+		byte[] bitMapBytes = new byte[b.length - contentSize - 4];
+		System.arraycopy(b, contentSize + 4 , bitMapBytes, 0, b.length - contentSize - 4);
+		
+		try
+		{
+			ByteArrayInputStream bos = new ByteArrayInputStream(contentBytes);
+			ObjectInputStream ois = new ObjectInputStream(bos);
+			Asset c = (Asset) ois.readObject();
+			
+			if(c instanceof GraphicAsset)
+			{
+				Bitmap bitmap = BitmapFactory.decodeByteArray(bitMapBytes , 0, bitMapBytes.length);
+				((GraphicAsset) c).setBitmap(bitmap);
+			}
+			else //fazer as coisas pro Audio Asset
+			{
+				
+			}
+			FileManager.writeAsset(c, ctx);
+		
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+		
+		
+	}
+	public static Asset getAssetFromBytes(byte[] b, Context ctx)
+	{
+		byte[] tam = new byte[4];
+		tam[0] = b[0];
+		tam[1] = b[1];
+		tam[2] = b[2];
+		tam[3] = b[3];
+		int contentSize = byteArrayToInt(tam);
+		byte[] contentBytes = new byte[contentSize];
+		System.arraycopy(b, 4 , contentBytes, 0, contentBytes.length);
+		byte[] bitMapBytes = new byte[b.length - contentSize - 4];
+		System.arraycopy(b, contentSize + 4 , bitMapBytes, 0, b.length - contentSize - 4);
+		
+		try
+		{
+			ByteArrayInputStream bos = new ByteArrayInputStream(contentBytes);
+			ObjectInputStream ois = new ObjectInputStream(bos);
+			Asset c = (Asset) ois.readObject();
+			if(c instanceof GraphicAsset)
+			{
+				Bitmap bitmap = BitmapFactory.decodeByteArray(bitMapBytes , 0, bitMapBytes.length);
+				((GraphicAsset) c).setBitmap(bitmap);
+			}
+			else
+			{
+				//setar o som
+			}
+			return c;
+		
+		}
+		catch(Exception e)
+		{
+			
+		}
+		return null;
+		
+		
+		
+	}
+	public static int byteArrayToInt(byte[] b) 
+	{
+	    return   b[3] & 0xFF |
+	            (b[2] & 0xFF) << 8 |
+	            (b[1] & 0xFF) << 16 |
+	            (b[0] & 0xFF) << 24;
 	}
 	
 

@@ -12,11 +12,14 @@ public abstract class Asset implements Disposable,Serializable{
 	private int versionNumber;
 	private String author;
 	private String filePath;
+	private boolean def;
 	
-	public Asset(int id,String filePath){
+	public Asset(int id,String filePath,String a,boolean d){
 		this.id = id;
 		this.versionNumber = 0;
+		this.author = a;
 		this.setFilePath(filePath);
+		this.def = d;
 	}
 	
 	public abstract void load();
@@ -61,4 +64,9 @@ public abstract class Asset implements Disposable,Serializable{
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
+
+	public boolean isDefault() {
+		return def;
+	}
+
 }
