@@ -7,8 +7,17 @@
     <ListView
         android:id="@+id/listView1"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="378dp"
+        android:layout_weight="0.71"
         android:scrollHorizontally="true" >
+
     </ListView>
+
+    <Button
+        android:id="@+id/sendSelected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.31"
+        android:text="Send Selected" />
 
 </LinearLayout>

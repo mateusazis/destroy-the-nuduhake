@@ -8,13 +8,15 @@ public class Component implements Serializable
 	private int versionNumber;
 	private String author;
 	private boolean checked;
+	private int id;
 	
-	public Component(String f, int i, String a, boolean c)
+	public Component(String f, int i, String a, boolean c, int id)
 	{
 		this.setFilepath(f);
 		this.setVersionNumber(i);
 		this.setAuthor(a);
 		this.setChecked(c);
+		this.setId(id);
 	}
 
 	public String getAuthor() {
@@ -48,6 +50,14 @@ public class Component implements Serializable
 
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

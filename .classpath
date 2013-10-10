@@ -3,9 +3,8 @@
 	<classpathentry kind="src" path="DestroyTheNuduhake/gen"/>
 	<classpathentry kind="src" path="DestroyTheNuduhake/libs/AndEngine/src"/>
 	<classpathentry kind="src" path="DestroyTheNuduhake/src"/>
-	<classpathentry kind="lib" path="DestroyTheNuduhake/bin/dexedLibs/android-ibrdtn-api-30069c0a802adf61f3b09d76787fb90f.jar"/>
-	<classpathentry kind="lib" path="DestroyTheNuduhake/bin/dexedLibs/annotations-3aa175739c4c1ce8f512b6aa76d26db2.jar"/>
-	<classpathentry kind="lib" path="DestroyTheNuduhake/libs/android-ibrdtn-api.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Guilherme/Documents/GitHub/destroy-the-nuduhake/DestroyTheNuduhake/libs/android-ibrdtn-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Guilherme/Documents/GitHub/destroy-the-nuduhake/DestroyTheNuduhake/libs/gdx-backend-android.jar"/>
 	<classpathentry kind="output" path="DestroyTheNuduhake/bin/classes"/>
 </classpath>

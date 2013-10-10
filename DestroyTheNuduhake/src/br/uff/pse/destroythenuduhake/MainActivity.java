@@ -4,6 +4,7 @@ package br.uff.pse.destroythenuduhake;
 //V de viadÃ£o
 
 import br.uff.pse.destroythenuduhake.dtn.DTNService;
+import br.uff.pse.destroythenuduhake.game.assets.AssetIDs;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.files.FileManager;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.main);
 		imview = (ImageView) findViewById(R.id.imageView1);
 		//BOTï¿½O TESTE
-		Button b = (Button) findViewById(R.id.button1);
+		Button b = (Button) findViewById(R.id.sendSelected);
 		b.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -58,15 +59,44 @@ public class MainActivity extends Activity {
 				//Asset tres = new Asset("Terreno Boladex","Terreno","Dieguin");
 				//FileManager.writeAsset(um, um.name, MainActivity.this);
 				//FileManager.writeAsset(dois, dois.name, MainActivity.this);
-				GraphicAsset kibe = new GraphicAsset(0,getFilesDir() + "/teste","Autor Bolado",true);
+				GraphicAsset kibe = new GraphicAsset(AssetIDs.SPRITE_MARIO,getFilesDir() + "/teste","Default",true);
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+				FileManager.writeAsset(kibe, MainActivity.this);
+				
+				kibe = new GraphicAsset(AssetIDs.SPRITE_MARIO,getFilesDir() + "/teste","Jos�",false);
+				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+				FileManager.writeAsset(kibe, MainActivity.this);
+				
+				kibe = new GraphicAsset(AssetIDs.SPRITE_MARIO,getFilesDir() + "/teste","Guilherme",false);
+				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+				FileManager.writeAsset(kibe, MainActivity.this);
+				
+				kibe = new GraphicAsset(AssetIDs.SPRITE_DRAGON,getFilesDir() + "/teste","Default",true);
+				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+				FileManager.writeAsset(kibe, MainActivity.this);
+				
+
+				kibe = new GraphicAsset(AssetIDs.SPRITE_SHELL,getFilesDir() + "/teste","Default",true);
+				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+				FileManager.writeAsset(kibe, MainActivity.this);
+				
+				
+				kibe = new GraphicAsset(AssetIDs.SPRITE_DRAGON,getFilesDir() + "/teste","Jeremias",false);
+				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+				FileManager.writeAsset(kibe, MainActivity.this);
+				
+				kibe = new GraphicAsset(AssetIDs.SPRITE_GROUND,getFilesDir() + "/teste","Default",true);
+				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+				FileManager.writeAsset(kibe, MainActivity.this);
+				
+				
 				
 				//FileManager.writeAsset(kibe,  MainActivity.this);
-				byte[] b = FileManager.prepareContentToSend(kibe);
+			//	byte[] b = FileManager.prepareContentToSend(kibe);
 		
-				FileManager.writeAssetFromBytes(b, MainActivity.this);
-				GraphicAsset chapoca = (GraphicAsset) FileManager.getAssetFromBytes(b, MainActivity.this);
-				imview.setImageBitmap(chapoca.getBitmap());
+			//	FileManager.writeAssetFromBytes(b, MainActivity.this);
+			//	GraphicAsset chapoca = (GraphicAsset) FileManager.getAssetFromBytes(b, MainActivity.this);
+			//	imview.setImageBitmap(chapoca.getBitmap());
 			}
 		});
 		Button b3 = (Button) findViewById(R.id.button3);

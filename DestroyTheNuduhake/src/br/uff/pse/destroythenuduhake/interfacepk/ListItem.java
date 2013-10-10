@@ -3,6 +3,7 @@ package br.uff.pse.destroythenuduhake.interfacepk;
 import br.uff.pse.destroythenuduhake.R;
 import br.uff.pse.destroythenuduhake.R.id;
 import br.uff.pse.destroythenuduhake.R.layout;
+import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter.RowType;
 import br.uff.pse.files.FileManager;
 import android.content.Context;
@@ -12,13 +13,23 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class ListItem implements Item {
-    private final String         str1;
-    private final String         str2;
-    private  boolean        checked;;
-    public ListItem( String text1, String text2,boolean c) {
-        this.str1 = text1;
-        this.str2 = text2;
-       	this.checked = c;
+	//private final String		 filepath;
+    //private final String         str1;
+    //private final String         str2;
+    //private final int             id;
+    private  boolean        checked;
+    private final Asset         asset;
+    private CheckBox cb;
+    public ListItem(Asset a,boolean c) {
+       // this.str1 = text1;
+        //this.str2 = text2;
+       	//this.checked = c;
+       	//this.id = id;
+       	//this.filepath = filepath;
+    	this.asset = a;
+    	this.checked = c;
+       	
+       	
     }
 
     @Override
@@ -38,11 +49,11 @@ public class ListItem implements Item {
 
         TextView text1 = (TextView) view.findViewById(R.id.list_content1);
         TextView text2 = (TextView) view.findViewById(R.id.list_content2);
-        CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox1);
+        cb = (CheckBox) view.findViewById(R.id.checkBox1);
         cb.setChecked(checked);
         //cb.setChecked(FileManager.getCheckOptionFromFile(str2,ctx));
-        text1.setText(str1);
-        text2.setText(str2);
+        text1.setText("Version: " + asset.getVersionNumber());
+        text2.setText(asset.getAuthor());
 
         return view;
     }
@@ -53,5 +64,11 @@ public class ListItem implements Item {
     public void setChecked(boolean b)
     {
     	checked = b;
+    	cb.setChecked(checked);
     }
+    public Asset getAsset()
+    {
+    	return asset;
+    }
+
 }

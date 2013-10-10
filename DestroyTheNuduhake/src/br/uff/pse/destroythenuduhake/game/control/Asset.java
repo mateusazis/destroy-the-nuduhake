@@ -26,7 +26,7 @@ public abstract class Asset implements Disposable,Serializable{
 	public abstract void dispose();
 	public abstract String getFolderPath();
 	public abstract String getAssetPath();
-	protected abstract String getDataFilePath();
+	public abstract String getDataFilePath();
 	
 	protected void markModification(){
 		versionNumber++;

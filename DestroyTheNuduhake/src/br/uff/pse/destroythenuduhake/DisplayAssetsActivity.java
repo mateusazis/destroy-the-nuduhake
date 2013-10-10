@@ -5,6 +5,8 @@ package br.uff.pse.destroythenuduhake;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.uff.pse.destroythenuduhake.game.control.Asset;
+import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.interfacepk.ListItem;
 import br.uff.pse.destroythenuduhake.interfacepk.Item;
 import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter;
@@ -14,14 +16,16 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 
-public class DisplayAssetsActivity extends Activity implements OnItemClickListener
+public class DisplayAssetsActivity extends Activity
 {
 
 
@@ -38,7 +42,23 @@ public class DisplayAssetsActivity extends Activity implements OnItemClickListen
 				int arg2, long arg3) {
 			try
 			{
-			boolean checked = ((ListItem)(values.get(arg2))).getChecked();
+			((ListItem)(values.get(arg2))).setChecked(true);
+			Asset a = ((ListItem)(values.get(arg2))).getAsset();
+			for(int i = 0 ; i < values.size();i++)
+			{
+				if(values.get(i) instanceof ListItem)
+				{
+					if(a.getId() == ((ListItem)values.get(i)).getAsset().getId() && arg2!=i)
+					{
+						((ListItem)values.get(i)).setChecked(false);
+					}
+					
+					
+				}
+			}
+		//	FileManager.setAssetChecked(FileManager.readAsset(((ListItem)(values.get(arg2))).getFilepath(), DisplayAssetsActivity.this));
+		//	TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(DisplayAssetsActivity.this, values);
+	    //    listView.setAdapter(adapter);
 			//Intent intent = new Intent(DisplayActivity.this, ShowContentActivity.class);
 			//intent.putExtra("filepath", filepath);
 			//startActivity(intent);
@@ -52,6 +72,26 @@ public class DisplayAssetsActivity extends Activity implements OnItemClickListen
 		}
 		
 	};
+	private OnItemLongClickListener llistener = new OnItemLongClickListener()
+	{
+
+		@Override
+		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+				int arg2, long arg3) {
+			try
+			{
+			// TODO Auto-generated method stub
+
+
+			}
+			catch(Exception e)
+			{
+				
+			}
+			return false;
+		}
+		
+	};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -59,11 +99,29 @@ public class DisplayAssetsActivity extends Activity implements OnItemClickListen
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.displayassetslayout);
-		Intent intent = getIntent();
-		String payload = intent.getStringExtra("payload");
-		listView = (ListView)findViewById(R.id.listView1);
+		listView = (ListView)findViewById(R.id.listView1);				
+		listView.setOnItemClickListener(listener);
 		showContents();
 		
+		Button b = (Button) findViewById(R.id.sendSelected);
+		b.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{	
+				AssetBundle bundle = new AssetBundle();
+				for(int i = 0; i < values.size(); i++)
+				{
+					if(values.get(i) instanceof ListItem)
+					{
+						if(((ListItem)values.get(i)).getChecked())
+						{
+							bundle.addAsset(((ListItem)values.get(i)).getAsset());
+						}
+					}
+				}
+			}
+		});
 		
 		
 		
@@ -85,12 +143,17 @@ public class DisplayAssetsActivity extends Activity implements OnItemClickListen
 //			listView.setAdapter(adapter);
 //			listView.setOnItemClickListener(this);
 			
-			
-			List<Item> items = FileManager.readAllFilesNames(this);
+			try
+			{
+				values = FileManager.readAllFilesNames(this);
+		        TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(this, values);
+		        listView.setAdapter(adapter);
+			}
+			catch (Exception e)
+			{
 
+			}
 
-	        TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(this, items);
-	        listView.setAdapter(adapter);
 			
 			
 		}
@@ -98,12 +161,6 @@ public class DisplayAssetsActivity extends Activity implements OnItemClickListen
 		{
 
 		}
-	}
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View v, int position, long id) 
-	{
-		
-		
 	}
 
 }

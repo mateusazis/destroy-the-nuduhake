@@ -58,7 +58,7 @@ public class GraphicAsset extends Asset{
 	}
 	
 	@Override
-	protected String getDataFilePath(){
+	public String getDataFilePath(){
 		return getFilePath() + ".png";
 	}
 	

@@ -25,7 +25,7 @@ public class MusicAsset extends Asset implements AudioAsset{
 	}
 	
 	@Override
-	protected String getDataFilePath(){
+	public String getDataFilePath(){
 		return getFilePath() + ".mp3";
 	}
 	
