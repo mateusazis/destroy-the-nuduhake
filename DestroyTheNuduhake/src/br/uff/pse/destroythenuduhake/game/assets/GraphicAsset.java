@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
+import br.uff.pse.destroythenuduhake.game.control.AssetID;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -15,8 +16,12 @@ public class GraphicAsset extends Asset{
 
 	private Texture texture;
 	
-	public GraphicAsset(int id,String filepath,String a,boolean b){
-		super(id,filepath,a,b);
+	public GraphicAsset(AssetID id,String filepath){
+		super(id,filepath);
+	}
+	
+	private GraphicAsset(AssetID id,String filepath, String author){
+		super(id,filepath, author);
 	}
 	
 	@Override
@@ -48,9 +53,13 @@ public class GraphicAsset extends Asset{
 	}
 	
 	@Override
-	public String getAssetPath() {
-		return AssetIDs.getSpritePath(getId());
+	public GraphicAsset makeCopy(String authorName, String newPath) {
+		return new GraphicAsset(getId(), newPath, authorName);
 	}
+//	@Override
+//	public String getAssetPath() {
+//		return AssetDatabase.getSpritePath(getId());
+//	}
 	
 	public Bitmap getBitmap()
 	{

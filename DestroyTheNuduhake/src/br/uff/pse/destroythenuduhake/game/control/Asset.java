@@ -8,31 +8,40 @@ import com.badlogic.gdx.utils.Disposable;
 
 public abstract class Asset implements Disposable,Serializable{
 
-	private int id;
+	private AssetID id;
 	private int versionNumber;
 	private String author;
 	private String filePath;
-	private boolean def;
+	private boolean original;
 	
-	public Asset(int id,String filePath,String a,boolean d){
+	public Asset(AssetID id, String filePath){
 		this.id = id;
 		this.versionNumber = 0;
-		this.author = a;
+		this.author = "Built-in";
 		this.setFilePath(filePath);
-		this.def = d;
+		this.original = true;
+	}
+	
+	public Asset(AssetID id,String filePath, String author){
+		this.id = id;
+		this.versionNumber = 0;
+		this.author = author;
+		this.setFilePath(filePath);
+		this.original = false;
 	}
 	
 	public abstract void load();
 	public abstract void dispose();
 	public abstract String getFolderPath();
-	public abstract String getAssetPath();
+//	public abstract String getAssetPath();
 	public abstract String getDataFilePath();
+	public abstract Asset makeCopy(String authorName, String newPath);
 	
 	protected void markModification(){
 		versionNumber++;
 	}
 	
-	public int getId(){
+	public AssetID getId(){
 		return id;
 	}
 	
@@ -43,8 +52,6 @@ public abstract class Asset implements Disposable,Serializable{
 	public String getAuthor(){
 		return author;
 	}
-	
-	
 	
 	protected FileHandle getFileHandle(){
 		return Gdx.files.internal(getDataFilePath());
@@ -65,8 +72,8 @@ public abstract class Asset implements Disposable,Serializable{
 		this.filePath = filePath;
 	}
 
-	public boolean isDefault() {
-		return def;
+	public boolean isOriginal() {
+		return original;
 	}
 
 }

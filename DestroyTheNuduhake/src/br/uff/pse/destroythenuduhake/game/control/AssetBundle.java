@@ -19,15 +19,15 @@ public class AssetBundle {
 		return assets;
 	}
 	
-	private Asset simpleGetAsset(int id){
+	private Asset simpleGetAsset(AssetID id){
 		for(Asset a : assets)
-			if(a.getId() == id)
+			if(a.getId().equals(id))
 				return a;
 		return null;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T extends Asset> T getAsset(int id){
+	public <T extends Asset> T getAsset(AssetID id){
 		return (T)simpleGetAsset(id);
 	}
 	

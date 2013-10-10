@@ -1,6 +1,7 @@
 package br.uff.pse.destroythenuduhake.game.assets;
 
 import br.uff.pse.destroythenuduhake.game.control.Asset;
+import br.uff.pse.destroythenuduhake.game.control.AssetID;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -8,10 +9,17 @@ import com.badlogic.gdx.audio.Music;
 public class MusicAsset extends Asset implements AudioAsset{
 
 	private Music music;
-
+	public MusicAsset(AssetID id, String filePath){
+		super(id,filePath);
+	}
 	
-	public MusicAsset(int id,String filePath,String a,boolean b){
-		super(id,filePath,a,b);
+	private MusicAsset(AssetID id, String filePath, String authorName){
+		super(id,filePath, authorName);
+	}
+	
+	@Override
+	public MusicAsset makeCopy(String authorName, String newPath) {
+		return new MusicAsset(getId(), newPath, authorName);
 	}
 	
 	@Override
@@ -45,8 +53,8 @@ public class MusicAsset extends Asset implements AudioAsset{
 		return "musics/";
 	}
 	
-	@Override
-	public String getAssetPath() {
-		return AssetIDs.getMusicPath(getId());
-	}
+//	@Override
+//	public String getAssetPath() {
+//		return AssetDatabase.getMusicPath(getId());
+//	}
 }

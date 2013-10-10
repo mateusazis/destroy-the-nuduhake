@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import org.w3c.dom.Entity;
 
-import br.uff.pse.destroythenuduhake.game.assets.AssetIDs;
+import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
@@ -56,15 +56,15 @@ public class TestLevel extends Level {
 		world = new World(gravity, true);
 
 		//setup assets
-		playerTex = b.getAsset(AssetIDs.SPRITE_MARIO);
-		shellTex = b.getAsset(AssetIDs.SPRITE_SHELL);
+		playerTex = b.getAsset(AssetDatabase.SPRITE_MARIO);
+		shellTex = b.getAsset(AssetDatabase.SPRITE_SHELL);
 		
 		// setup objects
-		ground = new LevelObject(200, 10, b.<GraphicAsset>getAsset(AssetIDs.SPRITE_GROUND));
+		ground = new LevelObject(200, 10, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_GROUND));
 		ground.setupPhysics(world);
 		addActor(ground);
 		
-		ground2 = new LevelObject(670, 70, b.<GraphicAsset>getAsset(AssetIDs.SPRITE_GROUND));
+		ground2 = new LevelObject(670, 70, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_GROUND));
 		ground2.setupPhysics(world);
 		addActor(ground2);
 		

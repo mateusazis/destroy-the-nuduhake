@@ -2,7 +2,7 @@ package br.uff.pse.destroythenuduhake.game.mainmenu;
 
 import java.util.ArrayList;
 
-import br.uff.pse.destroythenuduhake.game.assets.AssetIDs;
+import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
@@ -30,7 +30,7 @@ public class MainMenu extends Level implements TextListener{
 		
 		float middle = Gdx.graphics.getWidth() / 2f;
 		
-		bg = new LevelObject(0, 0, bundle.<GraphicAsset>getAsset(AssetIDs.SPRITE_DRAGON));
+		bg = new LevelObject(0, 0, bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_DRAGON));
 		addActor(bg);
 		
 		title = new Text(f, "Destroy The Nuduhake", middle, 350);
@@ -44,7 +44,7 @@ public class MainMenu extends Level implements TextListener{
 		addActor(editText);
 		addActor(dtnText);
 		
-		music = bundle.<MusicAsset>getAsset(AssetIDs.MUSIC_OPENING);
+		music = bundle.<MusicAsset>getAsset(AssetDatabase.MUSIC_OPENING);
 		music.play();
 	}	
 	

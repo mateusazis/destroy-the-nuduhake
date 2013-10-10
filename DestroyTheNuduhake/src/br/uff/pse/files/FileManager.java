@@ -22,7 +22,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import br.uff.pse.destroythenuduhake.dtn.BundleReceiver;
-import br.uff.pse.destroythenuduhake.game.assets.AssetIDs;
+import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
@@ -204,14 +204,14 @@ public class FileManager extends Activity implements BundleReceiver
 		for(int i = 0; i< filesPaths.size();i++)
 		{
  
-			if(filesPaths.get(i).getId() == AssetIDs.SPRITE_MARIO)
-				hero.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
-			if(filesPaths.get(i).getId() == AssetIDs.SPRITE_SHELL)
-				shell.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
-			if(filesPaths.get(i).getId() == AssetIDs.SPRITE_GROUND)
-				ground.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
-			if(filesPaths.get(i).getId() == AssetIDs.SPRITE_DRAGON)
-				dragon.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
+			if(filesPaths.get(i).getId() == AssetDatabase.SPRITE_MARIO)
+				hero.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isOriginal(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
+			if(filesPaths.get(i).getId() == AssetDatabase.SPRITE_SHELL)
+				shell.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isOriginal(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
+			if(filesPaths.get(i).getId() == AssetDatabase.SPRITE_GROUND)
+				ground.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isOriginal(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
+			if(filesPaths.get(i).getId() == AssetDatabase.SPRITE_DRAGON)
+				dragon.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isOriginal(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
 	//		if(a.type.equals("Ombreira"))
 	//			ombreiras.add(new ListItem(a.author,filesPaths.get(i),ctx));
 	//		if(a.type.equals("Terreno"))
@@ -375,7 +375,7 @@ public class FileManager extends Activity implements BundleReceiver
 	}
 	public static byte[] prepareContentToSend(Asset c)
 	{
-		//byte[] 0 a 1023 vai ter o Content, o resto será a imagem
+		//byte[] 0 a 1023 vai ter o Content, o resto serï¿½ a imagem
 		
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ObjectOutput out = null;
