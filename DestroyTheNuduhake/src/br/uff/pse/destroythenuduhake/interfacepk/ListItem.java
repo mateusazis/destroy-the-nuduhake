@@ -7,9 +7,11 @@ import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter.RowType;
 import br.uff.pse.files.FileManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ListItem implements Item {
@@ -19,8 +21,10 @@ public class ListItem implements Item {
     //private final int             id;
     private  boolean        checked;
     private final Asset         asset;
+    private final Bitmap b;
     private CheckBox cb;
-    public ListItem(Asset a,boolean c) {
+    private ImageView iv;
+    public ListItem(Asset a,boolean c,Bitmap b) {
        // this.str1 = text1;
         //this.str2 = text2;
        	//this.checked = c;
@@ -28,6 +32,7 @@ public class ListItem implements Item {
        	//this.filepath = filepath;
     	this.asset = a;
     	this.checked = c;
+    	this.b = b;
        	
        	
     }
@@ -49,8 +54,10 @@ public class ListItem implements Item {
 
         TextView text1 = (TextView) view.findViewById(R.id.list_content1);
         TextView text2 = (TextView) view.findViewById(R.id.list_content2);
+        iv = (ImageView) view.findViewById(R.id.imageView1);
         cb = (CheckBox) view.findViewById(R.id.checkBox1);
         cb.setChecked(checked);
+        iv.setImageBitmap(b);
         //cb.setChecked(FileManager.getCheckOptionFromFile(str2,ctx));
         text1.setText("Version: " + asset.getVersionNumber());
         text2.setText(asset.getAuthor());
@@ -70,5 +77,9 @@ public class ListItem implements Item {
     {
     	return asset;
     }
+
+	public Bitmap getBitmap() {
+		return b;
+	}
 
 }

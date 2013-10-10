@@ -63,29 +63,29 @@ public class MainActivity extends Activity {
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
-				kibe = new GraphicAsset(AssetIDs.SPRITE_MARIO,getFilesDir() + "/teste","José",false);
+				kibe = new GraphicAsset(AssetIDs.SPRITE_MARIO,getFilesDir() + "/teste1","José",false);
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
-				kibe = new GraphicAsset(AssetIDs.SPRITE_MARIO,getFilesDir() + "/teste","Guilherme",false);
-				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+				kibe = new GraphicAsset(AssetIDs.SPRITE_MARIO,getFilesDir() + "/teste2","Guilherme",false);
+				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
-				kibe = new GraphicAsset(AssetIDs.SPRITE_DRAGON,getFilesDir() + "/teste","Default",true);
-				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+				kibe = new GraphicAsset(AssetIDs.SPRITE_DRAGON,getFilesDir() + "/teste3","Default",true);
+				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.square));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
 
-				kibe = new GraphicAsset(AssetIDs.SPRITE_SHELL,getFilesDir() + "/teste","Default",true);
-				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+				kibe = new GraphicAsset(AssetIDs.SPRITE_SHELL,getFilesDir() + "/teste4","Default",true);
+				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.wifipacket));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
 				
-				kibe = new GraphicAsset(AssetIDs.SPRITE_DRAGON,getFilesDir() + "/teste","Jeremias",false);
-				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+				kibe = new GraphicAsset(AssetIDs.SPRITE_DRAGON,getFilesDir() + "/teste5","Jeremias",false);
+				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.square));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
-				kibe = new GraphicAsset(AssetIDs.SPRITE_GROUND,getFilesDir() + "/teste","Default",true);
+				kibe = new GraphicAsset(AssetIDs.SPRITE_GROUND,getFilesDir() + "/teste6","Default",true);
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				

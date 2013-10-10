@@ -205,13 +205,13 @@ public class FileManager extends Activity implements BundleReceiver
 		{
  
 			if(filesPaths.get(i).getId() == AssetIDs.SPRITE_MARIO)
-				hero.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault()));
+				hero.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
 			if(filesPaths.get(i).getId() == AssetIDs.SPRITE_SHELL)
-				shell.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault()));
+				shell.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
 			if(filesPaths.get(i).getId() == AssetIDs.SPRITE_GROUND)
-				ground.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault()));
+				ground.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
 			if(filesPaths.get(i).getId() == AssetIDs.SPRITE_DRAGON)
-				dragon.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault()));
+				dragon.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isDefault(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
 	//		if(a.type.equals("Ombreira"))
 	//			ombreiras.add(new ListItem(a.author,filesPaths.get(i),ctx));
 	//		if(a.type.equals("Terreno"))
@@ -495,9 +495,9 @@ public class FileManager extends Activity implements BundleReceiver
 	            (b[1] & 0xFF) << 16 |
 	            (b[0] & 0xFF) << 24;
 	}
-	public static void setAssetChecked(Asset a)
+	public static Bitmap getBitmapFromFilepath(String filepath)
 	{
-
+		return BitmapFactory.decodeFile(filepath);
 	}
 	
 

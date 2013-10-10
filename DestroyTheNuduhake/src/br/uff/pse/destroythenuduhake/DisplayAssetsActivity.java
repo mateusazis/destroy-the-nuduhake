@@ -5,6 +5,7 @@ package br.uff.pse.destroythenuduhake;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.interfacepk.ListItem;
@@ -81,7 +82,10 @@ public class DisplayAssetsActivity extends Activity
 			try
 			{
 			// TODO Auto-generated method stub
-
+				String filepath = ((ListItem)(values.get(arg2))).getAsset().getDataFilePath();
+				Intent intent = new Intent(DisplayAssetsActivity.this, ShowAssetActivity.class);
+				intent.putExtra("filepath", filepath);
+				startActivity(intent);
 
 			}
 			catch(Exception e)
@@ -101,6 +105,7 @@ public class DisplayAssetsActivity extends Activity
 		setContentView(R.layout.displayassetslayout);
 		listView = (ListView)findViewById(R.id.listView1);				
 		listView.setOnItemClickListener(listener);
+		listView.setOnItemLongClickListener(llistener);
 		showContents();
 		
 		Button b = (Button) findViewById(R.id.sendSelected);
