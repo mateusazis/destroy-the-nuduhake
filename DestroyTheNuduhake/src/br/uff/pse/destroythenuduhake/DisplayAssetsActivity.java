@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import br.uff.pse.destroythenuduhake.game.MainAndroid;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.interfacepk.ListItem;
@@ -16,6 +17,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
@@ -125,6 +127,8 @@ public class DisplayAssetsActivity extends Activity
 						}
 					}
 				}
+				MainAndroid.chosenBundle = bundle;
+				finish();
 			}
 		});
 		

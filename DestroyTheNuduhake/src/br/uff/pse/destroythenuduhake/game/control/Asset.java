@@ -37,6 +37,18 @@ public abstract class Asset implements Disposable,Serializable{
 	public abstract String getDataFilePath();
 	public abstract Asset makeCopy(String authorName, String newPath);
 	
+	/**
+	 * Compares each id in this list with this asset's own id, checking for any match.
+	 * @param idList List of ids to be compared.
+	 * @return true if any id in the list matches this assets's id.
+	 */
+	public boolean compareID(AssetID ... idList){
+		for(AssetID cur : idList)
+			if(cur.equals(id))
+				return true;
+		return false;
+	}
+	
 	protected void markModification(){
 		versionNumber++;
 	}

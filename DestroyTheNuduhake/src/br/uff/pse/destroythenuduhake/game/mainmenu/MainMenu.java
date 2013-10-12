@@ -49,8 +49,8 @@ public class MainMenu extends Level implements TextListener{
 	}	
 	
 	public void startGame(){
-		Game parent = getParent();
-		parent.changeLevel(parent.getCurrentLevel() + 1);
+		getParent().openBundleAssembler();
+
 	}
 	
 	public void editAssets(){

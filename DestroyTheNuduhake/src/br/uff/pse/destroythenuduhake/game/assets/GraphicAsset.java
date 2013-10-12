@@ -2,7 +2,10 @@ package br.uff.pse.destroythenuduhake.game.assets;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
@@ -61,8 +64,18 @@ public class GraphicAsset extends Asset{
 //		return AssetDatabase.getSpritePath(getId());
 //	}
 	
-	public Bitmap getBitmap()
+	public Bitmap getBitmap(Context c)
 	{
+		if(isOriginal()){
+			try {
+				InputStream in = c.getAssets().open(getDataFilePath());
+				Bitmap resp = BitmapFactory.decodeStream(in);
+				in.close();
+				return resp;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return BitmapFactory.decodeFile(getDataFilePath());
 	}
 	
@@ -87,12 +100,12 @@ public class GraphicAsset extends Asset{
 			e.printStackTrace();
 		}
 	}
-	public byte[] getBitmapBytes()
+	public byte[] getBitmapBytes(Context c)
 	{
 		byte[] byteArray = null;
 		try 
 		{
-			Bitmap bm = getBitmap();
+			Bitmap bm = getBitmap(c);
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byteArray = stream.toByteArray();

@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Game implements ApplicationListener {
 	private Level currentLevel;
 	private List<Level> levels;
-	private AssetBundle usedBundle;
+	private AssetBundle usedBundle, nextBundle;
 	private int nextLevel = -1;
 	
 	public Game(AssetBundle bundle){
@@ -24,6 +24,11 @@ public class Game implements ApplicationListener {
 		levels = new ArrayList<Level>();
 	}
 	
+	public void startGame(AssetBundle b){
+		nextBundle = b;
+		changeLevel(1);
+	}
+		
 	public void openDTNModule(){
 		MainAndroid.instance.openDTNModule();
 	}
@@ -43,7 +48,13 @@ public class Game implements ApplicationListener {
 	private void actualChangeLevel(){
 		if(currentLevel != null)
 			currentLevel.dispose();
+		
 		currentLevel = levels.get(nextLevel);
+		if(nextBundle != null){
+			usedBundle = nextBundle;
+			nextBundle = null;
+		}
+		
 		currentLevel.createWithAssetBundle(usedBundle);
 		nextLevel = -1;
 	}
@@ -108,5 +119,9 @@ public class Game implements ApplicationListener {
 	public void resume() {
 		if(currentLevel != null)
 			currentLevel.resume();
+	}
+
+	public void openBundleAssembler() {
+		MainAndroid.instance.openBundleAssembler();
 	}
 }

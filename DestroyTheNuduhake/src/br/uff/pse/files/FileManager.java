@@ -16,6 +16,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,6 +27,7 @@ import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
+import br.uff.pse.destroythenuduhake.game.control.AssetID;
 import br.uff.pse.destroythenuduhake.interfacepk.Header;
 import br.uff.pse.destroythenuduhake.interfacepk.Item;
 import br.uff.pse.destroythenuduhake.interfacepk.ListItem;
@@ -71,7 +73,6 @@ public class FileManager extends Activity implements BundleReceiver
 				//output.close();
 			}
 
-		
 		
 		
 	}
@@ -192,26 +193,34 @@ public class FileManager extends Activity implements BundleReceiver
 	{		
 		loadListFile(ctx);
 		loadCheckListFile(ctx);
-		ArrayList<Item> items = new ArrayList<Item>();
-		ArrayList<Item> hero = new ArrayList<Item>();
-		ArrayList<Item> shell = new ArrayList<Item>();
-		ArrayList<Item> ground = new ArrayList<Item>();
-		ArrayList<Item> dragon = new ArrayList<Item>();
-		hero.add(new Header("Heroes"));
-		shell.add(new Header("Shells"));
-		ground.add(new Header("Grounds"));
-		dragon.add(new Header("Dragons"));
+		
+		//fazemos um mapa associando cada AssetID a uma lista de assets com esse ID
+		HashMap<AssetID, ArrayList<Item>> itemListMap = new HashMap<AssetID, ArrayList<Item>>();
+
 		for(int i = 0; i< filesPaths.size();i++)
 		{
- 
-			if(filesPaths.get(i).getId() == AssetDatabase.SPRITE_MARIO)
-				hero.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isOriginal(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
-			if(filesPaths.get(i).getId() == AssetDatabase.SPRITE_SHELL)
-				shell.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isOriginal(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
-			if(filesPaths.get(i).getId() == AssetDatabase.SPRITE_GROUND)
-				ground.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isOriginal(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
-			if(filesPaths.get(i).getId() == AssetDatabase.SPRITE_DRAGON)
-				dragon.add(new ListItem(filesPaths.get(i),filesPaths.get(i).isOriginal(),((GraphicAsset)(filesPaths.get(i))).getBitmap()));
+			Asset current = filesPaths.get(i);
+			AssetID id = current.getId();
+			Bitmap b = null;
+			if(current instanceof GraphicAsset)
+				b = ((GraphicAsset)current).getBitmap(ctx);
+			
+			ArrayList<Item> myList;
+			if(!itemListMap.containsKey(id)){
+				//se for um tipo de asset inédito, crie uma lista nova pra ele
+				myList = new ArrayList<Item>();
+				itemListMap.put(id, myList);
+				//e adiciona a ela um header igual ao nome do ID
+				myList.add(new Header(id.getName()));
+			}
+			else{
+				//senão, já existem assets desse tipo. Apenas pega a lista existente
+				myList = itemListMap.get(id);
+			}
+			
+			//adiciona o asset na lista (AINDA TEM QUE VER O CASO DE NÃO SER GRAPHIC ASSET!)
+			myList.add(new ListItem(current,current.isOriginal(),b));
+			
 	//		if(a.type.equals("Ombreira"))
 	//			ombreiras.add(new ListItem(a.author,filesPaths.get(i),ctx));
 	//		if(a.type.equals("Terreno"))
@@ -240,12 +249,14 @@ public class FileManager extends Activity implements BundleReceiver
     */    
 
 		ArrayList<Item> combined = new ArrayList<Item>();
-		combined.addAll(hero);
-		combined.addAll(shell);
-		combined.addAll(ground);
-		combined.addAll(dragon);
+		
+		//percorre cada lista criada e junta na listona
+		for(ArrayList<Item> itemList : itemListMap.values())
+			combined.addAll(itemList);
+		
 		return combined;
 	}
+	
 	public static void saveListFile(Context ctx)
 	{
 		try
@@ -299,6 +310,13 @@ public class FileManager extends Activity implements BundleReceiver
 	    }
 		filesPaths = list;
 		
+
+
+		
+		filesPaths.clear();
+		for(Asset a : AssetDatabase.getOriginalAssets())
+			filesPaths.add(a);
+//		filesPaths.add(new GraphicAsset(AssetDatabase.SPRITE_MARIO, "file:///android_asset/images/mario"));
 	}
 	public static void saveCheckListFile(Context ctx)
 	{
@@ -352,7 +370,6 @@ public class FileManager extends Activity implements BundleReceiver
 	     ex.printStackTrace();
 	    }
 		checkedAssets = list;
-		
 	}
 	/*
 	public static boolean getCheckOptionFromFile(String fileName,Context ctx)
@@ -373,7 +390,7 @@ public class FileManager extends Activity implements BundleReceiver
 		// TODO Auto-generated method stub
 		
 	}
-	public static byte[] prepareContentToSend(Asset c)
+	public static byte[] prepareContentToSend(Asset c, Context ctx)
 	{
 		//byte[] 0 a 1023 vai ter o Content, o resto ser� a imagem
 		
@@ -389,7 +406,7 @@ public class FileManager extends Activity implements BundleReceiver
 		  byte[] intBytes = ByteBuffer.allocate(4).putInt(cBytes.length).array();
 		  int x = byteArrayToInt(intBytes);
 		  if( c instanceof GraphicAsset)
-			  bmBytes = ((GraphicAsset) c).getBitmapBytes();
+			  bmBytes = ((GraphicAsset) c).getBitmapBytes(ctx);
 		  else
 		  {
 			//pegar bytes do som

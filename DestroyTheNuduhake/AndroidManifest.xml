@@ -38,7 +38,9 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="br.uff.pse.destroythenuduhake.DisplayAssetsActivity"></activity>
+        <activity
+            android:name="br.uff.pse.destroythenuduhake.DisplayAssetsActivity"
+            android:screenOrientation="portrait"></activity>
         <activity android:name="br.uff.pse.destroythenuduhake.ShowAssetActivity"></activity>
         
         <activity 

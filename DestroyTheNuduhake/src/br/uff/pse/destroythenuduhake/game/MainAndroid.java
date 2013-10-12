@@ -19,6 +19,9 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
 public class MainAndroid extends AndroidApplication {
 	
+	public static final int CODE_GET_ASSET_BUNDLE = 0x200;
+	public static AssetBundle chosenBundle;
+	
 	public static MainAndroid instance;
 	private AndroidApplicationConfiguration cfg;
 	private Game g;
@@ -51,13 +54,21 @@ public class MainAndroid extends AndroidApplication {
     	showDialog(0);
     }
     
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//    	// TODO Auto-generated method stub
-//    	showDialog(0);
-//    	return false;
-//    	
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	super.onActivityResult(requestCode, resultCode, data);
+    	log("", "request code: " + requestCode + " result code " + resultCode);
+    	if(requestCode == CODE_GET_ASSET_BUNDLE){
+    		g.startGame(chosenBundle);
+    		chosenBundle = null;
+    	}
+    }
+    
+    public void openBundleAssembler(){
+    	Class<? extends Activity> c = br.uff.pse.destroythenuduhake.DisplayAssetsActivity.class;
+    	Intent i = new Intent(this, c);
+    	startActivityForResult(i, CODE_GET_ASSET_BUNDLE);
+    }
     
     public void openDTNModule(){
     	Class<? extends Activity> c = br.uff.pse.destroythenuduhake.MainActivity.class;
