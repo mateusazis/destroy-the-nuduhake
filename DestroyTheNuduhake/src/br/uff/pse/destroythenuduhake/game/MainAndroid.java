@@ -1,16 +1,12 @@
 package br.uff.pse.destroythenuduhake.game;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
-import br.uff.pse.destroythenuduhake.MainActivity;
+import br.uff.pse.destroythenuduhake.dtn.AuthorRetriever;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Game;
 
@@ -38,7 +34,8 @@ public class MainAndroid extends AndroidApplication {
         AssetBundle b = new TestBundle();
         g = new Game(b);
         initialize(g, cfg);
-//        initialize(new MyGdxGame(), cfg);
+        
+        AuthorRetriever.initialize(this);
     }
     
     @Override
