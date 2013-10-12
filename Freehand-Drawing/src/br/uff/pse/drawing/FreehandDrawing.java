@@ -1,7 +1,11 @@
 package br.uff.pse.drawing;
 
-import br.uff.pse.drawing.R;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -11,27 +15,26 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Toast;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
 public class FreehandDrawing extends Activity {
 	private static final String TAG = "FingerPaint";
 	DrawView drawView;
 	SeekBar seekBar;
-	
+    AlertDialog.Builder builder;
+    AlertDialog alert;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,27 +50,30 @@ public class FreehandDrawing extends Activity {
         drawView = (DrawView)findViewById(R.id.draw_view);
         drawView.setBackgroundColor(Color.BLACK);
         drawView.requestFocus();
-        seekBar = (SeekBar)findViewById(R.id.seek_bar);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){ 
+//        LayoutInflater inflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
+//        View layout = inflater.inflate(R.layout.color_picker_dialog, (ViewGroup)findViewById(R.id.RelativeLayout1));
+        builder = new AlertDialog.Builder(this);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				int progress = seekBar.getProgress();
+				drawView.setWid(progress);
+				drawView.changeWidth(progress);
+			}
+		});
+		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		builder.setTitle(R.string.dialog_title);
+        builder.setView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.color_picker_dialog, null));        
+        alert = builder.create();
+//        
 
-        	   @Override 
-        	   public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        		   drawView.changeWidth(progress);
-        	   } 
-
-        	   @Override 
-        	   public void onStartTrackingTouch(SeekBar seekBar) { 
-        	   } 
-
-        	   @Override 
-        	   public void onStopTrackingTouch(SeekBar seekBar) { 
-        	    // TODO Auto-generated method stub 
-        	   } 
-        	       });
-
-        seekBar.setMax(100);
-        seekBar.setProgress(1);
-        seekBar.setVisibility(View.INVISIBLE);
+        //seekBar.setVisibility(View.INVISIBLE);
 //        seekBar.setBackgroundColor(Color.BLUE);
 //
 //        LayoutParams lp = new LayoutParams(200, 50);
@@ -111,11 +117,44 @@ public class FreehandDrawing extends Activity {
     		drawView.colorPicker();
     	if(itemID == R.id.change_bg_color_id)
     		drawView.bgColorPicker();
-    	if(itemID == R.id.change_width_id){
-    		if(!seekBar.isShown())
-    			seekBar.setVisibility(View.VISIBLE);
-    		else
-    			seekBar.setVisibility(View.INVISIBLE);
+    	if(itemID == R.id.change_width_id){    		
+    		alert.show();
+    		CircleView circle = (CircleView)alert.findViewById(R.id.circle_view);
+            seekBar = (SeekBar)alert.findViewById(R.id.seek_bar);
+            circle.setWid(drawView.getWid());
+            seekBar.setProgress(drawView.getWid());
+			
+	        seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+	            CircleView circle = (CircleView)alert.findViewById(R.id.circle_view);
+			            public void onStopTrackingTouch(SeekBar arg0) {
+			                // TODO Auto-generated method stub
+			            }
+			
+			            public void onStartTrackingTouch(SeekBar arg0) {
+			                // TODO Auto-generated method stub
+			            }
+			
+			            public void onProgressChanged(SeekBar sb, int progress, boolean arg2) {
+			                // TODO Auto-generated method stub
+			            	circle.setWid(progress);
+			            	//Bitmap b = Bitmap.createBitmap(circle.getWidth(), circle.getHeight(), Bitmap.Config.ARGB_8888);
+			            	Canvas c = new Canvas();
+			            	circle.draw(c);
+			            }
+			        });
+
+    		//LayoutInflater inflater = getLayoutInflater();
+    		//builder.setView(inflater.inflate(R.layout.color_picker_dialog,null));
+    		
+//    		alert = builder.create();
+          
+//
+//            seekBar.setMax(100);
+//            seekBar.setProgress(5);
+//    		if(!seekBar.isShown())
+//    			seekBar.setVisibility(View.VISIBLE);
+//    		else
+//    			seekBar.setVisibility(View.INVISIBLE);
     	}
 /**    	case R.id.p_white_id : {
     		drawView.changeColour(0);

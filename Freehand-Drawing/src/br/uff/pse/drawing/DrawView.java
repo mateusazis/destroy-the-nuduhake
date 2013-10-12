@@ -29,6 +29,16 @@ public class DrawView extends View implements OnTouchListener {
 	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	Random gen;
 	int bgColor = Color.BLACK;
+	private int wid = 10;
+	
+	public int getWid() {
+		return wid;
+	}
+
+	public void setWid(int wid) {
+		this.wid = wid;
+	}
+
 	float x = 0;
 	float y = 0;
 	
@@ -39,13 +49,12 @@ public class DrawView extends View implements OnTouchListener {
 		paint.setStyle(Paint.Style.STROKE);
 	    paint.setColor(Color.WHITE);
 	    paint.setStrokeCap(Paint.Cap.ROUND);
-		setFocusable(true);
+		paint.setStrokeWidth(getWid());
+	    setFocusable(true);
 		setFocusableInTouchMode(true);
 		
 		this.setOnTouchListener(this);
-		
-		paint.setAntiAlias(true);
-	}
+		}
 	
 	// used to clear the screen
 	public void clearScreen () {
