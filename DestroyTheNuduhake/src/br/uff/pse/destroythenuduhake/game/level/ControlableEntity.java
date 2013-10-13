@@ -91,7 +91,7 @@ public class ControlableEntity extends LevelObject {
 	public void jump() {
 		if(getState() != State.JUMPING){
 			setState(State.JUMPING);
-			getBody().applyLinearImpulse(0.0f, 1500.0f, getX(), getY());
+			getBody().applyLinearImpulse(0.0f, 50.0f, getX(), getY());
 		}
 	}
 
