@@ -12,6 +12,7 @@ public class Player extends ControlableEntity {
 	
 	@Override
 	public void act(float delta) {
+		super.act(delta);
 		if(getVelocity().x > 0){
 			if(isFacingLeft()){
 				getBody().setLinearVelocity(Player.SPEED, 0);

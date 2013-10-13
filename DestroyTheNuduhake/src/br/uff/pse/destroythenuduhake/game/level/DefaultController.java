@@ -109,10 +109,10 @@ Player player;
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		if (x < player.getX() && (400 - y) < (player.getY() + 100) && y > player.getY()) {
-			rightPressed();
+			leftPressed();
 		}
 		if(x > player.getX() && (400 - y) < (player.getY() + 100) && y > player.getY()){
-			leftPressed();
+			rightPressed();
 		}
 		if(y < 200){
 			jumpPressed();

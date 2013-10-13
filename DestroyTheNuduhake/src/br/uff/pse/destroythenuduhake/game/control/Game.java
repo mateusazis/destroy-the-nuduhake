@@ -50,12 +50,12 @@ public class Game implements ApplicationListener {
 		if(currentLevel != null)
 			currentLevel.dispose();
 		
-		currentLevel = levels.get(nextLevel);
+		
 		if(nextBundle != null){
 			usedBundle = nextBundle;
 			nextBundle = null;
 		}
-		
+		currentLevel = levels.get(nextLevel);
 		currentLevel.createWithAssetBundle(usedBundle);
 		nextLevel = -1;
 	}
@@ -67,9 +67,8 @@ public class Game implements ApplicationListener {
 	
 	@Override
 	public void create() {
-		Level l = new TestLevel();
 		addLevel(new MainMenu());
-		addLevel(l);
+		addLevel(new TestLevel());
 		
 		changeLevel(0);
 	}

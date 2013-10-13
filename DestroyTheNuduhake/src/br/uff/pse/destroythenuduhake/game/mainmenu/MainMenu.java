@@ -48,6 +48,13 @@ public class MainMenu extends Level implements TextListener{
 		music.play();
 	}	
 	
+//	@Override
+//	public void act(float delta) {
+//		// TODO Auto-generated method stub
+//		super.act(delta);
+//		getParent().changeLevel(1);
+//	}
+	
 	public void startGame(){
 		getParent().openBundleAssembler();
 

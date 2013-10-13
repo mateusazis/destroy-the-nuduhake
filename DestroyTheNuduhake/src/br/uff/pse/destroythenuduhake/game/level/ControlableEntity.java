@@ -2,6 +2,7 @@ package br.uff.pse.destroythenuduhake.game.level;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
+import br.uff.pse.destroythenuduhake.game.Physics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,7 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class ControlableEntity extends LevelObject {
 
-	private int life;
+	private int life = 3;
 	private int atackPower;	
 	private Vector2 velocity;
 	private Fixture fixture;
@@ -29,9 +30,9 @@ public class ControlableEntity extends LevelObject {
 		IDLE, WALKING, JUMPING, DYING
 	}
 	
-	static final float SPEED = 50f;	// unit per second
-	static final float JUMP_VELOCITY = 1f;
-	static final float SIZE = 0.5f; // half a unit
+	protected static final float SPEED = 1f;	// unit per second
+	protected static final float JUMP_VELOCITY = 5f;
+	protected static final float SIZE = 0.5f; // half a unit
 	
 
 	public ControlableEntity(float x, float y, GraphicAsset asset) {
@@ -39,38 +40,24 @@ public class ControlableEntity extends LevelObject {
 		velocity = new Vector2();
 		velocity.x = 0f;
 		velocity.y = 0f;
-		this.bodyDef.type = BodyType.DynamicBody;
 	}
 	
 	@Override
-	public void setupPhysics(World world){
-		Body b = world.createBody(getBodyDef());
-		b.setUserData(this);
-		setBody(b);
-		
-		PolygonShape dynamicShape = new PolygonShape();
-		float w = getWidth(), h = getHeight();
-		float hX = w / 20f, hY = h / 20f;
-		dynamicShape.setAsBox(hX, hY, new Vector2(hX, hY), 0);
+	public void createBodyFixture(Body b, PolygonShape boxShape) {
 		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = dynamicShape;
+		fixtureDef.shape = boxShape;
 		fixtureDef.density = 0.0f;
 		fixtureDef.friction = 8.0f;
 		fixtureDef.restitution = 0;
-		getBody().createFixture(fixtureDef);
-	}
-	
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha){
-		
-		super.draw(batch, parentAlpha);
+		b.createFixture(fixtureDef);
+		b.setType(BodyType.DynamicBody);
 	}
 
 	public void moveLeft() {
 		if(getState() != State.JUMPING){
 			this.setFacingLeft(true);
 			this.setState(State.WALKING);
-			getBody().applyLinearImpulse(SPEED, 0, getX(), getY());
+			getBody().applyLinearImpulse(-SPEED, 0, getX(), getY());
 	//		this.getVelocity().x = SPEED;
 		}
 	}
@@ -79,7 +66,7 @@ public class ControlableEntity extends LevelObject {
 		if(getState() != State.JUMPING){
 			this.setFacingLeft(false);
 			this.setState(State.WALKING);
-			getBody().applyLinearImpulse(-SPEED, 0, getX(), getY());
+			getBody().applyLinearImpulse(SPEED, 0, getX(), getY());
 	//		this.getVelocity().x = SPEED;
 		}
 	}
@@ -91,7 +78,7 @@ public class ControlableEntity extends LevelObject {
 	public void jump() {
 		if(getState() != State.JUMPING){
 			setState(State.JUMPING);
-			getBody().applyLinearImpulse(0.0f, 1000.0f, getX(), getY());
+			getBody().applyLinearImpulse(0.0f, JUMP_VELOCITY, getX(), getY());
 		}
 	}
 
@@ -100,7 +87,13 @@ public class ControlableEntity extends LevelObject {
 	}
 
 	public void onAtacked(int atackPower) {
-
+		this.life = Math.max(0, this.life - atackPower);
+		if(isDead())
+			die();
+	}
+	
+	public boolean isDead(){
+		return this.life <= 0;
 	}
 
 	public void die() {

@@ -20,8 +20,9 @@ public class MainDesktop {
 		
 //		new LwjglApplication(new MyGdxGame(), cfg);
 		AssetBundle b = new TestBundle();
-	    
-		new LwjglApplication(new Game(b), cfg);
+	    Game g = new Game(b);
+	    g.changeLevel(1);
+		new LwjglApplication(g, cfg);
 		
 		
 	}

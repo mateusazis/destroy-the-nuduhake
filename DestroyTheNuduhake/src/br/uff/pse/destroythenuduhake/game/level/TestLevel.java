@@ -2,6 +2,7 @@ package br.uff.pse.destroythenuduhake.game.level;
 
 import java.util.Iterator;
 
+import br.uff.pse.destroythenuduhake.game.Physics;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
@@ -11,8 +12,10 @@ import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -30,10 +33,10 @@ public class TestLevel extends Level {
 	private Block block;
 	private DefaultController controllerPadrao;
 	private OrthographicCamera camera;
+	private Enemy e;
+	private IAManager manager;
 
 	// physics
-	private static final float WORLD_TO_BOX = 0.01f;
-	private static final float BOX_TO_WORLD = 10f;
 	private World world;
 
 	@Override
@@ -49,10 +52,9 @@ public class TestLevel extends Level {
 		shellTex = b.getAsset(AssetDatabase.SPRITE_SHELL);
 
 		// setup objects
-		ground = new LevelObject(100, 10,
+		ground = new LevelObject(100, 30,
 				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_GROUND));
 		ground.setupPhysics(world);
-		// ground.set
 		addActor(ground);
 
 		ground2 = new LevelObject(700, 120,
@@ -67,6 +69,13 @@ public class TestLevel extends Level {
 		player = new Player(100, 40, playerTex);
 		addActor(player);
 		player.setupPhysics(world);
+		
+		e = new Enemy(200, 40, shellTex);
+		addActor(e);
+		e.setupPhysics(world);
+		
+		manager = new IAManager(new Enemy[]{e}, player);
+		addActor(manager);
 
 		// setup input
 		controllerPadrao = new DefaultController(player);
@@ -77,37 +86,40 @@ public class TestLevel extends Level {
 		world.setContactListener(new LevelContactListener());
 
 		camera = (OrthographicCamera) this.getCamera();
-		camera.zoom = 3f;
+//		camera.zoom = 3f;
 
 	}
-
+	
 	@Override
 	public void render() {
 		super.render();
 		controllerPadrao.update();
-		camera.position.set(player.getX(), camera.position.y, 0);
-		world.step(1 / 10f, 6, 2);
+//		camera.position.set(player.getX(), camera.position.y, 0);
+		world.step(1/60f, 6, 2);
 
-		Iterator<Body> bi = world.getBodies();
-
-		while (bi.hasNext()) {
-			Body b = bi.next();
-
-			// Get the bodies user data - in this example, our user
-			// data is an instance of the Entity class
-			Actor e = (Actor) b.getUserData();
-
-			if (e != null) {
-				// Update the entities/sprites position and angle
-				((Actor) e).setPosition(b.getPosition().x * BOX_TO_WORLD - e.getWidth()/2,
-						b.getPosition().y * BOX_TO_WORLD - e.getHeight()/2);
-				// We need to convert our angle from radians to degrees
-				((Actor) e).setRotation(MathUtils.radiansToDegrees
-						* b.getAngle());
-//				((Actor) e).setPosition(b.getPosition().x,
-//						b.getPosition().y);
-			}
-		}
+//		Iterator<Body> bi = world.getBodies();
+//
+//		while (bi.hasNext()) {
+//			Body b = bi.next();
+//
+//			// Get the bodies user data - in this example, our user
+//			// data is an instance of the Entity class
+//			Actor e = (Actor) b.getUserData();
+//
+//			if (e != null) {
+//				// Update the entities/sprites position and angle
+//				float posX, posY;
+////				posX = b.getPosition().x * BOX_TO_WORLD - e.getWidth()/2;
+//				float bodyX = b.getPosition().x;
+//				float bodyY = b.getPosition().y;
+//				posX = bodyX * Physics.BOX_TO_WORLD; 
+//				posY = bodyY * Physics.BOX_TO_WORLD;
+//				e.setPosition(posX,posY);
+//				// We need to convert our angle from radians to degrees
+//				e.setRotation(MathUtils.radiansToDegrees
+//						* b.getAngle());
+//			}
+//		}
 	}
 
 	// @Override
