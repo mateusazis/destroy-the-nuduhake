@@ -25,6 +25,8 @@ public class MainAndroid extends AndroidApplication {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Configs.setup(true);
+        
         instance = this;
         cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = true;

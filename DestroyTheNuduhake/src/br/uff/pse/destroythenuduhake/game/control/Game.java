@@ -3,6 +3,7 @@ package br.uff.pse.destroythenuduhake.game.control;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.uff.pse.destroythenuduhake.game.Configs;
 import br.uff.pse.destroythenuduhake.game.MainAndroid;
 import br.uff.pse.destroythenuduhake.game.level.TestLevel;
 import br.uff.pse.destroythenuduhake.game.mainmenu.MainMenu;
@@ -122,6 +123,9 @@ public class Game implements ApplicationListener {
 	}
 
 	public void openBundleAssembler() {
-		MainAndroid.instance.openBundleAssembler();
+		if(Configs.isAndroid())
+			MainAndroid.instance.openBundleAssembler();
+		else
+			startGame(usedBundle);
 	}
 }

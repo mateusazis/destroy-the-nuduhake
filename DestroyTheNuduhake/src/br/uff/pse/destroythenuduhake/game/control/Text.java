@@ -54,8 +54,6 @@ public class Text extends Actor{
 		bounds = font.draw(batch, content, getX(), getY());
 	}
 	
-	private int i = 0;
-	
 	@Override
 	public void act(float delta) {
 		
