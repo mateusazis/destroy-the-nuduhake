@@ -1,11 +1,11 @@
-package br.uff.pse.drawing;
+package br.uff.pse.destroythenuduhake.drawing;
 
+import br.uff.pse.destroythenuduhake.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -57,14 +57,14 @@ public class FreehandDrawingActivity extends Activity {
 		});
 		
         builder.setTitle(R.string.dialog_title);
-        builder.setView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.color_picker_dialog, null));        
+        builder.setView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.width_picker_dialog, null));        
         alert = builder.create();
     }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	MenuInflater inflater = getMenuInflater();
-    	inflater.inflate(R.menu.paint_menu, menu);
+    	inflater.inflate(R.layout.paint_menu, menu);
     	return true;
     }
     

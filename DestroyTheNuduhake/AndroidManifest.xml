@@ -22,9 +22,10 @@
        			<category android:name="android.intent.category.DEFAULT" />
     </intent-filter>
         </activity>
-        <activity android:name="br.uff.pse.drawing.FreehandDrawing">
+        <activity 
+            android:name="br.uff.pse.destroythenuduhake.drawing.FreehandDrawingActivity">
             <intent-filter> 
-	       		<action android:name="br.uff.pse.drawing.FreehandDrawing" />  
+	       		<action android:name="br.uff.pse.destroythenuduhake.drawing.FreehandDrawingActivity" />  
 				<category android:name="android.intent.category.DEFAULT" />  
 			</intent-filter>   
         </activity>

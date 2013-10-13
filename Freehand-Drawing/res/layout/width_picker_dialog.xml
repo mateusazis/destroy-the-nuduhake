@@ -18,7 +18,7 @@
         android:layout_toLeftOf="@+id/circle_view" 
         />
 
-    <br.uff.pse.drawing.CircleView
+    <br.uff.pse.destroythenuduhake.drawing.CircleView
         android:id="@+id/circle_view"
         android:layout_width="60dp"
         android:layout_height="60dp"

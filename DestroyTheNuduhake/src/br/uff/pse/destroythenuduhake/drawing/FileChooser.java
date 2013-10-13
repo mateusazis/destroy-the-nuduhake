@@ -1,4 +1,4 @@
-package br.uff.pse.drawing;
+package br.uff.pse.destroythenuduhake.drawing;
 
 import java.io.File;
 import java.io.FilenameFilter;
