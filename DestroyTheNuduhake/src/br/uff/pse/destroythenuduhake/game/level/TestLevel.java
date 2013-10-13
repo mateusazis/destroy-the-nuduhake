@@ -33,7 +33,7 @@ public class TestLevel extends Level {
 
 	// physics
 	private static final float WORLD_TO_BOX = 0.01f;
-	private static final float BOX_TO_WORLD = 20f;
+	private static final float BOX_TO_WORLD = 10f;
 	private World world;
 
 	@Override
@@ -86,7 +86,7 @@ public class TestLevel extends Level {
 		super.render();
 		controllerPadrao.update();
 		camera.position.set(player.getX(), camera.position.y, 0);
-		world.step(1 / 60f, 6, 2);
+		world.step(1 / 10f, 6, 2);
 
 		Iterator<Body> bi = world.getBodies();
 
@@ -99,13 +99,13 @@ public class TestLevel extends Level {
 
 			if (e != null) {
 				// Update the entities/sprites position and angle
-//				((Actor) e).setPosition(b.getPosition().x * BOX_TO_WORLD - e.getWidth()/2,
-//						b.getPosition().y * BOX_TO_WORLD - e.getHeight()/2);
-//				// We need to convert our angle from radians to degrees
-//				((Actor) e).setRotation(MathUtils.radiansToDegrees
-//						* b.getAngle());
-				((Actor) e).setPosition(b.getPosition().x,
-						b.getPosition().y);
+				((Actor) e).setPosition(b.getPosition().x * BOX_TO_WORLD - e.getWidth()/2,
+						b.getPosition().y * BOX_TO_WORLD - e.getHeight()/2);
+				// We need to convert our angle from radians to degrees
+				((Actor) e).setRotation(MathUtils.radiansToDegrees
+						* b.getAngle());
+//				((Actor) e).setPosition(b.getPosition().x,
+//						b.getPosition().y);
 			}
 		}
 	}

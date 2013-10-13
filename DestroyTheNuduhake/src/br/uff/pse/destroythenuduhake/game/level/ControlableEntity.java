@@ -50,7 +50,7 @@ public class ControlableEntity extends LevelObject {
 		
 		PolygonShape dynamicShape = new PolygonShape();
 		float w = getWidth(), h = getHeight();
-		float hX = w / 2f, hY = h / 2f;
+		float hX = w / 20f, hY = h / 20f;
 		dynamicShape.setAsBox(hX, hY, new Vector2(hX, hY), 0);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = dynamicShape;
@@ -91,7 +91,7 @@ public class ControlableEntity extends LevelObject {
 	public void jump() {
 		if(getState() != State.JUMPING){
 			setState(State.JUMPING);
-			getBody().applyLinearImpulse(0.0f, 50.0f, getX(), getY());
+			getBody().applyLinearImpulse(0.0f, 1000.0f, getX(), getY());
 		}
 	}
 
