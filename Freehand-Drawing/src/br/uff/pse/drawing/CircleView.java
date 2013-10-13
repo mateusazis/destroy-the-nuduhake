@@ -6,11 +6,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.SeekBar;
 
 public class CircleView extends View {
 
-	Paint paint;
+	private Paint paintFill = new Paint();
+	private Paint paintStroke;
 	private float wid = 10;
 	
 	public float getWid() {
@@ -21,12 +21,22 @@ public class CircleView extends View {
 		this.wid = wid;
 	}
 
+	public Paint getPaintFill() {
+		return paintFill;
+	}
+
+	public void setPaintFill(Paint paint) {
+		paintFill.set(paint);
+		paintFill.setStyle(Paint.Style.FILL);
+	}
+
 	public CircleView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		paint.setStyle(Paint.Style.FILL);
-		paint.setColor(Color.WHITE);
-		paint.setStrokeCap(Paint.Cap.ROUND);
+		paintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paintStroke.setStyle(Paint.Style.STROKE);
+		paintStroke.setARGB(127, 127, 127, 127);
+		paintStroke.setStrokeWidth(1);
+		paintStroke.setStrokeCap(Paint.Cap.ROUND);
 	}
 
 	public CircleView(Context context) {
@@ -37,10 +47,13 @@ public class CircleView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
-		if(getWid() != 0)
-			canvas.drawCircle(getWidth()/2, getHeight()/2, getWid()/2, paint);
-		else
-			canvas.drawCircle(getWidth()/2, getHeight()/2, 0.5f, paint);
+		if(getWid() != 0){
+			canvas.drawCircle(getWidth()/2, getHeight()/2, getWid()/2, paintStroke);
+			canvas.drawCircle(getWidth()/2, getHeight()/2, getWid()/2, paintFill);
+		} else {
+			canvas.drawCircle(getWidth()/2, getHeight()/2, 0.5f, paintStroke);
+			canvas.drawCircle(getWidth()/2, getHeight()/2, 0.5f, paintFill);
+		}
 		invalidate();
 	}
 
