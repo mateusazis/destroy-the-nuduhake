@@ -1,8 +1,5 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
-import java.util.Iterator;
-
-import br.uff.pse.destroythenuduhake.game.Physics;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
@@ -11,17 +8,12 @@ import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class TestLevel extends Level {
 
@@ -30,7 +22,6 @@ public class TestLevel extends Level {
 	private LevelObject ground, ground2;
 	private ControlableEntity shell;
 	private Player player;
-	private Block block;
 	private DefaultController controllerPadrao;
 	private OrthographicCamera camera;
 	private Enemy e;
@@ -56,6 +47,11 @@ public class TestLevel extends Level {
 				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_GROUND));
 		ground.setupPhysics(world);
 		addActor(ground);
+		
+		LevelObject ground3 = new LevelObject(-350, 30,
+				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_GROUND));
+		ground3.setupPhysics(world);
+		addActor(ground3);
 
 		ground2 = new LevelObject(700, 120,
 				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_GROUND));
@@ -86,7 +82,7 @@ public class TestLevel extends Level {
 		world.setContactListener(new LevelContactListener());
 
 		camera = (OrthographicCamera) this.getCamera();
-//		camera.zoom = 3f;
+		camera.zoom = 3f;
 
 	}
 	
@@ -94,7 +90,7 @@ public class TestLevel extends Level {
 	public void render() {
 		super.render();
 		controllerPadrao.update();
-//		camera.position.set(player.getX(), camera.position.y, 0);
+		camera.position.set(player.getX(), camera.position.y, 0);
 		world.step(1/60f, 6, 2);
 
 //		Iterator<Body> bi = world.getBodies();
@@ -159,14 +155,16 @@ public class TestLevel extends Level {
 
 		@Override
 		public void beginContact(Contact contact) {
-			if (contact.getFixtureA().getBody().getUserData() == shell
-					&& contact.getFixtureB().getBody().getUserData() == player
-					|| contact.getFixtureA().getBody().getUserData() == player
-					&& contact.getFixtureB().getBody().getUserData() == shell) {
-				shell.setGraphic(shellTex);
-			} else {
-				player.touchGround();
+			LevelObject a = (LevelObject) contact.getFixtureA().getBody().getUserData();
+			LevelObject b = (LevelObject) contact.getFixtureB().getBody().getUserData();
+			
+			if(a instanceof ControlableEntity){
+				((ControlableEntity) a).touchGround();
 			}
+			if(b instanceof ControlableEntity){
+				((ControlableEntity) b).touchGround();
+			}
+			
 		}
 	}
 }

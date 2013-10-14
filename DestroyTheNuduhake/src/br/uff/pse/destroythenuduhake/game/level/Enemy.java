@@ -1,7 +1,5 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
-import com.badlogic.gdx.Gdx;
-
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
 public class Enemy extends ControlableEntity {

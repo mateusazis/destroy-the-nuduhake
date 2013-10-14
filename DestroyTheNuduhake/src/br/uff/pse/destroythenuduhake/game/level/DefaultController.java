@@ -3,10 +3,8 @@ package br.uff.pse.destroythenuduhake.game.level;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.uff.pse.destroythenuduhake.game.level.ControlableEntity.State;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 
 public class DefaultController implements InputProcessor {
 
@@ -108,15 +106,13 @@ Player player;
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		if (x < player.getX() && (400 - y) < (player.getY() + 100) && y > player.getY()) {
+		System.out.println("x: " + x);
+		if (x < player.getStage().stageToScreenCoordinates(player.localToStageCoordinates(new Vector2(player.getX(), player.getY()))).x) 
 			leftPressed();
-		}
-		if(x > player.getX() && (400 - y) < (player.getY() + 100) && y > player.getY()){
+		if(x > player.getStage().stageToScreenCoordinates(player.localToStageCoordinates(new Vector2(player.getX(), player.getY()))).x)
 			rightPressed();
-		}
-		if(y < 200){
+		if(y < 200)
 			jumpPressed();
-		}
 		return true;
 	}
 

@@ -2,24 +2,19 @@ package br.uff.pse.destroythenuduhake.game.level;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
-import br.uff.pse.destroythenuduhake.game.Physics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.World;
 
 public class ControlableEntity extends LevelObject {
 
 	private int life = 3;
 	private int atackPower;	
-	private Vector2 velocity;
+	private float velocity;
 	private Fixture fixture;
 	
 	Rectangle 	bounds = new Rectangle();
@@ -30,16 +25,13 @@ public class ControlableEntity extends LevelObject {
 		IDLE, WALKING, JUMPING, DYING
 	}
 	
-	protected static final float SPEED = 1f;	// unit per second
 	protected static final float JUMP_VELOCITY = 5f;
-	protected static final float SIZE = 0.5f; // half a unit
+	protected static final float MAX_VELOCITY = 10F;
 	
 
 	public ControlableEntity(float x, float y, GraphicAsset asset) {
 		super(x, y, asset);
-		velocity = new Vector2();
-		velocity.x = 0f;
-		velocity.y = 0f;
+		velocity = 1f;
 	}
 	
 	@Override
@@ -57,8 +49,8 @@ public class ControlableEntity extends LevelObject {
 		if(getState() != State.JUMPING){
 			this.setFacingLeft(true);
 			this.setState(State.WALKING);
-			getBody().applyLinearImpulse(-SPEED, 0, getX(), getY());
-	//		this.getVelocity().x = SPEED;
+			if(getBody().getLinearVelocity().x > -MAX_VELOCITY)
+				getBody().applyLinearImpulse(-velocity, 0, getX(), getY());
 		}
 	}
 
@@ -66,8 +58,8 @@ public class ControlableEntity extends LevelObject {
 		if(getState() != State.JUMPING){
 			this.setFacingLeft(false);
 			this.setState(State.WALKING);
-			getBody().applyLinearImpulse(SPEED, 0, getX(), getY());
-	//		this.getVelocity().x = SPEED;
+			if(getBody().getLinearVelocity().x < MAX_VELOCITY)
+				getBody().applyLinearImpulse(velocity, 0, getX(), getY());
 		}
 	}
 	
@@ -116,11 +108,11 @@ public class ControlableEntity extends LevelObject {
 		this.life = life;
 	}
 
-	public Vector2 getVelocity() {
+	public float getVelocity() {
 		return velocity;
 	}
 
-	public void setVelocity(Vector2 velocity) {
+	public void setVelocity(float velocity) {
 		this.velocity = velocity;
 	}
 
