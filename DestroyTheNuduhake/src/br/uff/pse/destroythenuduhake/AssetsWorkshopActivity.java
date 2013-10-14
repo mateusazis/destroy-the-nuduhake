@@ -12,7 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import br.uff.pse.destroythenuduhake.drawing.FreehandDrawingActivity;
 import br.uff.pse.destroythenuduhake.game.MainAndroid;
+import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.interfacepk.Item;
@@ -26,8 +28,15 @@ public class AssetsWorkshopActivity extends Activity
 
 	private ListView listView;
 	private List<Item> values;	
+	public static GraphicAsset asset;
 
 	
+	public static GraphicAsset getAsset() {
+		return asset;
+	}
+	public static void setAsset(GraphicAsset asset) {
+		AssetsWorkshopActivity.asset = asset;
+	}
 	private OnItemClickListener listener = new OnItemClickListener()
 	{
 
@@ -36,10 +45,10 @@ public class AssetsWorkshopActivity extends Activity
 				int arg2, long arg3) {
 			try
 			{
-			String filepath = ((ListItem)(values.get(arg2))).getAsset().getDataFilePath();
-			Intent intent = new Intent(AssetsWorkshopActivity.this, ShowAssetActivity.class);
-			intent.putExtra("filepath", filepath);
-			startActivity(intent);
+				GraphicAsset ga =  (GraphicAsset) ((ListItem)(values.get(arg2))).getAsset();
+				setAsset(ga);
+				Intent intent = new Intent(AssetsWorkshopActivity.this, FreehandDrawingActivity.class);
+				startActivity(intent);
 			}
 			catch(Exception e)
 			{
