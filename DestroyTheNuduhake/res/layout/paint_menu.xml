@@ -18,4 +18,5 @@
 <!--         </menu> -->
 <!--     </item> -->
     <item android:id="@+id/undo_id" android:title="Undo" android:titleCondensed="Undo"></item>
+    <item android:id="@+id/eraser_id" android:title="Eraser" android:titleCondensed="Eraser"></item>
 </menu>

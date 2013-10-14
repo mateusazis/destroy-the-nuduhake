@@ -405,7 +405,7 @@ public class FileManager extends Activity implements BundleReceiver
 		  cBytes = bos.toByteArray();
 		  byte[] intBytes = ByteBuffer.allocate(4).putInt(cBytes.length).array();
 		  int x = byteArrayToInt(intBytes);
-		  if( c instanceof GraphicAsset)
+		  if(c instanceof GraphicAsset)
 			  bmBytes = ((GraphicAsset) c).getBitmapBytes(ctx);
 		  else
 		  {
