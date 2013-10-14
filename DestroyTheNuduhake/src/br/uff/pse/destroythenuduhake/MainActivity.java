@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.main);
 		imview = (ImageView) findViewById(R.id.imageView1);
 		//BOTï¿½O TESTE
-		Button b = (Button) findViewById(R.id.sendSelected);
+		Button b = (Button) findViewById(R.id.button1);
 		b.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -106,6 +106,25 @@ public class MainActivity extends Activity {
 			public void onClick(View v)
 			{				
 				FileManager.deleteAllFiles(MainActivity.this);
+			}
+		});
+		Button b4 = (Button) findViewById(R.id.assetWorkshop);
+		b4.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{				
+					//sendTestDtnBundle();
+					try
+					{
+						Intent intent = new Intent(MainActivity.this, AssetsWorkshopActivity.class);
+						startActivity(intent);
+					}
+					catch (Exception e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
 		});
 	}

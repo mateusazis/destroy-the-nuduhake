@@ -514,7 +514,16 @@ public class FileManager extends Activity implements BundleReceiver
 	}
 	public static Bitmap getBitmapFromFilepath(String filepath)
 	{
-		return BitmapFactory.decodeFile(filepath);
+		try
+		{
+			return BitmapFactory.decodeFile(filepath);
+		}
+		catch(Exception e)
+		{
+			
+		}
+		return null;
+		
 	}
 	
 

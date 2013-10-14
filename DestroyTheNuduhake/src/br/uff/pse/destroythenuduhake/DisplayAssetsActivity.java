@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 import br.uff.pse.destroythenuduhake.game.MainAndroid;
+import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.interfacepk.ListItem;
@@ -34,7 +36,8 @@ public class DisplayAssetsActivity extends Activity
 
 
 	private ListView listView;
-	private List<Item> values;	
+	private List<Item> values;
+	private static Asset asset;
 
 	
 	private OnItemClickListener listener = new OnItemClickListener()
@@ -84,11 +87,14 @@ public class DisplayAssetsActivity extends Activity
 			try
 			{
 			// TODO Auto-generated method stub
-				String filepath = ((ListItem)(values.get(arg2))).getAsset().getDataFilePath();
+				//String filepath = ((ListItem)(values.get(arg2))).getAsset().getDataFilePath();
+				GraphicAsset ga = (GraphicAsset) ((ListItem)(values.get(arg2))).getAsset();
+				setAsset(ga);
 				Intent intent = new Intent(DisplayAssetsActivity.this, ShowAssetActivity.class);
-				intent.putExtra("filepath", filepath);
+				//intent.putExtra("filepath", filepath);
 				startActivity(intent);
 
+				
 			}
 			catch(Exception e)
 			{
@@ -110,7 +116,7 @@ public class DisplayAssetsActivity extends Activity
 		listView.setOnItemLongClickListener(llistener);
 		showContents();
 		
-		Button b = (Button) findViewById(R.id.sendSelected);
+		Button b = (Button) findViewById(R.id.button1);
 		b.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -170,6 +176,12 @@ public class DisplayAssetsActivity extends Activity
 		{
 
 		}
+	}
+	public static Asset getAsset() {
+		return asset;
+	}
+	public static void setAsset(Asset asset) {
+		DisplayAssetsActivity.asset = asset;
 	}
 
 }
