@@ -1,23 +1,28 @@
 package br.uff.pse.destroythenuduhake.drawing;
 
-import br.uff.pse.destroythenuduhake.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import br.uff.pse.destroythenuduhake.AssetsWorkshopActivity;
+import br.uff.pse.destroythenuduhake.R;
 
 public class FreehandDrawingActivity extends Activity {
-	private static final String TAG = "FingerPaint";
+	private static final String TAG = "FreehandDrawing";
 	DrawView drawView;
 	SeekBar seekBar;
     AlertDialog.Builder builder;
@@ -34,9 +39,25 @@ public class FreehandDrawingActivity extends Activity {
         // lock screen orientation (stops screen clearing when rotating phone)
         setRequestedOrientation(getResources().getConfiguration().orientation);
         
+        
         setContentView(R.layout.freehand_drawing_main);
         drawView = (DrawView)findViewById(R.id.draw_view);
-        drawView.setBackgroundColor(Color.BLACK);
+		drawView.setGraphicAsset(AssetsWorkshopActivity.asset);
+		if(drawView.image != null){
+	        OnGlobalLayoutListener list = new OnGlobalLayoutListener() {
+				
+				@Override
+				public void onGlobalLayout() {
+					drawView.setCenter(drawView.getWidth(), drawView.getHeight());
+					if(Build.VERSION.SDK_INT < 16){
+					drawView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+					} else {
+					drawView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+					}
+				}
+			};
+			drawView.getViewTreeObserver().addOnGlobalLayoutListener(list);
+		}
         drawView.requestFocus();
         builder = new AlertDialog.Builder(this);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -45,7 +66,6 @@ public class FreehandDrawingActivity extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 				int progress = seekBar.getProgress();
 				drawView.setWid(progress);
-				drawView.changeWidth(progress);
 			}
 		});
 
@@ -76,6 +96,7 @@ public class FreehandDrawingActivity extends Activity {
     		drawView.clearScreen();
     	if(itemID == R.id.undo_id)
     		drawView.undo();
+    	//if(itemID == R.id.eraser_id)
     	if(itemID == R.id.change_color_id)
     		drawView.colorPicker();
     	if(itemID == R.id.change_bg_color_id)

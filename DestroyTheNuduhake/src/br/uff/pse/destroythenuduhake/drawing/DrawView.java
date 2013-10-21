@@ -2,20 +2,23 @@ package br.uff.pse.destroythenuduhake.drawing;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
-
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import br.uff.pse.destroythenuduhake.AssetsWorkshopActivity;
+import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
+import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
 public class DrawView extends View implements OnTouchListener {
 	private static final String TAG = "DrawView";
@@ -26,10 +29,17 @@ public class DrawView extends View implements OnTouchListener {
 	//HashMap<Path, Paint> pathList = new LinkedHashMap<Path, Paint>();
 //	List<List<Point>> drawing = new ArrayList<List<Point>>();
 //	List<Point> points = new ArrayList<Point>();
+	private GraphicAsset graphicAsset;
+	Bitmap image = null;
 	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-	Random gen;
-	int bgColor = Color.BLACK;
+	Matrix transformation = new Matrix();
+	int centerX, centerY;
+	int bgColor = Color.TRANSPARENT;
 	private int wid = 20;
+	float[] leftmostPoint;
+	float[] rightmostPoint;
+	float x = 0;
+	float y = 0;
 	
 	public int getWid() {
 		return wid;
@@ -37,10 +47,28 @@ public class DrawView extends View implements OnTouchListener {
 
 	public void setWid(int wid) {
 		this.wid = wid;
+		paint.setStrokeWidth(wid);		
 	}
-
-	float x = 0;
-	float y = 0;
+	
+	public GraphicAsset getGraphicAsset(){
+		return graphicAsset;
+	}
+	
+	public void setGraphicAsset(GraphicAsset ga){
+		this.graphicAsset = ga;
+		if(graphicAsset != null)
+			image = graphicAsset.getBitmap(getContext());
+	}
+	
+	public void setCenter(int x, int y){
+		transformation.setTranslate((x - image.getWidth())/2, (y - image.getHeight())/2);
+		leftmostPoint = new float[2];
+		leftmostPoint[0] = (x - image.getWidth())/2;
+		leftmostPoint[1] = (y - image.getHeight())/2;
+		rightmostPoint = new float[2];
+		rightmostPoint[0] = (x + image.getWidth())/2;
+		rightmostPoint[1] = (y + image.getWidth())/2;
+	}
 	
 	public DrawView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -54,7 +82,8 @@ public class DrawView extends View implements OnTouchListener {
 		setFocusableInTouchMode(true);
 		
 		this.setOnTouchListener(this);
-		}
+	}
+	
 	
 	// used to clear the screen
 	public void clearScreen () {
@@ -113,14 +142,11 @@ public class DrawView extends View implements OnTouchListener {
 		});	
 		dialog.show();
 	}
-
-	// used to set drawing width
-	public void changeWidth(int progress) {
-		paint.setStrokeWidth(progress);
-	}
 	
 	@Override
 	public void onDraw(Canvas canvas) {
+		if(image != null)
+			canvas.drawBitmap(image, transformation, null);
 		for (int i = 0; i < pathList.size(); i++) {
 			canvas.drawPath(pathList.get(i), paintList.get(i));
 		}
@@ -130,6 +156,16 @@ public class DrawView extends View implements OnTouchListener {
 	public boolean onTouch(View view, MotionEvent event) {
 	    x = event.getX();
 	    y = event.getY();
+	    
+	    if((x-wid)/2 < leftmostPoint[0])
+	    	leftmostPoint[0] = (x-wid)/2;
+	    else if((x-wid)/2 > rightmostPoint[0])
+	    	rightmostPoint[0] = (x+wid)/2;
+	    
+	    if((y+wid)/2 < leftmostPoint[1])
+	    	leftmostPoint[1] = (y-wid)/2;
+	    else if(y > rightmostPoint[1])
+	    	rightmostPoint[1] = (y+wid)/2;
 	    
 	    switch (event.getAction()) {
 	    case MotionEvent.ACTION_DOWN:

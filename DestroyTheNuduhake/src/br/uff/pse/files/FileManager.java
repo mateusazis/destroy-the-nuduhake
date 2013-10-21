@@ -405,7 +405,7 @@ public class FileManager extends Activity implements BundleReceiver
 		  cBytes = bos.toByteArray();
 		  byte[] intBytes = ByteBuffer.allocate(4).putInt(cBytes.length).array();
 		  int x = byteArrayToInt(intBytes);
-		  if( c instanceof GraphicAsset)
+		  if(c instanceof GraphicAsset)
 			  bmBytes = ((GraphicAsset) c).getBitmapBytes(ctx);
 		  else
 		  {
@@ -514,7 +514,16 @@ public class FileManager extends Activity implements BundleReceiver
 	}
 	public static Bitmap getBitmapFromFilepath(String filepath)
 	{
-		return BitmapFactory.decodeFile(filepath);
+		try
+		{
+			return BitmapFactory.decodeFile(filepath);
+		}
+		catch(Exception e)
+		{
+			
+		}
+		return null;
+		
 	}
 	
 
