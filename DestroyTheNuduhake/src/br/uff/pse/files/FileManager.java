@@ -18,9 +18,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import uff.br.infouffdtn.db.Content;
-import uff.br.infouffdtn.db.FileManager;
-import uff.br.infouffdtn.server.CommFile;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
