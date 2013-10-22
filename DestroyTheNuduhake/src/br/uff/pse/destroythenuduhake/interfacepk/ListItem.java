@@ -24,6 +24,7 @@ public class ListItem implements Item {
     private final Bitmap b;
     private CheckBox cb;
     private ImageView iv;
+    private boolean visible = true;
     public ListItem(Asset a,boolean c,Bitmap b) {
        // this.str1 = text1;
         //this.str2 = text2;
@@ -58,6 +59,10 @@ public class ListItem implements Item {
         cb = (CheckBox) view.findViewById(R.id.checkBox1);
         cb.setChecked(checked);
         iv.setImageBitmap(b);
+        if(!visible)
+        {
+        	cb.setVisibility(View.INVISIBLE);
+        }
         //cb.setChecked(FileManager.getCheckOptionFromFile(str2,ctx));
         text1.setText("Version: " + asset.getVersionNumber());
         text2.setText(asset.getAuthor());
@@ -72,6 +77,10 @@ public class ListItem implements Item {
     {
     	checked = b;
     	cb.setChecked(checked);
+    }
+    public void setCheckBoxInv()
+    {
+    	visible = false;
     }
     public Asset getAsset()
     {

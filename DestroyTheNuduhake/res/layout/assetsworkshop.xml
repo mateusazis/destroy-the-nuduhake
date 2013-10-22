@@ -4,20 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="fill_parent"
-        android:layout_height="378dp"
-        android:layout_weight="0.71"
-        android:scrollHorizontally="true" >
-
-    </ListView>
-
-    <Button
-        android:id="@+id/assetCreator"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.70"
-        android:text="Button" />
+        android:layout_weight="0.06"
+        android:gravity="center"
+        android:text="Assets Workshop"
+        android:textAppearance="?android:attr/textAppearanceLarge" >
+</TextView>
+
+    <ListView
+        android:id="@+id/workshopList"
+        android:layout_width="fill_parent"
+        android:layout_height="377dp"
+        android:layout_weight="0.07"
+        android:scrollHorizontally="true" >
+    </ListView>
 
 </LinearLayout>

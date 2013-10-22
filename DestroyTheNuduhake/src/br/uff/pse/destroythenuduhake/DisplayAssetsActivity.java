@@ -35,6 +35,7 @@ public class DisplayAssetsActivity extends Activity
 
 
 
+
 	private ListView listView;
 	private List<Item> values;
 	private static Asset asset;
