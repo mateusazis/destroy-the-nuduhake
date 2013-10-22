@@ -18,6 +18,9 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import uff.br.infouffdtn.db.Content;
+import uff.br.infouffdtn.db.FileManager;
+import uff.br.infouffdtn.server.CommFile;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -523,6 +526,98 @@ public class FileManager extends Activity implements BundleReceiver
 			
 		}
 		return null;
+		
+	}
+	public static ArrayList<Asset> getFilesToSend(Context ctx)
+	{
+		loadListFile(ctx);
+		ArrayList<Asset> ret = new ArrayList<Asset>();
+		ArrayList<String> types = new ArrayList<String>();		
+		for(int i = 0;i<filesPaths.size();i++)
+		{
+
+			ret.add(filesPaths.get(i));		
+		}
+
+		
+		return ret;
+		
+	}
+	public static byte[] prepareAssetToSend(Asset c, Context ctx)
+	{
+		//byte[] 0 a 1023 vai ter o Content, o resto será a imagem
+		
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutput out = null;
+		byte[] cBytes = new byte[1024];
+		byte[] bmBytes = null;
+		try 
+		{
+		  
+		  out = new ObjectOutputStream(bos);   
+		  out.writeObject(c);
+		  cBytes = bos.toByteArray();
+		  byte[] intBytes = ByteBuffer.allocate(4).putInt(cBytes.length).array();
+		  int x = byteArrayToInt(intBytes);
+		  if(c instanceof GraphicAsset)
+			  bmBytes = ((GraphicAsset) c).getBitmapBytes(ctx);
+		  else
+		  {
+			  //transformar audio em bytes
+		  }
+		  byte[] retBytes = new byte[cBytes.length + bmBytes.length + intBytes.length];
+		  System.arraycopy(intBytes, 0, retBytes, 0, intBytes.length);
+		  System.arraycopy(cBytes, 0, retBytes, intBytes.length, cBytes.length);
+		  System.arraycopy(bmBytes, 0, retBytes, intBytes.length + cBytes.length, bmBytes.length);
+		  return retBytes;
+		
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+		return null;
+	}
+	public static Asset getAssetFromBytes(byte[] b)
+	{
+		byte[] tam = new byte[4];
+		tam[0] = b[0];
+		tam[1] = b[1];
+		tam[2] = b[2];
+		tam[3] = b[3];
+		int contentSize = byteArrayToInt(tam);
+		byte[] contentBytes = new byte[contentSize];
+		System.arraycopy(b, 4 , contentBytes, 0, contentBytes.length);
+		byte[] bitMapBytes = new byte[b.length - contentSize - 4];
+		System.arraycopy(b, contentSize + 4 , bitMapBytes, 0, b.length - contentSize - 4);
+		
+		try
+		{
+			ByteArrayInputStream bos = new ByteArrayInputStream(contentBytes);
+			ObjectInputStream ois = new ObjectInputStream(bos);
+			Asset c = (Asset) ois.readObject();
+			//CommFile comm = (CommFile) ois.readObject();
+			if(c instanceof GraphicAsset)
+			{
+				Bitmap bitmap = BitmapFactory.decodeByteArray(bitMapBytes , 0, bitMapBytes.length);
+				((GraphicAsset) c).setBitmap(bitmap);
+			}
+			else
+			{
+				//RECUPERAR AUDIO
+			}
+
+			return c;
+		
+		}
+		catch(Exception e)
+		{
+			Exception x = e;
+		}
+		return null;
+		
+		
 		
 	}
 	
