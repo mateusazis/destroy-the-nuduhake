@@ -130,7 +130,7 @@ public class DTNService extends IntentService implements ShareService
 				List<Node> neighbours = mClient.getDTNService().getNeighbors();
 				for (int i = 0; i < neighbours.size(); i++)
 				{
-					String destAddress = neighbours.get(i).endpoint.toString() + "/InfoUffDtn";
+					String destAddress = neighbours.get(i).endpoint.toString() + "/example-app";
 					SingletonEndpoint destination = new SingletonEndpoint(destAddress);
 	
 					// create a new bundle

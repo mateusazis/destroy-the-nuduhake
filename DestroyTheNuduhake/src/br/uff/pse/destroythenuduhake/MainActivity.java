@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
 				
 				FileManager.saveBuiltInAssets(MainActivity.this);
 				
-				GraphicAsset kibe = new GraphicAsset(AssetDatabase.SPRITE_MARIO,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
+				GraphicAsset kibe = new GraphicAsset(AssetDatabase.SPRITE_MARIO,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath(),true));
 //				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
 //			
 //				byte[] b = FileManager.prepareAssetToSend(kibe, MainActivity.this);
@@ -75,14 +75,15 @@ public class MainActivity extends Activity {
 //												
 //				FileManager.writeAsset(kibe, MainActivity.this);
 				
-				kibe = kibe.makeCopy("JosÃ©", FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
+				kibe = kibe.makeCopy("JosÃ©", FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath(),true));
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
-				kibe = kibe.makeCopy("Guilherme", FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
+				kibe = kibe.makeCopy("Guilherme", FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath(),true));
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
+				sendTestDtnBundle();
 //				GraphicAsset dragonkibe = new GraphicAsset(AssetDatabase.SPRITE_DRAGON,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
 //				dragonkibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.square));
 //				FileManager.writeAsset(dragonkibe, MainActivity.this);
