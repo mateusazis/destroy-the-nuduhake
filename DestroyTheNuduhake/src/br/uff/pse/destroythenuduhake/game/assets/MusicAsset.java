@@ -32,10 +32,10 @@ public class MusicAsset extends Asset implements AudioAsset{
 		music.dispose();
 	}
 	
-	@Override
-	public String getDataFilePath(){
-		return getFilePath() + ".mp3";
-	}
+//	@Override
+//	public String getDataFilePath(){
+//		return getFilePath() + ".mp3";
+//	}
 	
 	@Override
 	public void play() {

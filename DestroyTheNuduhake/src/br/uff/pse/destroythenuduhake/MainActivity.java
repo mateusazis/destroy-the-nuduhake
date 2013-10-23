@@ -1,11 +1,12 @@
 package br.uff.pse.destroythenuduhake;
 
 
-//V de viadÃ£o
+//V de viadÃƒÂ£o
 
 import br.uff.pse.destroythenuduhake.dtn.DTNService;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.files.FileManager;
 import android.os.Bundle;
 import android.app.Activity;
@@ -29,7 +30,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		imview = (ImageView) findViewById(R.id.imageView1);
-		//BOTï¿½O TESTE
+		//BOTÃ¯Â¿Â½O TESTE
 		Button b = (Button) findViewById(R.id.button1);
 		b.setOnClickListener(new OnClickListener()
 		{
@@ -55,37 +56,48 @@ public class MainActivity extends Activity {
 			public void onClick(View v)
 			{				
 				//Asset um = new Asset("Capacete1","Capacete","Jurema");
-				//Asset dois = new Asset("Ombreira2","Ombreira","Z�");
+				//Asset dois = new Asset("Ombreira2","Ombreira","Zï¿½");
 				//Asset tres = new Asset("Terreno Boladex","Terreno","Dieguin");
 				//FileManager.writeAsset(um, um.name, MainActivity.this);
 				//FileManager.writeAsset(dois, dois.name, MainActivity.this);
-				GraphicAsset kibe = new GraphicAsset(AssetDatabase.SPRITE_MARIO,getFilesDir() + "/teste");
+				
+				FileManager.deleteAllFiles(MainActivity.this);
+				
+				FileManager.saveBuiltInAssets(MainActivity.this);
+				
+				GraphicAsset kibe = new GraphicAsset(AssetDatabase.SPRITE_MARIO,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
+				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
+			
+				byte[] b = FileManager.prepareAssetToSend(kibe, MainActivity.this);
+				
+				Asset x = FileManager.getAssetFromBytes(b, MainActivity.this);
+				((GraphicAsset)x).getBitmap(MainActivity.this);
+												
+				FileManager.writeAsset(kibe, MainActivity.this);
+				
+				kibe = kibe.makeCopy("JosÃ©", FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
-				kibe = kibe.makeCopy("José", getFilesDir() + "/teste1");
-				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
-				FileManager.writeAsset(kibe, MainActivity.this);
-				
-				kibe = kibe.makeCopy("Guilherme", getFilesDir() + "/teste2");
+				kibe = kibe.makeCopy("Guilherme", FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
-				GraphicAsset dragonkibe = new GraphicAsset(AssetDatabase.SPRITE_DRAGON,getFilesDir() + "/teste3");
+				GraphicAsset dragonkibe = new GraphicAsset(AssetDatabase.SPRITE_DRAGON,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
 				dragonkibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.square));
 				FileManager.writeAsset(dragonkibe, MainActivity.this);
 				
 
-				kibe = new GraphicAsset(AssetDatabase.SPRITE_SHELL,getFilesDir() + "/teste4");
+				kibe = new GraphicAsset(AssetDatabase.SPRITE_SHELL,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.wifipacket));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
 				
-				dragonkibe = dragonkibe.makeCopy("Jeremias", getFilesDir() + "/teste5");
+				dragonkibe = dragonkibe.makeCopy("Jeremias", FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
 				dragonkibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.square));
 				FileManager.writeAsset(dragonkibe, MainActivity.this);
 				
-				kibe = new GraphicAsset(AssetDatabase.SPRITE_GROUND,getFilesDir() + "/teste6");
+				kibe = new GraphicAsset(AssetDatabase.SPRITE_GROUND,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				

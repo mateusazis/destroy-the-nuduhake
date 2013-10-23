@@ -28,14 +28,14 @@ public final class AssetDatabase {
 	
 	public static Asset[] getOriginalAssets(){
 		return new Asset[]{
-			new GraphicAsset(AssetDatabase.SPRITE_MARIO, "images/mario"),
-			new GraphicAsset(AssetDatabase.SPRITE_SHELL, "images/shell"),
-			new GraphicAsset(AssetDatabase.SPRITE_GROUND, "images/ground"),
-			new GraphicAsset(AssetDatabase.SPRITE_DRAGON, "images/dragon"),
-			new GraphicAsset(AssetDatabase.SPRITE_BALL, "images/ball"),
-			new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER, "images/ball_shooter"),
+			new GraphicAsset(AssetDatabase.SPRITE_MARIO, "images/mario.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_SHELL, "images/shell.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_GROUND, "images/ground.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_DRAGON, "images/dragon.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_BALL, "images/ball.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER, "images/ball_shooter.png"),
 			
-			new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening"),
+			new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening.mp3"),
 		};
 	}
 }

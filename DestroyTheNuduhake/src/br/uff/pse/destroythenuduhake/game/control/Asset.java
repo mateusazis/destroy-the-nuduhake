@@ -34,7 +34,7 @@ public abstract class Asset implements Disposable,Serializable{
 	public abstract void dispose();
 	public abstract String getFolderPath();
 //	public abstract String getAssetPath();
-	public abstract String getDataFilePath();
+//	public abstract String getDataFilePath();
 	public abstract Asset makeCopy(String authorName, String newPath);
 	
 	/**
@@ -66,7 +66,7 @@ public abstract class Asset implements Disposable,Serializable{
 	}
 	
 	protected FileHandle getFileHandle(){
-		return Gdx.files.internal(getDataFilePath());
+		return Gdx.files.internal(getFilePath());
 //		StringBuilder pathBuilder = new StringBuilder("bundles/");
 //		
 //		pathBuilder.append(bundlePath);

@@ -132,7 +132,7 @@ public class FileManager extends Activity implements BundleReceiver
 		{
 			if(filesPaths.get(i).equals(a))
 			{
-				File f = new File(a.getDataFilePath());
+				File f = new File(a.getFilePath());
 				f.delete();
 				filesPaths.remove(i);
 			}
@@ -155,7 +155,7 @@ public class FileManager extends Activity implements BundleReceiver
 		for(int i = 0; i < filesPaths.size() ; i++)
 		{
 		//	ctx.deleteFile(filesPaths.get(i).getFilepath());
-			File f = new File(filesPaths.get(i).getDataFilePath());
+			File f = new File(filesPaths.get(i).getFilePath());
 			f.delete();
 		}
 		filesPaths.clear();
@@ -314,10 +314,15 @@ public class FileManager extends Activity implements BundleReceiver
 
 
 		
-		filesPaths.clear();
+//		filesPaths.clear();
+		
+//		filesPaths.add(new GraphicAsset(AssetDatabase.SPRITE_MARIO, "file:///android_asset/images/mario"));
+	}
+	public static void saveBuiltInAssets(Context ctx)
+	{
 		for(Asset a : AssetDatabase.getOriginalAssets())
 			filesPaths.add(a);
-//		filesPaths.add(new GraphicAsset(AssetDatabase.SPRITE_MARIO, "file:///android_asset/images/mario"));
+		saveListFile(ctx);
 	}
 	public static void saveCheckListFile(Context ctx)
 	{
@@ -543,7 +548,7 @@ public class FileManager extends Activity implements BundleReceiver
 	}
 	public static byte[] prepareAssetToSend(Asset c, Context ctx)
 	{
-		//byte[] 0 a 1023 vai ter o Content, o resto será a imagem
+		//byte[] 0 a 1023 vai ter o Content, o resto serï¿½ a imagem
 		
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ObjectOutput out = null;
@@ -617,6 +622,41 @@ public class FileManager extends Activity implements BundleReceiver
 		
 		
 		
+	}
+	public static synchronized String writeValidation(String type,int num,Context ctx,String dirPath)
+	{
+		
+	
+		try
+		{
+		loadListFile(ctx);
+		String fp = dirPath;
+		for(int i = 0; i < filesPaths.size();i++)
+		{
+			if(filesPaths.get(i).getFilePath().equals(fp+"/"+type))
+			{
+				if(num == 0 )
+					return writeValidation(type+"("+(num+1)+")",++num,ctx,dirPath);
+				else
+				{
+					String newType = type.substring(0, type.indexOf("("));
+					return writeValidation(newType+"("+(num+1)+")",++num,ctx,dirPath);
+				}
+			}
+		}
+
+		return fp+"/"+type;	
+		}
+		catch(Exception e)
+		{
+			
+		}
+		return null;
+	}
+	public static synchronized String getAvaiableFilepath(Context ctx,String dirPath)
+	{
+		
+		return writeValidation("NuduhakeFile",0,ctx,dirPath);
 	}
 	
 
