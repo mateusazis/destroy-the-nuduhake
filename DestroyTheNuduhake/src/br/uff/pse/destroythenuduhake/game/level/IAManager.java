@@ -1,5 +1,6 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,14 +11,17 @@ public class IAManager extends Actor{
 	private List<Enemy> enemies;
 	private Player player;
 	
-	public IAManager(Enemy [] enemies, Player p){
-		this.enemies = Arrays.asList(enemies);
+	public IAManager(Player p, Enemy...enemies){
+		this.enemies = new ArrayList<Enemy>();
+		addEnemies(enemies);
 		this.player = p;
 	}
 	
 	public void addEnemies(Enemy...e){
-		for(int i = 0; i < e.length; i++)
+		for(int i = 0; i < e.length; i++){
 			enemies.add(e[i]);
+			e[i].setManager(this);
+		}
 	}
 	
 	
@@ -28,12 +32,14 @@ public class IAManager extends Actor{
 			Enemy e = enemies.get(i);
 			if(e.isDead()){
 				enemies.remove(i);
+				e.setManager(null);
 				i--;
 			} else {
 				float xDistance = Math.abs(e.getX() - player.getX());
-				if(xDistance <= e.getMinXPlayerDistance())
+				boolean isNear = xDistance <= e.getMinXPlayerDistance(); 
+				if(isNear && e.isSleeping())
 					e.awake(player);
-				else
+				if(!isNear && !e.isSleeping())
 					e.sleep();
 			}
 			

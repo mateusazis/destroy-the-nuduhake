@@ -135,7 +135,9 @@ public class DisplayAssetsActivity extends Activity
 					}
 				}
 				MainAndroid.chosenBundle = bundle;
+				setResult(MainAndroid.CODE_GET_ASSET_BUNDLE);      
 				finish();
+				
 			}
 		});
 		

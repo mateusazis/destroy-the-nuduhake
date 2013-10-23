@@ -9,16 +9,19 @@ import br.uff.pse.destroythenuduhake.game.level.Enemy;
 
 public class Ball extends Enemy{
 
-	private static final float LIFETIME = 2f;
+	private static final float LIFETIME = 5f, SPEED = 1f;
 	private static final int ATACK_POWER = 1;
 	private float elapsedLifetime = 0;
 	
 	private boolean dead = false;
+	private boolean firstGroundTouched = false;
 	
 	public Ball(float x, float y, GraphicAsset asset) {
 		super(x, y, asset, 100000);
 		setJumpVelocity(6);
-		setVelocity(1f);
+		setVelocity(SPEED);
+		setMaxMoveVelocity(SPEED);
+		setState(State.WALKING);
 	}
 	
 	@Override
@@ -30,7 +33,9 @@ public class Ball extends Enemy{
 		}
 		
 		moveLeft();
-		jump();
+		if(firstGroundTouched)
+			jump();
+
 		elapsedLifetime += delta;
 		if(elapsedLifetime >= LIFETIME){
 			this.die();
@@ -39,12 +44,11 @@ public class Ball extends Enemy{
 	
 	@Override
 	public void die(){
+		super.die();
 		dead = true;
 	}
 	
 	public void die2() {
-		
-		Gdx.app.log("", "died");
 		Smoke smoke = new Smoke(getX(), getY());
 		getParent().addActor(smoke);
 		remove();
@@ -55,6 +59,12 @@ public class Ball extends Enemy{
 	}
 	
 	@Override
+	public void touchGround() {
+		super.touchGround();
+		this.firstGroundTouched = true;
+	}
+	
+	@Override
 	public void onContactStart(LevelObject other) {
 		boolean collisionWithPlayer = other == getTarget();
 		if(collisionWithPlayer){
@@ -62,7 +72,4 @@ public class Ball extends Enemy{
 			this.die();
 		}
 	}
-
-	
-	
 }
