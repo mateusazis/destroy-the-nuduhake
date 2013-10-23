@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
 				//FileManager.writeAsset(um, um.name, MainActivity.this);
 				//FileManager.writeAsset(dois, dois.name, MainActivity.this);
 				
-				FileManager.deleteAllFiles(MainActivity.this);
+//				FileManager.deleteAllFiles(MainActivity.this);
 				
 				FileManager.saveBuiltInAssets(MainActivity.this);
 				

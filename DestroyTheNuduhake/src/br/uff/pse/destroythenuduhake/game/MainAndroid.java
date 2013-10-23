@@ -28,8 +28,7 @@ public class MainAndroid extends AndroidApplication {
         super.onCreate(savedInstanceState);
         Configs.setup(true);
         
-        if(AuthorRetriever.isFirstTimePlaying())
-        	FileManager.saveBuiltInAssets(this);
+       
         
         instance = this;
         cfg = new AndroidApplicationConfiguration();
@@ -42,6 +41,8 @@ public class MainAndroid extends AndroidApplication {
         initialize(g, cfg);
         
         AuthorRetriever.initialize(this);
+        if(AuthorRetriever.isFirstTimePlaying())
+        	FileManager.saveBuiltInAssets(this);
     }
     
     @Override
