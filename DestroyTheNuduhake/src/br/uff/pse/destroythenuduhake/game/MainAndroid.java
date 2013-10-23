@@ -9,6 +9,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import br.uff.pse.destroythenuduhake.dtn.AuthorRetriever;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Game;
+import br.uff.pse.files.FileManager;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -26,7 +27,7 @@ public class MainAndroid extends AndroidApplication {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Configs.setup(true);
-        
+        FileManager.saveBuiltInAssets(this);
         instance = this;
         cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = true;
