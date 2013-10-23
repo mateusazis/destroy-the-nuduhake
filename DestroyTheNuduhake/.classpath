@@ -6,6 +6,6 @@
 	<classpathentry exported="true" kind="lib" path="libs_sources/gdx.jar" sourcepath="libs_sources/gdx-sources.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="C:/Users/Rolim/Documents/GitHub/Info-UFF-DTN/InfoUFFDtn/libs/android-ibrdtn-api.jar"/>
+	<classpathentry kind="lib" path="libs/android-ibrdtn-api.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

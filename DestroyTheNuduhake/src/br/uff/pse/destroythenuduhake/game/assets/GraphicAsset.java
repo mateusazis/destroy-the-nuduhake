@@ -33,6 +33,10 @@ public class GraphicAsset extends Asset{
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	};
 	
+	public Texture getTexture(){
+		return texture;
+	}
+	
 	public int getWidth(){
 		return texture.getWidth();
 	}

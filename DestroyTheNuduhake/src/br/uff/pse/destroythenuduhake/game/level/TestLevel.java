@@ -71,9 +71,8 @@ public class TestLevel extends Level {
 //		e = new Enemy(200, 40, shellTex);
 //		addActor(e);
 //		e.setupPhysics(world);
-		GraphicAsset shooterAsset = b.getAsset(AssetDatabase.SPRITE_BALL_SHOOTER),
-				ballAsset = b.getAsset(AssetDatabase.SPRITE_BALL);
-		BallShooter ball = new BallShooter(400, 100, shooterAsset, ballAsset);
+		
+		BallShooter ball = new BallShooter(400, 100, b);
 		ball.setupPhysics(world);
 		addActor(ball);
 		
@@ -167,7 +166,6 @@ public class TestLevel extends Level {
 		public void beginContact(Contact contact) {
 			LevelObject a = (LevelObject) contact.getFixtureA().getBody().getUserData();
 			LevelObject b = (LevelObject) contact.getFixtureB().getBody().getUserData();
-			
 			
 			
 			if(a instanceof ControlableEntity){

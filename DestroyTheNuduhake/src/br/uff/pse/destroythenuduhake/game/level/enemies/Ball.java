@@ -1,8 +1,5 @@
 package br.uff.pse.destroythenuduhake.game.level.enemies;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 import br.uff.pse.destroythenuduhake.game.level.Enemy;
@@ -16,8 +13,11 @@ public class Ball extends Enemy{
 	private boolean dead = false;
 	private boolean firstGroundTouched = false;
 	
-	public Ball(float x, float y, GraphicAsset asset) {
+	private GraphicAsset smokeAsset;
+	
+	public Ball(float x, float y, GraphicAsset asset, GraphicAsset smokeAsset) {
 		super(x, y, asset, 100000);
+		this.smokeAsset = smokeAsset;
 		setJumpVelocity(6);
 		setVelocity(SPEED);
 		setMaxMoveVelocity(SPEED);
@@ -49,7 +49,7 @@ public class Ball extends Enemy{
 	}
 	
 	public void die2() {
-		Smoke smoke = new Smoke(getX(), getY());
+		Smoke smoke = new Smoke(getX(), getY(), smokeAsset);
 		getParent().addActor(smoke);
 		remove();
 		dispose();
