@@ -25,6 +25,7 @@ public class TestLevel extends Level {
 	private DefaultController controllerPadrao;
 	private OrthographicCamera camera;
 	private Enemy e;
+	private ShooterEnemy se;
 	private IAManager manager;
 
 	// physics
@@ -41,7 +42,7 @@ public class TestLevel extends Level {
 		playerTex = b.getAsset(AssetDatabase.SPRITE_MARIO);
 
 		shellTex = b.getAsset(AssetDatabase.SPRITE_SHELL);
-
+		
 		// setup objects
 		ground = new LevelObject(100, 30,
 				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_GROUND));
@@ -66,11 +67,15 @@ public class TestLevel extends Level {
 		addActor(player);
 		player.setupPhysics(world);
 		
-		e = new Enemy(200, 40, shellTex);
-		addActor(e);
-		e.setupPhysics(world);
+//		e = new Enemy(200, 40, shellTex);
+//		addActor(e);
+//		e.setupPhysics(world);
 		
-		manager = new IAManager(new Enemy[]{e}, player);
+		se = new ShooterEnemy(200, 40, shellTex, shellTex, this);
+		addActor(se);
+		se.setupPhysics(world);
+		
+		manager = new IAManager(new ShooterEnemy[]{se}, player);
 		addActor(manager);
 
 		// setup input

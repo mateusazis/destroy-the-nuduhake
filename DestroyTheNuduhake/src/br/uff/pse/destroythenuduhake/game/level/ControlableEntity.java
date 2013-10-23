@@ -13,27 +13,26 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 public class ControlableEntity extends LevelObject {
 
 	private int life = 3;
-	private int atackPower;	
+	private int atackPower;
 	private float velocity;
 	private Fixture fixture;
-	
-	Rectangle 	bounds = new Rectangle();
-	private State		state = State.IDLE;
-	private boolean		facingLeft = true;
-	
+
+	Rectangle bounds = new Rectangle();
+	private State state = State.IDLE;
+	private boolean facingLeft = true;
+
 	public enum State {
 		IDLE, WALKING, JUMPING, DYING
 	}
-	
-	protected static final float JUMP_VELOCITY = 5f;
+
+	protected static final float JUMP_VELOCITY = 6f;
 	protected static final float MAX_VELOCITY = 10F;
-	
 
 	public ControlableEntity(float x, float y, GraphicAsset asset) {
 		super(x, y, asset);
 		velocity = 1f;
 	}
-	
+
 	@Override
 	public void createBodyFixture(Body b, PolygonShape boxShape) {
 		FixtureDef fixtureDef = new FixtureDef();
@@ -46,29 +45,25 @@ public class ControlableEntity extends LevelObject {
 	}
 
 	public void moveLeft() {
-		if(getState() != State.JUMPING){
-			this.setFacingLeft(true);
-			this.setState(State.WALKING);
-			if(getBody().getLinearVelocity().x > -MAX_VELOCITY)
-				getBody().applyLinearImpulse(-velocity, 0, getX(), getY());
-		}
+		this.setFacingLeft(true);
+		if (getBody().getLinearVelocity().x > -MAX_VELOCITY)
+			getBody().applyLinearImpulse(-velocity, 0, getX(), getY());
+
 	}
 
 	public void moveRight() {
-		if(getState() != State.JUMPING){
-			this.setFacingLeft(false);
-			this.setState(State.WALKING);
-			if(getBody().getLinearVelocity().x < MAX_VELOCITY)
-				getBody().applyLinearImpulse(velocity, 0, getX(), getY());
-		}
+		this.setFacingLeft(false);
+		if (getBody().getLinearVelocity().x < MAX_VELOCITY)
+			getBody().applyLinearImpulse(velocity, 0, getX(), getY());
+
 	}
-	
-	public void touchGround(){
+
+	public void touchGround() {
 		setState(State.IDLE);
 	}
 
 	public void jump() {
-		if(getState() != State.JUMPING){
+		if (getState() != State.JUMPING) {
 			setState(State.JUMPING);
 			getBody().applyLinearImpulse(0.0f, JUMP_VELOCITY, getX(), getY());
 		}
@@ -80,11 +75,11 @@ public class ControlableEntity extends LevelObject {
 
 	public void onAtacked(int atackPower) {
 		this.life = Math.max(0, this.life - atackPower);
-		if(isDead())
+		if (isDead())
 			die();
 	}
-	
-	public boolean isDead(){
+
+	public boolean isDead() {
 		return this.life <= 0;
 	}
 
