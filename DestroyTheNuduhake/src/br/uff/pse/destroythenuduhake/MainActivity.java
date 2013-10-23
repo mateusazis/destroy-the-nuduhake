@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 				
 //				FileManager.deleteAllFiles(MainActivity.this);
 				
-				FileManager.saveBuiltInAssets(MainActivity.this);
+				//FileManager.saveBuiltInAssets(MainActivity.this);
 				
 				GraphicAsset kibe = new GraphicAsset(AssetDatabase.SPRITE_MARIO,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath(),true));
 //				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
