@@ -27,7 +27,10 @@ public class MainAndroid extends AndroidApplication {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Configs.setup(true);
-        FileManager.saveBuiltInAssets(this);
+        
+        if(AuthorRetriever.isFirstTimePlaying())
+        	FileManager.saveBuiltInAssets(this);
+        
         instance = this;
         cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = true;

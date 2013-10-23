@@ -14,6 +14,7 @@ public class AuthorRetriever {
 
 	private static final String PLAYER_NAME_PREF = "player_name";
 	private static String storedName;
+	private static boolean firstTimePlaying = false;
 	
 	private static boolean retrieveSavedName(Activity a){
 		SharedPreferences prefs = a.getPreferences(Activity.MODE_PRIVATE);
@@ -50,8 +51,15 @@ public class AuthorRetriever {
 	}
 	
 	public static void initialize(Activity a){
-		if(!retrieveSavedName(a))
+		if(!retrieveSavedName(a)){
 			retrieveNewName(a);
+			firstTimePlaying = true;
+		} else
+			firstTimePlaying = false;
+	}
+	
+	public static boolean isFirstTimePlaying(){
+		return firstTimePlaying;
 	}
 	
 	public static String getAuthorName(){
