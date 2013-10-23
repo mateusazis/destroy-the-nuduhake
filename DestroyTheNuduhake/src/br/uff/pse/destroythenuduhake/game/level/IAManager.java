@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class IAManager extends Actor{
 
-	private static float MIN_X_DISTANCE = 300;
 	private List<Enemy> enemies;
 	private Player player;
 	
@@ -32,7 +31,7 @@ public class IAManager extends Actor{
 				i--;
 			} else {
 				float xDistance = Math.abs(e.getX() - player.getX());
-				if(xDistance <= MIN_X_DISTANCE)
+				if(xDistance <= e.getMinXPlayerDistance())
 					e.awake(player);
 				else
 					e.sleep();

@@ -1,12 +1,9 @@
 package br.uff.pse.destroythenuduhake.game.mainmenu;
 
-import java.util.ArrayList;
-
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
-import br.uff.pse.destroythenuduhake.game.control.Game;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 import br.uff.pse.destroythenuduhake.game.control.Text;
@@ -14,10 +11,10 @@ import br.uff.pse.destroythenuduhake.game.control.TextListener;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class MainMenu extends Level implements TextListener{
 
+	private static final boolean SKIP_INTRO = false;
 	private Text title, startText, editText, dtnText;
 	private LevelObject bg;
 	private MusicAsset music;
@@ -48,12 +45,12 @@ public class MainMenu extends Level implements TextListener{
 		music.play();
 	}	
 	
-//	@Override
-//	public void act(float delta) {
-//		// TODO Auto-generated method stub
-//		super.act(delta);
-//		getParent().changeLevel(1);
-//	}
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		if(SKIP_INTRO)
+			getParent().changeLevel(1);
+	}
 	
 	public void startGame(){
 		getParent().openBundleAssembler();

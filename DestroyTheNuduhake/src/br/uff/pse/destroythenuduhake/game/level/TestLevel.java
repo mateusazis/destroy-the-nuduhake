@@ -5,6 +5,7 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
+import br.uff.pse.destroythenuduhake.game.level.enemies.Ball;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -58,19 +59,23 @@ public class TestLevel extends Level {
 		ground2.setupPhysics(world);
 		addActor(ground2);
 
-		shell = new ControlableEntity(70, 20, shellTex);
-		addActor(shell);
-		shell.setupPhysics(world);
+//		shell = new ControlableEntity(70, 20, shellTex);
+//		addActor(shell);
+//		shell.setupPhysics(world);
 
 		player = new Player(100, 40, playerTex);
 		addActor(player);
 		player.setupPhysics(world);
 		
-		e = new Enemy(200, 40, shellTex);
-		addActor(e);
-		e.setupPhysics(world);
+//		e = new Enemy(200, 40, shellTex);
+//		addActor(e);
+//		e.setupPhysics(world);
 		
-		manager = new IAManager(new Enemy[]{e}, player);
+		Ball ball = new Ball(400, 100, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BALL));
+		ball.setupPhysics(world);
+		addActor(ball);
+		
+		manager = new IAManager(new Enemy[]{ball}, player);
 		addActor(manager);
 
 		// setup input
@@ -83,7 +88,6 @@ public class TestLevel extends Level {
 
 		camera = (OrthographicCamera) this.getCamera();
 		camera.zoom = 3f;
-
 	}
 	
 	@Override
@@ -158,12 +162,17 @@ public class TestLevel extends Level {
 			LevelObject a = (LevelObject) contact.getFixtureA().getBody().getUserData();
 			LevelObject b = (LevelObject) contact.getFixtureB().getBody().getUserData();
 			
+			
+			
 			if(a instanceof ControlableEntity){
 				((ControlableEntity) a).touchGround();
 			}
 			if(b instanceof ControlableEntity){
 				((ControlableEntity) b).touchGround();
 			}
+			
+			a.onContactStart(b);
+			b.onContactStart(a);
 			
 		}
 	}
