@@ -26,6 +26,7 @@ public class AssetsWorkshopActivity extends Activity
 {
 
 
+	
 	private ListView listView;
 	private List<Item> values;	
 	public static GraphicAsset asset;
@@ -58,6 +59,13 @@ public class AssetsWorkshopActivity extends Activity
 		}
 		
 	};
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -65,24 +73,17 @@ public class AssetsWorkshopActivity extends Activity
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.assetsworkshop);
-		listView = (ListView)findViewById(R.id.listView1);				
+		listView = (ListView)findViewById(R.id.workshopList);				
 		listView.setOnItemClickListener(listener);
 
 		showContents();
 		
-		Button b = (Button) findViewById(R.id.assetCreator);
-		b.setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{	
 
-			}
-		});
 		
 		
 		
 	}
+	
 	private void showContents()
 	{
 		// ImageView icon = (ImageView)findViewById(R.id.icon);
@@ -92,12 +93,19 @@ public class AssetsWorkshopActivity extends Activity
 			try
 			{
 				values = FileManager.readAllFilesNames(this);
+				for(int i = 0;i<values.size();i++)
+				{
+					if(values.get(i) instanceof ListItem)
+					{
+						((ListItem)(values.get(i))).setCheckBoxInv();
+					}
+				}
 		        TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(this, values);
 		        listView.setAdapter(adapter);
 			}
 			catch (Exception e)
 			{
-
+				Exception x = e;
 			}
 
 			

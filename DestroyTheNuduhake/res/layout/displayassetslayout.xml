@@ -2,22 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+   >
 
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="fill_parent"
-        android:layout_height="378dp"
-        android:layout_weight="0.71"
-        android:scrollHorizontally="true" >
+     <TextView
+         android:id="@+id/textView1"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_weight="0.15"
+         android:gravity="center"
+         android:text="Choose your Assets"
+         android:textAppearance="?android:attr/textAppearanceLarge" >
+</TextView>
 
-    </ListView>
+     <ListView
+         android:id="@+id/listView1"
+         android:layout_width="match_parent"
+         android:layout_height="348dp"
+         android:layout_weight="0.38" >
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.31"
-        android:text="Send Selected" />
+     </ListView>
+
+     <Button
+         android:id="@+id/button1"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="Begin!" />
 
 </LinearLayout>

@@ -1,13 +1,26 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
+import com.badlogic.gdx.Gdx;
+
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
 public class Enemy extends ControlableEntity {
 
 	private Player target;
+	private float minXPlayerDistance = 300f;
+	private IAManager manager;
 	
 	public Enemy(float x, float y, GraphicAsset asset) {
+		this(x, y, asset, 300);
+	}
+	
+	public Enemy(float x, float y, GraphicAsset asset, float minXPlayerDistance) {
 		super(x, y, asset);
+		this.minXPlayerDistance = minXPlayerDistance;
+	}
+	
+	public float getMinXPlayerDistance(){
+		return minXPlayerDistance;
 	}
 	
 	public void awake(Player p){
@@ -18,9 +31,7 @@ public class Enemy extends ControlableEntity {
 		this.target = null;
 	}
 	
-	public void updateIA(){
-		jump();
-	}
+	public void updateIA(float delta){	}
 
 	public boolean isSleeping(){
 		return target == null;
@@ -30,7 +41,19 @@ public class Enemy extends ControlableEntity {
 	public void act(float delta) {
 		super.act(delta);
 		if(!isSleeping()){
-			updateIA();
+			updateIA(delta);
 		}
+	}
+	
+	public Player getTarget(){
+		return target;
+	}
+	
+	public void setManager(IAManager manager){
+		this.manager = manager;
+	}
+	
+	public IAManager getManager(){
+		return manager;
 	}
 }

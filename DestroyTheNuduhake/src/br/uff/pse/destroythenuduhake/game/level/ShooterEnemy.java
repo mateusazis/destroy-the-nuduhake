@@ -41,7 +41,7 @@ public class ShooterEnemy extends Enemy {
 	}
 
 	@Override
-	public void updateIA() {
+	public void updateIA(float delta) {
 		if (podeAtirar){
 			atack();
 			podeAtirar = false;

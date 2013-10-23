@@ -107,7 +107,6 @@ Player player;
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		float xPlayer = player.getStage().stageToScreenCoordinates(player.localToStageCoordinates(new Vector2(player.getX(), player.getY()))).x;
-		//System.out.println("x: " + x + "\nxPlayer: " + xPlayer);
 		if (x < xPlayer) 
 			leftPressed();
 		if(x > xPlayer)

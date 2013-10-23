@@ -24,6 +24,22 @@ public class LevelObject extends Actor{
 		setGraphic(asset);
 		setSize(asset.getWidth(), asset.getHeight());
 	}
+	
+	public void onContactStart(LevelObject other){	}
+	
+//	public boolean removeFromLevel(){
+//		//in case physics is not used, the body is null
+//		if(body != null){
+//			World w = body.getWorld();
+//			w.destroyBody(body);
+//		}
+//		return super.remove();
+//	}
+	
+	public void dispose(){
+		World w = body.getWorld();
+		w.destroyBody(body);
+	}
 
 	
 	public void setupPhysics(World world){

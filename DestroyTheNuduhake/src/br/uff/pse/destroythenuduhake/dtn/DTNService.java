@@ -1,15 +1,23 @@
 package br.uff.pse.destroythenuduhake.dtn;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+
+
 import br.uff.pse.destroythenuduhake.DisplayAssetsActivity;
+import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 
 
 
+import br.uff.pse.files.FileManager;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Binder;
@@ -110,11 +118,13 @@ public class DTNService extends IntentService implements ShareService
 		return null;
 	}
 
-	private void sendContent()
+	private synchronized void sendContent()
 	{
 
 		
-	
+			ArrayList<Asset> files = FileManager.getFilesToSend(this);
+		
+		
 			try
 			{
 				List<Node> neighbours = mClient.getDTNService().getNeighbors();
@@ -130,42 +140,71 @@ public class DTNService extends IntentService implements ShareService
 					b.setDestination(destination);
 	
 					// limit the lifetime of the bundle to 60 seconds
-					b.setLifetime(60L);
+					b.setLifetime(120L);
+					
 	
 					// set status report requests for bundle reception
-					// b.set(ProcFlags.REQUEST_REPORT_OF_BUNDLE_RECEPTION, true);
+					 b.set(ProcFlags.REQUEST_REPORT_OF_BUNDLE_RECEPTION, true);
 	
 					// set destination for status reports
-					// b.setReportto(SingletonEndpoint.ME);
+					 b.setReportto(SingletonEndpoint.ME);
 	
 					// generate some payload
-					String payload = "PAYLOAD";
+					
+
+					
 	
 					try
 					{
+						
 						// get the DTN session
 						Session s = mClient.getSession();
+	
 
 	
 						// send the bundle
-						BundleID ret = s.send(b, payload.getBytes());
-	
-						if (ret == null)
+						//BundleID ret = s.send(b, payload.getBytes());
+						
+						for(int j = 0 ; j < files.size(); j++)
 						{
-							Log.e(TAG, "could not send the message");
+							
+							try 
+							{
+							  byte[] contentBytes = FileManager.prepareAssetToSend(files.get(j),this);
+							  BundleID ret = s.send(b, contentBytes);
+							  
+							  	if (ret == null)
+								{
+									Log.e(TAG, "could not send the message");
+
+								}
+								else
+								{
+									Log.d(TAG, "Bundle sent, BundleID: " + ret.toString());
+
+									
+								}
+							} 
+							catch(Exception e)
+							{
+								
+							}
+							finally
+							{
+
+							}													
 						}
-						else
-						{
-							Log.d(TAG, "Bundle sent, BundleID: " + ret.toString());
-						}
+						
 					}
 					catch (SessionDestroyedException e)
 					{
 						Log.e(TAG, "could not send the message", e);
+						
 					}
 					catch (InterruptedException e)
 					{
 						Log.e(TAG, "could not send the message", e);
+						
 					}
 				}
 			}
@@ -328,6 +367,7 @@ public class DTNService extends IntentService implements ShareService
 	private DataHandler mDataHandler = new DataHandler()
 	{
 
+		ByteArrayOutputStream stream = null;
 		private Bundle mBundle = null;
 
 		@Override
@@ -343,6 +383,8 @@ public class DTNService extends IntentService implements ShareService
 			// complete bundle received
 			BundleID received = new BundleID(mBundle);
 
+
+			
 			// mark the bundle as delivered
 			Intent i = new Intent(DTNService.this, DTNService.class);
 			i.setAction(MARK_DELIVERED_INTENT);
@@ -366,6 +408,7 @@ public class DTNService extends IntentService implements ShareService
 			{
 				// return SIMPLE mode to received the payload as "payload()"
 				// calls
+				stream = new ByteArrayOutputStream();
 				return TransferMode.SIMPLE;
 			}
 			else
@@ -378,7 +421,40 @@ public class DTNService extends IntentService implements ShareService
 		@Override
 		public void endBlock()
 		{
-			// nothing to do here.
+			if (stream != null) {
+
+				try
+				{
+
+					
+					byte[] streamBytes = stream.toByteArray();
+
+					try 
+					{
+
+					  Asset c = FileManager.getAssetFromBytes(streamBytes);
+					 
+					  FileManager.writeAsset(c, DTNService.this);
+					  
+
+
+					} 
+					catch(Exception e)
+					{
+						
+					}
+					finally 
+					{
+
+					}
+				}
+				catch(Exception e)
+				{
+				}
+           
+		    
+                stream = null;
+		    }
 		}
 
 		@Override
@@ -393,22 +469,17 @@ public class DTNService extends IntentService implements ShareService
 		@Override
 		public void payload(byte[] data)
 		{
-			// payload is received here
-			try
-			{
-				String payload =new String(data, "UTF-8");
-				Intent intent = new Intent(getBaseContext(),DisplayAssetsActivity.class);
-				intent.putExtra("payload", payload);
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
-			}
-			catch (Exception e)
-			{
-				Exception x = e;
-				String jk = "";
+			if (stream == null) return;
+		    // write data to the stream
+		    try {
+                stream.write(data);
+            } catch (IOException e) {
+                Log.e(TAG, "error on writing payload", e);
+            }
 
-			}
-			Log.d(TAG, "payload received: " + data);
+			
+
+
 		}
 
 		@Override

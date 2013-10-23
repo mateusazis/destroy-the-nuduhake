@@ -2,8 +2,14 @@ package br.uff.pse.destroythenuduhake.game.control;
 
 import java.io.Serializable;
 
+import android.util.Log;
+
 public class AssetID implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int idNumber;
 	private String name, description;
 	
@@ -27,5 +33,10 @@ public class AssetID implements Serializable{
 			return false;
 		AssetID idOther = (AssetID)other;
 		return this.idNumber == idOther.idNumber;
+	}
+	@Override
+	public int hashCode()
+	{
+		return idNumber;
 	}
 }

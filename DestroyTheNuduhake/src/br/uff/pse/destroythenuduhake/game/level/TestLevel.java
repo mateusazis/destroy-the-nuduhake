@@ -5,6 +5,8 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
+import br.uff.pse.destroythenuduhake.game.level.enemies.Ball;
+import br.uff.pse.destroythenuduhake.game.level.enemies.BallShooter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -59,9 +61,9 @@ public class TestLevel extends Level {
 		ground2.setupPhysics(world);
 		addActor(ground2);
 
-		shell = new ControlableEntity(70, 20, shellTex);
-		addActor(shell);
-		shell.setupPhysics(world);
+//		shell = new ControlableEntity(70, 20, shellTex);
+//		addActor(shell);
+//		shell.setupPhysics(world);
 
 		player = new Player(100, 40, playerTex);
 		addActor(player);
@@ -75,7 +77,17 @@ public class TestLevel extends Level {
 		addActor(se);
 		se.setupPhysics(world);
 		
-		manager = new IAManager(new ShooterEnemy[]{se}, player);
+		manager = new IAManager(player, new ShooterEnemy[]{se});
+
+//		BallShooter ball = new BallShooter(400, 100, b);
+//		ball.setupPhysics(world);
+//		addActor(ball);
+		
+//		Ball ball = new Ball(400, 100, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BALL));
+//		ball.setupPhysics(world);
+//		addActor(ball);
+		
+		//manager = new IAManager(player, ball);
 		addActor(manager);
 
 		// setup input
@@ -88,7 +100,6 @@ public class TestLevel extends Level {
 
 		camera = (OrthographicCamera) this.getCamera();
 		camera.zoom = 3f;
-
 	}
 	
 	@Override
@@ -163,12 +174,16 @@ public class TestLevel extends Level {
 			LevelObject a = (LevelObject) contact.getFixtureA().getBody().getUserData();
 			LevelObject b = (LevelObject) contact.getFixtureB().getBody().getUserData();
 			
+			
 			if(a instanceof ControlableEntity){
 				((ControlableEntity) a).touchGround();
 			}
 			if(b instanceof ControlableEntity){
 				((ControlableEntity) b).touchGround();
 			}
+			
+			a.onContactStart(b);
+			b.onContactStart(a);
 			
 		}
 	}

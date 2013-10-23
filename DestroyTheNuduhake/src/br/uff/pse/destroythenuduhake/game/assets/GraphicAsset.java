@@ -33,6 +33,10 @@ public class GraphicAsset extends Asset{
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	};
 	
+	public Texture getTexture(){
+		return texture;
+	}
+	
 	public int getWidth(){
 		return texture.getWidth();
 	}
@@ -68,7 +72,7 @@ public class GraphicAsset extends Asset{
 	{
 		if(isOriginal()){
 			try {
-				InputStream in = c.getAssets().open(getDataFilePath());
+				InputStream in = c.getAssets().open(getFilePath());
 				Bitmap resp = BitmapFactory.decodeStream(in);
 				in.close();
 				return resp;
@@ -76,19 +80,19 @@ public class GraphicAsset extends Asset{
 				e.printStackTrace();
 			}
 		}
-		return BitmapFactory.decodeFile(getDataFilePath());
+		return BitmapFactory.decodeFile(getFilePath());
 	}
 	
-	@Override
-	public String getDataFilePath(){
-		return getFilePath() + ".png";
-	}
+//	@Override
+//	public String getDataFilePath(){
+//		return getFilePath() + ".png";
+//	}
 	
 	public void setBitmap(Bitmap bm)
 	{
 		try 
 		{
-			FileOutputStream fos = new FileOutputStream(getDataFilePath());
+			FileOutputStream fos = new FileOutputStream(getFilePath());
 			bm.compress(Bitmap.CompressFormat.PNG, 100, fos);
 			fos.flush();
 			fos.close();

@@ -9,6 +9,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import br.uff.pse.destroythenuduhake.dtn.AuthorRetriever;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Game;
+import br.uff.pse.files.FileManager;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -27,6 +28,8 @@ public class MainAndroid extends AndroidApplication {
         super.onCreate(savedInstanceState);
         Configs.setup(true);
         
+       
+        
         instance = this;
         cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = true;
@@ -38,6 +41,8 @@ public class MainAndroid extends AndroidApplication {
         initialize(g, cfg);
         
         AuthorRetriever.initialize(this);
+        if(AuthorRetriever.isFirstTimePlaying())
+        	FileManager.saveBuiltInAssets(this);
     }
     
     @Override

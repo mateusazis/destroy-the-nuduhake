@@ -18,10 +18,12 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import br.uff.pse.destroythenuduhake.dtn.BundleReceiver;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
@@ -131,7 +133,7 @@ public class FileManager extends Activity implements BundleReceiver
 		{
 			if(filesPaths.get(i).equals(a))
 			{
-				File f = new File(a.getDataFilePath());
+				File f = new File(a.getFilePath());
 				f.delete();
 				filesPaths.remove(i);
 			}
@@ -154,7 +156,7 @@ public class FileManager extends Activity implements BundleReceiver
 		for(int i = 0; i < filesPaths.size() ; i++)
 		{
 		//	ctx.deleteFile(filesPaths.get(i).getFilepath());
-			File f = new File(filesPaths.get(i).getDataFilePath());
+			File f = new File(filesPaths.get(i).getFilePath());
 			f.delete();
 		}
 		filesPaths.clear();
@@ -313,10 +315,15 @@ public class FileManager extends Activity implements BundleReceiver
 
 
 		
-		filesPaths.clear();
+//		filesPaths.clear();
+		
+//		filesPaths.add(new GraphicAsset(AssetDatabase.SPRITE_MARIO, "file:///android_asset/images/mario"));
+	}
+	public static void saveBuiltInAssets(Context ctx)
+	{
 		for(Asset a : AssetDatabase.getOriginalAssets())
 			filesPaths.add(a);
-//		filesPaths.add(new GraphicAsset(AssetDatabase.SPRITE_MARIO, "file:///android_asset/images/mario"));
+		saveListFile(ctx);
 	}
 	public static void saveCheckListFile(Context ctx)
 	{
@@ -524,6 +531,137 @@ public class FileManager extends Activity implements BundleReceiver
 		}
 		return null;
 		
+	}
+	public static ArrayList<Asset> getFilesToSend(Context ctx)
+	{
+		loadListFile(ctx);
+		ArrayList<Asset> ret = new ArrayList<Asset>();
+		ArrayList<String> types = new ArrayList<String>();		
+		for(int i = 0;i<filesPaths.size();i++)
+		{
+			if(!filesPaths.get(i).isOriginal())
+				ret.add(filesPaths.get(i));		
+		}
+
+		
+		return ret;
+		
+	}
+	public static byte[] prepareAssetToSend(Asset c, Context ctx)
+	{
+		//byte[] 0 a 1023 vai ter o Content, o resto ser� a imagem
+		
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutput out = null;
+		byte[] cBytes = new byte[1024];
+		byte[] bmBytes = null;
+		try 
+		{
+		  
+		  out = new ObjectOutputStream(bos);   
+		  out.writeObject(c);
+		  cBytes = bos.toByteArray();
+		  byte[] intBytes = ByteBuffer.allocate(4).putInt(cBytes.length).array();
+		  int x = byteArrayToInt(intBytes);
+		  if(c instanceof GraphicAsset)
+			  bmBytes = ((GraphicAsset) c).getBitmapBytes(ctx);
+		  else
+		  {
+			  //transformar audio em bytes
+		  }
+		  byte[] retBytes = new byte[cBytes.length + bmBytes.length + intBytes.length];
+		  System.arraycopy(intBytes, 0, retBytes, 0, intBytes.length);
+		  System.arraycopy(cBytes, 0, retBytes, intBytes.length, cBytes.length);
+		  System.arraycopy(bmBytes, 0, retBytes, intBytes.length + cBytes.length, bmBytes.length);
+		  return retBytes;
+		
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+		return null;
+	}
+	public static Asset getAssetFromBytes(byte[] b)
+	{
+		byte[] tam = new byte[4];
+		tam[0] = b[0];
+		tam[1] = b[1];
+		tam[2] = b[2];
+		tam[3] = b[3];
+		int contentSize = byteArrayToInt(tam);
+		byte[] contentBytes = new byte[contentSize];
+		System.arraycopy(b, 4 , contentBytes, 0, contentBytes.length);
+		byte[] bitMapBytes = new byte[b.length - contentSize - 4];
+		System.arraycopy(b, contentSize + 4 , bitMapBytes, 0, b.length - contentSize - 4);
+		
+		try
+		{
+			ByteArrayInputStream bos = new ByteArrayInputStream(contentBytes);
+			ObjectInputStream ois = new ObjectInputStream(bos);
+			Asset c = (Asset) ois.readObject();
+			//CommFile comm = (CommFile) ois.readObject();
+			if(c instanceof GraphicAsset)
+			{
+				Bitmap bitmap = BitmapFactory.decodeByteArray(bitMapBytes , 0, bitMapBytes.length);
+				((GraphicAsset) c).setBitmap(bitmap);
+			}
+			else
+			{
+				//RECUPERAR AUDIO
+			}
+
+			return c;
+		
+		}
+		catch(Exception e)
+		{
+			Exception x = e;
+		}
+		return null;
+		
+		
+		
+	}
+	public static synchronized String writeValidation(String type,int num,Context ctx,String dirPath,boolean isGraphic)
+	{
+		
+	
+		try
+		{
+		loadListFile(ctx);
+		String fp = dirPath;
+		for(int i = 0; i < filesPaths.size();i++)
+		{
+			String fname = filesPaths.get(i).getFilePath().substring(0, filesPaths.get(i).getFilePath().lastIndexOf("."));
+			if( fname.equals(fp+"/"+type))
+			{
+				if(num == 0 )
+					return writeValidation(type+"("+(num+1)+")",++num,ctx,dirPath,isGraphic);
+				else
+				{
+					String newType = type.substring(0, type.indexOf("("));
+					return writeValidation(newType+"("+(num+1)+")",++num,ctx,dirPath,isGraphic);
+				}
+			}
+		}
+		
+		if(isGraphic)
+			return fp+"/"+type+".png";
+		else
+			return fp+"/"+type+".mp3";
+		}
+		catch(Exception e)
+		{
+			
+		}
+		return null;
+	}
+	public static synchronized String getAvaiableFilepath(Context ctx,String dirPath,boolean isGraphic)
+	{
+		
+		return writeValidation("NuduhakeFile",0,ctx,dirPath,isGraphic);
 	}
 	
 

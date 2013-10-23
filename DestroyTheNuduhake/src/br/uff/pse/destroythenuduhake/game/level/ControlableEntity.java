@@ -25,12 +25,20 @@ public class ControlableEntity extends LevelObject {
 		IDLE, WALKING, JUMPING, DYING
 	}
 
-	protected static final float JUMP_VELOCITY = 6f;
-	protected static final float MAX_VELOCITY = 10F;
+	private float jumpVelocity = 5f;
+	private float maxMoveVelocity = 10F;
 
 	public ControlableEntity(float x, float y, GraphicAsset asset) {
 		super(x, y, asset);
 		velocity = 1f;
+	}
+
+	public void setJumpVelocity(float value) {
+		this.jumpVelocity = value;
+	}
+
+	public void setMaxMoveVelocity(float value) {
+		this.maxMoveVelocity = value;
 	}
 
 	@Override
@@ -46,16 +54,14 @@ public class ControlableEntity extends LevelObject {
 
 	public void moveLeft() {
 		this.setFacingLeft(true);
-		if (getBody().getLinearVelocity().x > -MAX_VELOCITY)
+		if (getBody().getLinearVelocity().x > -maxMoveVelocity)
 			getBody().applyLinearImpulse(-velocity, 0, getX(), getY());
-
 	}
 
 	public void moveRight() {
 		this.setFacingLeft(false);
-		if (getBody().getLinearVelocity().x < MAX_VELOCITY)
+		if (getBody().getLinearVelocity().x < maxMoveVelocity)
 			getBody().applyLinearImpulse(velocity, 0, getX(), getY());
-
 	}
 
 	public void touchGround() {
@@ -65,7 +71,7 @@ public class ControlableEntity extends LevelObject {
 	public void jump() {
 		if (getState() != State.JUMPING) {
 			setState(State.JUMPING);
-			getBody().applyLinearImpulse(0.0f, JUMP_VELOCITY, getX(), getY());
+			getBody().applyLinearImpulse(0.0f, jumpVelocity, getX(), getY());
 		}
 	}
 
