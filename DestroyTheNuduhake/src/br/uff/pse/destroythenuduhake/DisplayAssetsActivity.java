@@ -11,6 +11,7 @@ import br.uff.pse.destroythenuduhake.game.MainAndroid;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
+import br.uff.pse.destroythenuduhake.game.control.AssetID;
 import br.uff.pse.destroythenuduhake.interfacepk.ListItem;
 import br.uff.pse.destroythenuduhake.interfacepk.Item;
 import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter;
@@ -55,7 +56,9 @@ public class DisplayAssetsActivity extends Activity
 			{
 				if(values.get(i) instanceof ListItem)
 				{
-					if(a.getId() == ((ListItem)values.get(i)).getAsset().getId() && arg2!=i)
+					AssetID x = a.getId();
+					AssetID y = ((ListItem)values.get(i)).getAsset().getId();
+					if(x.equals(y) && arg2!=i)
 					{
 						((ListItem)values.get(i)).setChecked(false);
 					}
@@ -150,17 +153,7 @@ public class DisplayAssetsActivity extends Activity
 		try
 		{
 			
-	//		values = FileManager.readAllFilesNames(this);
-//			String[] values = {"Categoria","teste1","teste2","Categoria","teste3","Categoria","teste1","teste2","Categoria","teste3"};
-			
-			// Use your own layout
-			// ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-			// R.layout.displayactivitymenu, R.id.label, values);
 
-//			DisplayAdapter adapter = new DisplayAdapter(R.layout.rowlayout,values,this);
-//			listView.setAdapter(adapter);
-//			listView.setOnItemClickListener(this);
-			
 			try
 			{
 				values = FileManager.readAllFilesNames(this);
