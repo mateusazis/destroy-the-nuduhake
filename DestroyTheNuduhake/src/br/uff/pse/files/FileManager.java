@@ -539,8 +539,8 @@ public class FileManager extends Activity implements BundleReceiver
 		ArrayList<String> types = new ArrayList<String>();		
 		for(int i = 0;i<filesPaths.size();i++)
 		{
-
-			ret.add(filesPaths.get(i));		
+			if(!filesPaths.get(i).isOriginal())
+				ret.add(filesPaths.get(i));		
 		}
 
 		
@@ -624,7 +624,7 @@ public class FileManager extends Activity implements BundleReceiver
 		
 		
 	}
-	public static synchronized String writeValidation(String type,int num,Context ctx,String dirPath)
+	public static synchronized String writeValidation(String type,int num,Context ctx,String dirPath,boolean isGraphic)
 	{
 		
 	
@@ -634,19 +634,23 @@ public class FileManager extends Activity implements BundleReceiver
 		String fp = dirPath;
 		for(int i = 0; i < filesPaths.size();i++)
 		{
-			if(filesPaths.get(i).getFilePath().equals(fp+"/"+type))
+			String fname = filesPaths.get(i).getFilePath().substring(0, filesPaths.get(i).getFilePath().lastIndexOf("."));
+			if( fname.equals(fp+"/"+type))
 			{
 				if(num == 0 )
-					return writeValidation(type+"("+(num+1)+")",++num,ctx,dirPath);
+					return writeValidation(type+"("+(num+1)+")",++num,ctx,dirPath,isGraphic);
 				else
 				{
 					String newType = type.substring(0, type.indexOf("("));
-					return writeValidation(newType+"("+(num+1)+")",++num,ctx,dirPath);
+					return writeValidation(newType+"("+(num+1)+")",++num,ctx,dirPath,isGraphic);
 				}
 			}
 		}
-
-		return fp+"/"+type;	
+		
+		if(isGraphic)
+			return fp+"/"+type+".png";
+		else
+			return fp+"/"+type+".mp3";
 		}
 		catch(Exception e)
 		{
@@ -654,10 +658,10 @@ public class FileManager extends Activity implements BundleReceiver
 		}
 		return null;
 	}
-	public static synchronized String getAvaiableFilepath(Context ctx,String dirPath)
+	public static synchronized String getAvaiableFilepath(Context ctx,String dirPath,boolean isGraphic)
 	{
 		
-		return writeValidation("NuduhakeFile",0,ctx,dirPath);
+		return writeValidation("NuduhakeFile",0,ctx,dirPath,isGraphic);
 	}
 	
 

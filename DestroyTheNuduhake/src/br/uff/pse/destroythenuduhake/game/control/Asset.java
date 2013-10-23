@@ -66,7 +66,9 @@ public abstract class Asset implements Disposable,Serializable{
 	}
 	
 	protected FileHandle getFileHandle(){
-		return Gdx.files.internal(getFilePath());
+		if(isOriginal())
+			return Gdx.files.internal(getFilePath());
+		return Gdx.files.absolute(getFilePath());
 //		StringBuilder pathBuilder = new StringBuilder("bundles/");
 //		
 //		pathBuilder.append(bundlePath);
