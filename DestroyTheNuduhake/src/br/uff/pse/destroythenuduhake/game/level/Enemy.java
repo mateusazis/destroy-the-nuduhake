@@ -1,7 +1,5 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
-import com.badlogic.gdx.Gdx;
-
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
 public class Enemy extends ControlableEntity {
@@ -40,9 +38,9 @@ public class Enemy extends ControlableEntity {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if(!isSleeping()){
+		//if(!isSleeping()){
 			updateIA(delta);
-		}
+		//}
 	}
 	
 	public Player getTarget(){

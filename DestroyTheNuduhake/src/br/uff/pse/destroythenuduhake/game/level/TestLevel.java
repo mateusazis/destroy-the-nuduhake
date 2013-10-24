@@ -5,8 +5,7 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
-import br.uff.pse.destroythenuduhake.game.level.enemies.Ball;
-import br.uff.pse.destroythenuduhake.game.level.enemies.BallShooter;
+import br.uff.pse.destroythenuduhake.game.level.enemies.ShooterEnemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -73,7 +72,7 @@ public class TestLevel extends Level {
 //		addActor(e);
 //		e.setupPhysics(world);
 		
-		se = new ShooterEnemy(200, 40, shellTex, shellTex, this);
+		se = new ShooterEnemy(200, 40, b);
 		addActor(se);
 		se.setupPhysics(world);
 		
