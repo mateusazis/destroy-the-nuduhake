@@ -18,12 +18,13 @@ public class MainMenu extends Level implements TextListener{
 	private Text title, startText, editText, dtnText;
 	private LevelObject bg;
 	private MusicAsset music;
+	private BitmapFont f;
 	
 	@Override
 	public void createWithAssetBundle(AssetBundle bundle){
 		super.createWithAssetBundle(bundle);
 		
-		BitmapFont f = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), false);
+		f = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), false);
 		
 		float middle = Gdx.graphics.getWidth() / 2f;
 		
@@ -44,6 +45,12 @@ public class MainMenu extends Level implements TextListener{
 		music = bundle.<MusicAsset>getAsset(AssetDatabase.MUSIC_OPENING);
 		music.play();
 	}	
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		f.dispose();
+	}
 	
 	@Override
 	public void act(float delta) {
@@ -80,8 +87,5 @@ public class MainMenu extends Level implements TextListener{
 			doDTN();
 			break;
 		}
-			
-		
 	}
-	
 }

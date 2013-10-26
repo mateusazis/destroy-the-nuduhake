@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import br.uff.pse.destroythenuduhake.dtn.AuthorRetriever;
@@ -46,8 +47,18 @@ public class MainAndroid extends AndroidApplication {
     }
     
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	if(keyCode == KeyEvent.KEYCODE_BACK && g.getCurrentLevel() != 0){
+    		g.changeLevel(0);
+    		return false;
+    	}
+    	return super.onKeyDown(keyCode, event);
+    }
+    
+    @Override
     protected void onDestroy() {
     	super.onDestroy();
+    	g.dispose();
     	instance = null;
     }
     

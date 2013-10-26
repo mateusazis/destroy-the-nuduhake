@@ -1,8 +1,5 @@
 package br.uff.pse.destroythenuduhake.game.control;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -23,9 +20,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 	}
 	
 	@Override
-	public final void create() {
-//		createWithAssetBundle(DefaultBundle.getInstance());
-	}
+	public final void create() {	}
 	
 	public void createWithAssetBundle(AssetBundle bundle){
 		usedBundle = bundle;
@@ -43,8 +38,10 @@ public abstract class Level extends Stage implements ApplicationListener{
 		//do NOT call super.dispose! It disposes a sprite batch necessary
 		//for rendering! Instead, use definitiveDispose when you are done!
 		super.clear();
-		usedBundle.dispose();
-		usedBundle = null;
+		if(usedBundle != null){
+			usedBundle.dispose();
+			usedBundle = null;
+		}
 	}
 
 	@Override

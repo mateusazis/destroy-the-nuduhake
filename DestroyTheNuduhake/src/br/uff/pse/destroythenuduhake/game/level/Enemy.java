@@ -7,51 +7,60 @@ public class Enemy extends ControlableEntity {
 	private Player target;
 	private float minXPlayerDistance = 300f;
 	private IAManager manager;
-	
+
 	public Enemy(float x, float y, GraphicAsset asset) {
 		this(x, y, asset, 300);
 	}
-	
+
 	public Enemy(float x, float y, GraphicAsset asset, float minXPlayerDistance) {
 		super(x, y, asset);
 		this.minXPlayerDistance = minXPlayerDistance;
 	}
-	
-	public float getMinXPlayerDistance(){
+
+	public float getMinXPlayerDistance() {
 		return minXPlayerDistance;
 	}
-	
-	public void awake(Player p){
+
+	public void awake(Player p) {
 		this.target = p;
 	}
-	
-	public void sleep(){
+
+	public void sleep() {
 		this.target = null;
 	}
-	
-	public void updateIA(float delta){	}
 
-	public boolean isSleeping(){
+	public void updateIA(float delta) {
+	}
+
+	public boolean isSleeping() {
 		return target == null;
 	}
-	
+
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		//if(!isSleeping()){
+		if (!isSleeping()) {
 			updateIA(delta);
-		//}
+		} else {
+			patrol();
+		}
 	}
-	
-	public Player getTarget(){
+
+	public Player getTarget() {
 		return target;
 	}
-	
-	public void setManager(IAManager manager){
+
+	public void setManager(IAManager manager) {
 		this.manager = manager;
 	}
-	
-	public IAManager getManager(){
+
+	public IAManager getManager() {
 		return manager;
+	}
+
+	public void patrol() {}
+
+	public boolean isLeft() {
+		return this.getX() < getTarget().getX();
 	}
 }

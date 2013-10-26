@@ -13,6 +13,8 @@ public final class AssetDatabase {
 	public static final AssetID SPRITE_BALL_SHOOTER = new AssetID(0x0004, "Ball Shooter", "");
 	public static final AssetID SPRITE_BALL = new AssetID(0x0005, "Ball", "");
 	public static final AssetID SPRITE_SMOKE = new AssetID(0x0006, "Smoke", "");
+	public static final AssetID SPRITE_BULLET = new AssetID(0x0007, "Bullet", "");
+	public static final AssetID SPRITE_SHOOTER = new AssetID(0x0008, "Shooter", "");
 	
 	//musics
 	public static final AssetID MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", "");
@@ -22,7 +24,7 @@ public final class AssetDatabase {
 		return new AssetID[]{
 				SPRITE_MARIO, SPRITE_SHELL, SPRITE_GROUND, SPRITE_DRAGON, SPRITE_BALL, SPRITE_BALL_SHOOTER,
 				
-				MUSIC_OPENING,
+				MUSIC_OPENING, SPRITE_BULLET, SPRITE_SHOOTER, 
 		};
 	}
 	
@@ -36,6 +38,8 @@ public final class AssetDatabase {
 			new GraphicAsset(AssetDatabase.SPRITE_BALL, "images/ball.png"),
 			new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER, "images/ball_shooter.png"),
 			new GraphicAsset(AssetDatabase.SPRITE_SMOKE, "images/smoke1.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_BULLET, "images/bullet.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_SHOOTER, "images/shooter.png"),
 			
 			new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening.mp3"),
 		};
