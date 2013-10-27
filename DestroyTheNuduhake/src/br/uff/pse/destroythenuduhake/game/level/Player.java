@@ -1,17 +1,39 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
 
 public class Player extends ControlableEntity {
 
-	public Player(float x, float y, GraphicAsset asset) {
+	private Sword s;
+	private GraphicAsset swordAsset;
+	private Vector2 swordRelativePos;
+	private Vector2 swordPos = new Vector2(0,0);
+	
+	public Player(float x, float y, GraphicAsset asset, GraphicAsset swordAsset) {
 		super(x, y, asset);
-		// TODO Auto-generated constructor stub
+		swordRelativePos = new Vector2(getWidth(), getHeight() / 2f);
+		this.swordAsset = swordAsset;
 	}
 	
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		if(s == null){
+			s = new Sword(swordAsset);
+			getParent().addActor(s);
+		}
+		
+		swordPos.set(swordRelativePos);
+		localToStageCoordinates(swordPos);
+		s.setPosition(swordPos.x, swordPos.y);
+	}
+	
+	@Override
+	public void atack(){
+		s.swing();
 	}
 }

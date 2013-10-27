@@ -64,7 +64,7 @@ public class TestLevel extends Level {
 //		addActor(shell);
 //		shell.setupPhysics(world);
 
-		player = new Player(100, 40, playerTex);
+		player = new Player(100, 40, playerTex, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_SWORD));
 		addActor(player);
 		player.setupPhysics(world);
 		
@@ -72,11 +72,12 @@ public class TestLevel extends Level {
 //		addActor(e);
 //		e.setupPhysics(world);
 		
-		se = new ShooterEnemy(200, 40, b);
-		addActor(se);
-		se.setupPhysics(world);
+//		se = new ShooterEnemy(200, 40, b);
+//		addActor(se);
+//		se.setupPhysics(world);
 		
-		manager = new IAManager(player, new ShooterEnemy[]{se});
+		manager = new IAManager(player);
+//		manager.addEnemies(se);
 
 //		BallShooter ball = new BallShooter(400, 100, b);
 //		ball.setupPhysics(world);

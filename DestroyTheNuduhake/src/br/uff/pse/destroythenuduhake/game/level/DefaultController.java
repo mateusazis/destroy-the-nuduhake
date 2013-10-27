@@ -3,6 +3,8 @@ package br.uff.pse.destroythenuduhake.game.level;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
@@ -72,6 +74,8 @@ Player player;
 				player.moveRight();
 			if (keys.get(Keys.JUMP)) 
 				player.jump();
+			if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+				player.atack();
 		}
 
 	@Override
