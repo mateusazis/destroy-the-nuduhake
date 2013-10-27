@@ -74,7 +74,7 @@ Player player;
 				player.moveRight();
 			if (keys.get(Keys.JUMP)) 
 				player.jump();
-			if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+			if(Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.MENU))
 				player.atack();
 		}
 

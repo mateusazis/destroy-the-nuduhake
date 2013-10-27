@@ -72,12 +72,12 @@ public class TestLevel extends Level {
 //		addActor(e);
 //		e.setupPhysics(world);
 		
-//		se = new ShooterEnemy(200, 40, b);
-//		addActor(se);
-//		se.setupPhysics(world);
+		se = new ShooterEnemy(200, 40, b);
+		addActor(se);
+		se.setupPhysics(world);
 		
 		manager = new IAManager(player);
-//		manager.addEnemies(se);
+		manager.addEnemies(se);
 
 //		BallShooter ball = new BallShooter(400, 100, b);
 //		ball.setupPhysics(world);

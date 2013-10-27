@@ -1,6 +1,5 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
@@ -19,11 +18,15 @@ public class Player extends ControlableEntity {
 		this.swordAsset = swordAsset;
 	}
 	
+	public Sword getWeapon(){
+		return s;
+	}
+	
 	@Override
 	public void act(float delta) {
 		super.act(delta);
 		if(s == null){
-			s = new Sword(swordAsset);
+			s = new Sword(this, swordAsset);
 			getParent().addActor(s);
 		}
 		

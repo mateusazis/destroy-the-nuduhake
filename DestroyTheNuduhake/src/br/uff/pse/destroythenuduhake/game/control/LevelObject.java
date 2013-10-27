@@ -5,6 +5,8 @@ import br.uff.pse.destroythenuduhake.game.Physics;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -17,12 +19,20 @@ public class LevelObject extends Actor{
 	private GraphicAsset graphic;
 	private BodyDef bodyDef;
 	private Body body;
+	private Rectangle r;
 	
 	public LevelObject(float x, float y, GraphicAsset asset){
 		super();
 		setPosition(x, y);
 		setGraphic(asset);
 		setSize(asset.getWidth(), asset.getHeight());
+		Rectangle rectangle;
+		r = new Rectangle(0, 0, getWidth(), getHeight());
+	}
+	
+	public Rectangle getRect(){
+		r.x = getX(); r.y = getY();
+		return r;
 	}
 	
 	public void onContactStart(LevelObject other){	}

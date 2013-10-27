@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class IAManager extends Actor{
@@ -28,8 +29,14 @@ public class IAManager extends Actor{
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		Sword s = player.getWeapon();
+		Rectangle sRect = s.getRect();
+		
 		for(int i = 0; i < enemies.size(); i++){
 			Enemy e = enemies.get(i);
+			if(s.canHitEnemies() && sRect.overlaps(e.getRect()))
+				s.onOverlap(e);
+			
 			if(e.isDead()){
 				enemies.remove(i);
 				e.setManager(null);

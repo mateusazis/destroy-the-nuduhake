@@ -1,15 +1,25 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Sword extends Actor{
+/**
+ * Sword is a physics-less LevelObject with a custom rect. It has a back-and-forth swing animation.
+ * IAManager is responsible for checking collisions between the Sword and each enemy. In case of collision, 
+ * this object is notified. However, the enemy will only be hit if: 1) The sword is in the SWING_FRONT mode and
+ * 2) the enemy has not been previously hit during this movement. 
+ * @author mateus
+ *
+ */
+public class Sword extends LevelObject{
 	
-//	private GraphicAsset swordAsset;
 	private TextureRegion r;
 	private enum State{IDLE, SWINGING_FRONT, SWINGING_BACK, RESTORE}
 	private State state = State.IDLE;
@@ -18,33 +28,37 @@ public class Sword extends Actor{
 	private static final float
 		SWING_FRONT_DURATION = 0.2f, SWING_BACK_DURATION = 0.1f, RESTORE_DURATION = 0.1f;
 	
+	private Set<Enemy> hitEnemies = new HashSet<Enemy>();
+	private Player owner;
 	
-	public Sword(GraphicAsset swordAsset){
-		super();
-//		this.swordAsset = swordAsset;
+	
+	public Sword(Player owner, GraphicAsset swordAsset){
+		super(0, 0, swordAsset);
+		this.owner = owner;
 		r = new TextureRegion(swordAsset.getTexture());
 		setSize(swordAsset.getWidth(), swordAsset.getHeight());
+		setScaleX(4); setScaleY(4);
+		
+		
+		//update the sword rectangle
+		//scale up the height and set the width the same as the height
+		Rectangle r = getRect();
+		r.height = getHeight() * getScaleY();
+		r.width = r.height;
 	}
-	
+		
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		super.draw(batch, parentAlpha);
-//		swordAsset.render(batch, getX(), getY());
-//		batch.draw(r, getX(), getY(), swordAsset.getWidth(), swordAsset.getHeight());
-//		batch.draw(r, 0, 0);
-//		batch.draw(swordAsset.getTexture(), getX(), getY());
-		
 		float x = getX(),
 				y = getY(),
 				originX = getWidth()/2,
 				originY = 0,
 				width = getWidth(),
 				height = getHeight(),
-				scaleX = 4,
-				scaleY = 4,
+				scaleX = getScaleX(),
+				scaleY = getScaleY(),
 				rotation = getRotation();
 		batch.draw(r, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
-//		batch.draw(r, getX(), getY(), 0, 0, getWidth(), getHeight(), 4, 4, 90, true);
 	}
 	
 	public void swing(){
@@ -86,11 +100,24 @@ public class Sword extends Actor{
 				break;
 			case RESTORE:
 				elapsed += delta;
-				if(elapsed >= RESTORE_DURATION)
+				if(elapsed >= RESTORE_DURATION){
 					state = State.IDLE;
+					hitEnemies.clear();
+				}
 				else 
 					setRotation(lerp(frontAngle, idleAngle, elapsed / RESTORE_DURATION));
 				break;
 			}
 		}
+	
+	public boolean canHitEnemies(){
+		return state.equals(State.SWINGING_FRONT);
+	}
+	
+	public void onOverlap(Enemy e){
+		if(!hitEnemies.contains(e)){
+			hitEnemies.add(e);
+			e.onAtacked(owner.getAtackPower());
+		}
+	}
 }
