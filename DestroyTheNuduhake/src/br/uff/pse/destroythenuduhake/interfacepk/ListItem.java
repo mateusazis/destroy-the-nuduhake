@@ -1,12 +1,8 @@
 package br.uff.pse.destroythenuduhake.interfacepk;
 
 import br.uff.pse.destroythenuduhake.R;
-import br.uff.pse.destroythenuduhake.R.id;
-import br.uff.pse.destroythenuduhake.R.layout;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter.RowType;
-import br.uff.pse.files.FileManager;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +61,7 @@ public class ListItem implements Item {
         }
         //cb.setChecked(FileManager.getCheckOptionFromFile(str2,ctx));
         text1.setText("Version: " + asset.getVersionNumber());
-        text2.setText(asset.getAuthor());
+        text2.setText(asset.getAuthor().toString());
 
         return view;
     }

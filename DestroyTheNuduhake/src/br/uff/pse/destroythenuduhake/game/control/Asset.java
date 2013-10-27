@@ -2,27 +2,34 @@ package br.uff.pse.destroythenuduhake.game.control;
 
 import java.io.Serializable;
 
+import br.uff.pse.destroythenuduhake.dtn.Author;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Disposable;
 
 public abstract class Asset implements Disposable,Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -387636279654201957L;
+	
 	private AssetID id;
 	private int versionNumber;
-	private String author;
+	private Author author;
 	private String filePath;
 	private boolean original;
 	
 	public Asset(AssetID id, String filePath){
 		this.id = id;
 		this.versionNumber = 0;
-		this.author = "Built-in";
+		this.author = Author.getBuiltin();
 		this.setFilePath(filePath);
 		this.original = true;
 	}
 	
-	public Asset(AssetID id,String filePath, String author){
+	public Asset(AssetID id,String filePath, Author author){
 		this.id = id;
 		this.versionNumber = 0;
 		this.author = author;
@@ -32,10 +39,7 @@ public abstract class Asset implements Disposable,Serializable{
 	
 	public abstract void load();
 	public abstract void dispose();
-	public abstract String getFolderPath();
-//	public abstract String getAssetPath();
-//	public abstract String getDataFilePath();
-	public abstract Asset makeCopy(String authorName, String newPath);
+	public abstract Asset makeCopy(Author author, String newPath);
 	
 	/**
 	 * Compares each id in this list with this asset's own id, checking for any match.
@@ -61,7 +65,7 @@ public abstract class Asset implements Disposable,Serializable{
 		return versionNumber;
 	}
 	
-	public String getAuthor(){
+	public Author getAuthor(){
 		return author;
 	}
 	
@@ -69,13 +73,6 @@ public abstract class Asset implements Disposable,Serializable{
 		if(isOriginal())
 			return Gdx.files.internal(getFilePath());
 		return Gdx.files.absolute(getFilePath());
-//		StringBuilder pathBuilder = new StringBuilder("bundles/");
-//		
-//		pathBuilder.append(bundlePath);
-//		pathBuilder.append(getFolderPath());
-//		pathBuilder.append(getAssetPath());
-//		
-//		return Gdx.files.internal(pathBuilder.toString());
 	}
 
 	public String getFilePath() {

@@ -8,6 +8,7 @@ import java.io.InputStream;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import br.uff.pse.destroythenuduhake.dtn.Author;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetID;
 
@@ -17,13 +18,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GraphicAsset extends Asset{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6114353327388248403L;
 	private Texture texture;
 	
 	public GraphicAsset(AssetID id,String filepath){
 		super(id,filepath);
 	}
 	
-	private GraphicAsset(AssetID id,String filepath, String author){
+	private GraphicAsset(AssetID id,String filepath, Author author){
 		super(id,filepath, author);
 	}
 	
@@ -55,18 +60,9 @@ public class GraphicAsset extends Asset{
 	}
 	
 	@Override
-	public String getFolderPath() {
-		return "images/";
+	public GraphicAsset makeCopy(Author author, String newPath) {
+		return new GraphicAsset(getId(), newPath, author);
 	}
-	
-	@Override
-	public GraphicAsset makeCopy(String authorName, String newPath) {
-		return new GraphicAsset(getId(), newPath, authorName);
-	}
-//	@Override
-//	public String getAssetPath() {
-//		return AssetDatabase.getSpritePath(getId());
-//	}
 	
 	public Bitmap getBitmap(Context c)
 	{
@@ -83,11 +79,6 @@ public class GraphicAsset extends Asset{
 		return BitmapFactory.decodeFile(getFilePath());
 	}
 	
-//	@Override
-//	public String getDataFilePath(){
-//		return getFilePath() + ".png";
-//	}
-	
 	public void setBitmap(Bitmap bm)
 	{
 		try 
@@ -100,10 +91,10 @@ public class GraphicAsset extends Asset{
 		} 
 		catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
 	public byte[] getBitmapBytes(Context c)
 	{
 		byte[] byteArray = null;
@@ -112,16 +103,12 @@ public class GraphicAsset extends Asset{
 			Bitmap bm = getBitmap(c);
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
-			byteArray = stream.toByteArray();
-			
-			
+			byteArray = stream.toByteArray();			
 		} 
 		catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return byteArray;
-		
 	}
 }

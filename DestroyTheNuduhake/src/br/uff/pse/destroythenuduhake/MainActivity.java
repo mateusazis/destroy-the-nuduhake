@@ -3,16 +3,14 @@ package br.uff.pse.destroythenuduhake;
 
 //V de viadÃƒÂ£o
 
+import br.uff.pse.destroythenuduhake.dtn.Author;
 import br.uff.pse.destroythenuduhake.dtn.DTNService;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
-import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.files.FileManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.BitmapFactory;
 import android.view.View;
@@ -75,11 +73,11 @@ public class MainActivity extends Activity {
 //												
 //				FileManager.writeAsset(kibe, MainActivity.this);
 				
-				kibe = kibe.makeCopy("JosÃ©", FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath(),true));
+				kibe = kibe.makeCopy(new Author("JosÃ©", "0"), FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath(),true));
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
-				kibe = kibe.makeCopy("Guilherme", FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath(),true));
+				kibe = kibe.makeCopy(new Author("Guilherme", "1"), FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath(),true));
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
