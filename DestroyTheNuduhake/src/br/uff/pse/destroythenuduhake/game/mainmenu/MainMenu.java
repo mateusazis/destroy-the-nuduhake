@@ -8,7 +8,11 @@ import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MainMenu extends Level implements TextListener{
 
@@ -17,10 +21,16 @@ public class MainMenu extends Level implements TextListener{
 	private LevelObject bg;
 	private MusicAsset music;
 	private BitmapFont f;
+	private Pixmap p;
+	private Texture fadeTexture;
+	
+	private float elapsed = 0;
+	private static final float FADE_IN_DURATION = 3.2f;
 	
 	@Override
 	public void createWithAssetBundle(AssetBundle bundle){
 		super.createWithAssetBundle(bundle);
+		elapsed = 0;
 		
 		f = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), false);
 		
@@ -42,19 +52,31 @@ public class MainMenu extends Level implements TextListener{
 		
 		music = bundle.<MusicAsset>getAsset(AssetDatabase.MUSIC_OPENING);
 		music.play();
+		
+		p = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Format.RGBA4444);
+		fadeTexture = new Texture(p);
+		p.setColor(0, 0, 0, 1);
+		p.fill();
+		fadeTexture.draw(p, 0, 0);
 	}	
 	
 	@Override
 	public void dispose() {
 		super.dispose();
 		f.dispose();
+		fadeTexture.dispose();
 	}
 	
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		if(elapsed < FADE_IN_DURATION){
+			elapsed += delta;
+		}
+		
 		if(SKIP_INTRO)
 			getParent().changeLevel(1);
+		
 	}
 	
 	public void startGame(){
@@ -63,15 +85,29 @@ public class MainMenu extends Level implements TextListener{
 	}
 	
 	public void editAssets(){
-//		Gdx.app.log("", "edit assets");
 		getParent().openAssetModule();
 	}
 	
 	public void doDTN(){
-//		Gdx.app.log("", "do dtn");
 		getParent().openDTNModule();
 	}
 
+	
+	@Override
+	public void draw() {
+		super.draw();
+		
+		if(elapsed < FADE_IN_DURATION){
+			SpriteBatch batch = getSpriteBatch();
+			batch.begin();
+			batch.setColor(0, 0, 0, 1 - elapsed / FADE_IN_DURATION);
+			batch.draw(fadeTexture, 0, 0);
+			batch.end();
+			batch.setColor(1,1,1,1);
+		}
+	}
+	
+	
 	@Override
 	public void onTouched(int id) {
 		switch(id){

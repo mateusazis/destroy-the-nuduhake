@@ -46,7 +46,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 
 	@Override
 	public void render() {
-		super.draw();
+		draw();
 	}
 
 	@Override
