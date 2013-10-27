@@ -6,8 +6,6 @@ import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
-import br.uff.pse.destroythenuduhake.game.control.Text;
-import br.uff.pse.destroythenuduhake.game.control.TextListener;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

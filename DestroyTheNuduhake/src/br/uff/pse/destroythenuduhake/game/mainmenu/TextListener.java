@@ -1,4 +1,4 @@
-package br.uff.pse.destroythenuduhake.game.control;
+package br.uff.pse.destroythenuduhake.game.mainmenu;
 
 public interface TextListener {
 

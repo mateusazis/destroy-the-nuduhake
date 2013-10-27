@@ -23,6 +23,7 @@ public final class AssetDatabase {
 	public static AssetID[] getAllIDs(){
 		return new AssetID[]{
 				SPRITE_MARIO, SPRITE_SHELL, SPRITE_GROUND, SPRITE_DRAGON, SPRITE_BALL, SPRITE_BALL_SHOOTER,
+				SPRITE_SMOKE,
 				
 				MUSIC_OPENING, SPRITE_BULLET, SPRITE_SHOOTER, 
 		};
