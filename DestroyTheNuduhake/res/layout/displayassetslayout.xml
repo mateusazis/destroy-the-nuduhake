@@ -3,17 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background ="@drawable/background"
    >
 
-     <TextView
-         android:id="@+id/textView1"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_weight="0.15"
-         android:gravity="center"
-         android:text="Choose your Assets"
-         android:textAppearance="?android:attr/textAppearanceLarge" >
-</TextView>
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/chooseyourassets" /> />
+
+     
 
      <ListView
          android:id="@+id/listView1"
@@ -27,6 +27,9 @@
          android:id="@+id/button1"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:text="Begin!" />
+         android:background="@drawable/button"
+         android:text="Begin!"
+         android:textColor="#2E1B00"
+         android:textSize="30dp" />
 
 </LinearLayout>

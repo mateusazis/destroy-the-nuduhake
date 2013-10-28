@@ -15,7 +15,7 @@
         android:paddingBottom="1dip"
         android:paddingTop="1dip"
         android:text="sample"
-        android:textColor="#ff7f1d"
+        android:textColor="#2D1008"
         android:textSize="17dip"
         android:textStyle="bold" />
 
@@ -24,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="5dip"
+        android:layout_weight="0.59"
         android:clickable="false"
         android:gravity="center"
         android:linksClickable="false"
@@ -31,16 +32,17 @@
         android:paddingBottom="1dip"
         android:paddingTop="1dip"
         android:text="sample"
-        android:textColor="#6d6d6d"
+        android:textColor="#4A1F0F"
         android:textSize="17dip" />
 
     <CheckBox
         android:id="@+id/checkBox1"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="" 
+        android:layout_weight="0.29"
+        android:enabled="false"
         android:focusable="false"
-        android:enabled="false"/>
+        android:text="" />
 
     <ImageView
         android:id="@+id/imageView1"

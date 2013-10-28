@@ -195,7 +195,7 @@ public class FileManager extends Activity implements BundleReceiver
 	{		
 		loadListFile(ctx);
 		loadCheckListFile(ctx);
-		
+		Asset[] builtins = AssetDatabase.getOriginalAssets();
 		//fazemos um mapa associando cada AssetID a uma lista de assets com esse ID
 		HashMap<AssetID, ArrayList<Item>> itemListMap = new HashMap<AssetID, ArrayList<Item>>();
 
@@ -228,27 +228,33 @@ public class FileManager extends Activity implements BundleReceiver
 	//		if(a.type.equals("Terreno"))
 	//			terrenos.add(new ListItem(a.author,filesPaths.get(i),ctx));
 		}
-	/*	items.add(new Header("Terrain Asset"));
-        items.add(new ListItem("Default", "Terrain"));
-        items.add(new ListItem("Z�zinho", "Terreno de fogo"));
-        items.add(new ListItem("Jurema", "Terreno de gelo"));
+		for(int i = 0;i<builtins.length;i++)
+		{
+			Asset current = builtins[i];
+			AssetID id = current.getId();
+			Bitmap b = null;
+			if(current instanceof GraphicAsset)
+				b = ((GraphicAsset)current).getBitmap(ctx);
+			
+			ArrayList<Item> myList;
+			if(!itemListMap.containsKey(id)){
+				//se for um tipo de asset inédito, crie uma lista nova pra ele
+				myList = new ArrayList<Item>();
+				itemListMap.put(id, myList);
+				//e adiciona a ela um header igual ao nome do ID
+				myList.add(new Header(id.getName()));
+			}
+			else{
+				//senão, já existem assets desse tipo. Apenas pega a lista existente
+				myList = itemListMap.get(id);
+			}
+			
+			//adiciona o asset na lista (AINDA TEM QUE VER O CASO DE NÃO SER GRAPHIC ASSET!)
+			myList.add(new ListItem(current,current.isOriginal(),b));
+			
 
-		items.add(new Header("Enemy Asset"));
-        items.add(new ListItem("Default", "Enemy"));
-        items.add(new ListItem("Z�zinho", "Inimigo de fogo"));
-        items.add(new ListItem("Jurema", "Inimigo de gelo"));
+		}
 
-		items.add(new Header("Hero Asset"));
-        items.add(new ListItem("Default", "Hero"));
-        items.add(new ListItem("Cl�udio", "Her�i bolad�o"));
-        items.add(new ListItem("Jeremias", "Obi Juan"));
-        items.add(new ListItem("Francis", "Megaman"));
-
-		items.add(new Header("Background Asset"));
-        items.add(new ListItem("Default", "Background"));
-        items.add(new ListItem("Emanuelle", "Chaos"));
-        items.add(new ListItem("Maximillian", "Armageddon"));
-    */    
 
 		ArrayList<Item> combined = new ArrayList<Item>();
 		
@@ -321,9 +327,9 @@ public class FileManager extends Activity implements BundleReceiver
 	}
 	public static void saveBuiltInAssets(Context ctx)
 	{
-		for(Asset a : AssetDatabase.getOriginalAssets())
-			filesPaths.add(a);
-		saveListFile(ctx);
+		//for(Asset a : AssetDatabase.getOriginalAssets())
+		//	filesPaths.add(a);
+		//saveListFile(ctx);
 	}
 	public static void saveCheckListFile(Context ctx)
 	{
