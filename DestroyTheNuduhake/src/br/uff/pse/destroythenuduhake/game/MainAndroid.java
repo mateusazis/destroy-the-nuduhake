@@ -8,6 +8,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import br.uff.pse.destroythenuduhake.dtn.AuthorRetriever;
+import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
+import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Game;
 import br.uff.pse.files.FileManager;
@@ -74,6 +76,8 @@ public class MainAndroid extends AndroidApplication {
     	super.onActivityResult(requestCode, resultCode, data);
     	log("", "request code: " + requestCode + " result code " + resultCode);
     	if(requestCode == CODE_GET_ASSET_BUNDLE){
+    		for(Asset a : AssetDatabase.getPrivateBuiltinAssets())
+    			chosenBundle.addAsset(a);
     		g.startGame(chosenBundle);
     		chosenBundle = null;
     	}

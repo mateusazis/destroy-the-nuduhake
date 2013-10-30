@@ -5,6 +5,8 @@ import br.uff.pse.destroythenuduhake.game.control.AssetID;
 
 public final class AssetDatabase {
 	
+	private static Asset[] privateAssets, editableAssets;
+	
 	//sprites
 	public static final AssetID
 		SPRITE_MARIO = new AssetID(0x0000, "Mario", ""),
@@ -38,28 +40,35 @@ public final class AssetDatabase {
 //				MUSIC_OPENING, SPRITE_BULLET, SPRITE_SHOOTER, 
 //		};
 //	}
+	public static Asset[] getPrivateBuiltinAssets(){
+		if(privateAssets == null)
+			privateAssets =  new Asset[]{
+				new GraphicAsset(AssetDatabase.SPRITE_SMOKE, "images/smoke1.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_INPUT_SLIDER, "images/Input_slider.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_INPUT_SLIDER_PRESSED, "images/Input_slider_pressed.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_INPUT_JUMP, "images/jump_icon.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_INPUT_JUMP_PRESSED, "images/jump_icon_pressed.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_INPUT_ATTACK, "images/sword_icon.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_INPUT_ATTACK_PRESSED, "images/sword_icon_pressed.png"),
+			};
+		return privateAssets;
+	}
 	
-	
-	public static Asset[] getOriginalAssets(){
-		return new Asset[]{
-			new GraphicAsset(AssetDatabase.SPRITE_MARIO, "images/mario.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_SHELL, "images/shell.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_GROUND, "images/ground.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_DRAGON, "images/dragon.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_BALL, "images/ball.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER, "images/ball_shooter.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_SMOKE, "images/smoke1.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_BULLET, "images/bullet.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_SHOOTER, "images/shooter.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_SWORD, "images/sword.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_INPUT_SLIDER, "images/Input_slider.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_INPUT_SLIDER_PRESSED, "images/Input_slider_pressed.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_INPUT_JUMP, "images/jump_icon.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_INPUT_JUMP_PRESSED, "images/jump_icon_pressed.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_INPUT_ATTACK, "images/sword_icon.png"),
-			new GraphicAsset(AssetDatabase.SPRITE_INPUT_ATTACK_PRESSED, "images/sword_icon_pressed.png"),
-			
-			new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening.mp3"),
-		};
+	public static Asset[] getEditableBuiltinAssets(){
+		if(editableAssets == null)
+			editableAssets =  new Asset[]{
+				new GraphicAsset(AssetDatabase.SPRITE_MARIO, "images/mario.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_SHELL, "images/shell.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_GROUND, "images/ground.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_DRAGON, "images/dragon.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_BALL, "images/ball.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER, "images/ball_shooter.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_BULLET, "images/bullet.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_SHOOTER, "images/shooter.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_SWORD, "images/sword.png"),
+				
+				new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening.mp3"),
+			};
+		return editableAssets;
 	}
 }
