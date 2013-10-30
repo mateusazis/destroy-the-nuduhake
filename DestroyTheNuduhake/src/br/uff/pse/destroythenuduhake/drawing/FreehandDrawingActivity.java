@@ -13,9 +13,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import br.uff.pse.destroythenuduhake.AssetsWorkshopActivity;
@@ -59,6 +62,75 @@ public class FreehandDrawingActivity extends Activity {
 			drawView.getViewTreeObserver().addOnGlobalLayoutListener(list);
 		}
         drawView.requestFocus();
+        Button widthButton = (Button)findViewById(R.id.width_button);
+        widthButton.setOnClickListener(new OnClickListener() {
+		
+			@Override
+			public void onClick(View v) {
+	    		alert.show();
+	    		CircleView circle = (CircleView)alert.findViewById(R.id.circle_view);
+	            seekBar = (SeekBar)alert.findViewById(R.id.seek_bar);
+	            circle.setWid(drawView.getWid());
+	            circle.setPaintFill(drawView.paint);
+	            seekBar.setProgress(drawView.getWid());
+				
+		        seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+		            CircleView circle = (CircleView)alert.findViewById(R.id.circle_view);
+				            @Override
+							public void onStopTrackingTouch(SeekBar arg0) {
+				                // TODO Auto-generated method stub
+				            }
+				
+				            @Override
+							public void onStartTrackingTouch(SeekBar arg0) {
+				                // TODO Auto-generated method stub
+				            }
+				
+				            @Override
+							public void onProgressChanged(SeekBar sb, int progress, boolean arg2) {
+				                // TODO Auto-generated method stub
+				            	circle.setWid(progress);
+				            	Canvas c = new Canvas();
+				            	circle.draw(c);
+				            }
+				        });				
+			}
+		});
+        Button colorButton = (Button)findViewById(R.id.color_button);
+        colorButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				drawView.colorPicker();
+			}
+		});
+        Button eraserButton = (Button)findViewById(R.id.eraser_button);
+        eraserButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        Button undoButton = (Button)findViewById(R.id.undo_button);
+        undoButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				drawView.undo();
+				
+			}
+		});
+        Button clearButton = (Button)findViewById(R.id.clear_button);
+        clearButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				drawView.clearScreen();
+				
+			}
+		});
         builder = new AlertDialog.Builder(this);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			
@@ -80,59 +152,7 @@ public class FreehandDrawingActivity extends Activity {
         builder.setView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.width_picker_dialog, null));        
         alert = builder.create();
     }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-    	MenuInflater inflater = getMenuInflater();
-    	inflater.inflate(R.layout.paint_menu, menu);
-    	return true;
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-    	// Handle item selection
-    	int itemID = item.getItemId();
-    	if(itemID == R.id.clear_id)
-    		drawView.clearScreen();
-    	if(itemID == R.id.undo_id)
-    		drawView.undo();
-    	//if(itemID == R.id.eraser_id)
-    	if(itemID == R.id.change_color_id)
-    		drawView.colorPicker();
-    	if(itemID == R.id.change_bg_color_id)
-    		drawView.bgColorPicker();
-    	if(itemID == R.id.change_width_id){    		
-    		alert.show();
-    		CircleView circle = (CircleView)alert.findViewById(R.id.circle_view);
-            seekBar = (SeekBar)alert.findViewById(R.id.seek_bar);
-            circle.setWid(drawView.getWid());
-            circle.setPaintFill(drawView.paint);
-            seekBar.setProgress(drawView.getWid());
-			
-	        seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-	            CircleView circle = (CircleView)alert.findViewById(R.id.circle_view);
-			            @Override
-						public void onStopTrackingTouch(SeekBar arg0) {
-			                // TODO Auto-generated method stub
-			            }
-			
-			            @Override
-						public void onStartTrackingTouch(SeekBar arg0) {
-			                // TODO Auto-generated method stub
-			            }
-			
-			            @Override
-						public void onProgressChanged(SeekBar sb, int progress, boolean arg2) {
-			                // TODO Auto-generated method stub
-			            	circle.setWid(progress);
-			            	Canvas c = new Canvas();
-			            	circle.draw(c);
-			            }
-			        });
-    	}
-    	return true;
-    }
-
+        
 //    
 //    void setCustomBackground(DrawView v) {
 //    	Intent fileChooserIntent = new Intent();
