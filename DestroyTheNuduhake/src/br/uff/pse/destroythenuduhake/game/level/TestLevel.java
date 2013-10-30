@@ -91,8 +91,7 @@ public class TestLevel extends Level {
 		addActor(manager);
 
 		// setup input
-		controllerPadrao = new DefaultController(player);
-		Gdx.input.setInputProcessor(controllerPadrao);
+		controllerPadrao = new DefaultController(player, b, this);
 
 		// debugRenderer = new Box2DDebugRenderer();
 
@@ -186,5 +185,17 @@ public class TestLevel extends Level {
 			b.onContactStart(a);
 			
 		}
+	}
+	
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		super.touchUp(screenX, screenY, pointer, button);
+		return controllerPadrao.touchUp(screenX, screenY, pointer, button);
+	}
+	
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		super.touchDown(screenX, screenY, pointer, button);
+		return controllerPadrao.touchDown(screenX, screenY, pointer, button);
 	}
 }

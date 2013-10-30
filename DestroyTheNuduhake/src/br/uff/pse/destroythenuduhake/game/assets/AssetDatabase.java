@@ -17,19 +17,21 @@ public final class AssetDatabase {
 		SPRITE_BULLET = new AssetID(0x0007, "Bullet", ""),
 		SPRITE_SHOOTER = new AssetID(0x0008, "Shooter", ""),
 		SPRITE_SWORD = new AssetID(0x0009, "Sword", ""),
+		SPRITE_INPUT_SLIDER = new AssetID(0x000A, "Input Slider", ""),
+		SPRITE_INPUT_SLIDER_PRESSED = new AssetID(0x000B, "Input Slider Pressed", ""),
 	
 	//musics
 	MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", "");
 	
 
-	public static AssetID[] getAllIDs(){
-		return new AssetID[]{
-				SPRITE_MARIO, SPRITE_SHELL, SPRITE_GROUND, SPRITE_DRAGON, SPRITE_BALL, SPRITE_BALL_SHOOTER,
-				SPRITE_SMOKE, SPRITE_SWORD,
-				
-				MUSIC_OPENING, SPRITE_BULLET, SPRITE_SHOOTER, 
-		};
-	}
+//	public static AssetID[] getAllIDs(){
+//		return new AssetID[]{
+//				SPRITE_MARIO, SPRITE_SHELL, SPRITE_GROUND, SPRITE_DRAGON, SPRITE_BALL, SPRITE_BALL_SHOOTER,
+//				SPRITE_SMOKE, SPRITE_SWORD,
+//				
+//				MUSIC_OPENING, SPRITE_BULLET, SPRITE_SHOOTER, 
+//		};
+//	}
 	
 	
 	public static Asset[] getOriginalAssets(){
@@ -44,6 +46,8 @@ public final class AssetDatabase {
 			new GraphicAsset(AssetDatabase.SPRITE_BULLET, "images/bullet.png"),
 			new GraphicAsset(AssetDatabase.SPRITE_SHOOTER, "images/shooter.png"),
 			new GraphicAsset(AssetDatabase.SPRITE_SWORD, "images/sword.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_INPUT_SLIDER, "images/Input_slider.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_INPUT_SLIDER_PRESSED, "images/Input_slider_pressed.png"),
 			
 			new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening.mp3"),
 		};

@@ -1,6 +1,7 @@
 package br.uff.pse.destroythenuduhake.game.control;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public abstract class Level extends Stage implements ApplicationListener{
@@ -23,6 +24,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 	public final void create() {	}
 	
 	public void createWithAssetBundle(AssetBundle bundle){
+		Gdx.input.setInputProcessor(this);
 		usedBundle = bundle;
 		bundle.load();
 	}
@@ -51,6 +53,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 
 	@Override
 	public void resize(int width, int height) {
+		super.setViewport(width, height, true);
 	}
 
 	@Override

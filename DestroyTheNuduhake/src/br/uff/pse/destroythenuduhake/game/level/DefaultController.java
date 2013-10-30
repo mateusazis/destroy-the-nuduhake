@@ -3,14 +3,18 @@ package br.uff.pse.destroythenuduhake.game.level;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
+import br.uff.pse.destroythenuduhake.game.control.Level;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
-public class DefaultController implements InputProcessor {
+public class DefaultController {
 
-Player player;
+	private Player player;
+	private InputSlider slider;
 	
 	enum Keys {
 		LEFT, RIGHT, JUMP, FIRE
@@ -24,8 +28,10 @@ Player player;
 		keys.put(Keys.FIRE, false);
 	};
 
-	public DefaultController(Player player) {
+	public DefaultController(Player player, AssetBundle b, Level l) {
 		this.player = player;
+		slider = new InputSlider(100, 100, b, this);
+		l.addActor(slider);
 	}
 
 	// ** Key presses and touches **************** //
@@ -77,56 +83,18 @@ Player player;
 			if(Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.MENU))
 				player.atack();
 		}
-
-	@Override
-	public boolean keyDown(int arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyUp(int arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
+		
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		float xPlayer = player.getStage().stageToScreenCoordinates(player.localToStageCoordinates(new Vector2(player.getX(), player.getY()))).x;
-		if (x < xPlayer) 
-			leftPressed();
-		if(x > xPlayer)
-			rightPressed();
-		if(y < 200)
-			jumpPressed();
+//		float xPlayer = player.getStage().stageToScreenCoordinates(player.localToStageCoordinates(new Vector2(player.getX(), player.getY()))).x;
+//		if (x < xPlayer) 
+//			leftPressed();
+//		if(x > xPlayer)
+//			rightPressed();
+//		if(y < 200)
+//			jumpPressed();
 		return true;
 	}
 
-	@Override
-	public boolean touchDragged(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
 		leftReleased();
 		rightReleased();
