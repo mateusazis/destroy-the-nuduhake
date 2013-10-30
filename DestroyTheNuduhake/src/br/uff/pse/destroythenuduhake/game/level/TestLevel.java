@@ -93,8 +93,7 @@ public class TestLevel extends Level {
 		addActor(manager);
 
 		// setup input
-		controllerPadrao = new DefaultController(player);
-		Gdx.input.setInputProcessor(controllerPadrao);
+		controllerPadrao = new DefaultController(player, b, this);
 
 		// debugRenderer = new Box2DDebugRenderer();
 
@@ -135,21 +134,6 @@ public class TestLevel extends Level {
 //			}
 //		}
 	}
-
-	// @Override
-	// public void act(float delta) {
-	// // TODO Auto-generated method stub
-	// super.act(delta);
-	// if(Gdx.input.justTouched()){
-	// choiceSound.play();
-	// }
-	// }
-
-	// @Override
-	// public void dispose() {
-	// super.dispose();
-	// raiTex.dispose();
-	// }
 
 	class LevelContactListener implements ContactListener {
 

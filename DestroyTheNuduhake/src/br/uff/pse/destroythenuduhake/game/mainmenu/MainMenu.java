@@ -27,6 +27,11 @@ public class MainMenu extends Level implements TextListener{
 	private float elapsed = 0;
 	private static final float FADE_IN_DURATION = 3.2f;
 	
+	public MainMenu(){
+		super();
+		setRequiredAssets(AssetDatabase.SPRITE_DRAGON, AssetDatabase.MUSIC_OPENING);
+	}
+	
 	@Override
 	public void createWithAssetBundle(AssetBundle bundle){
 		super.createWithAssetBundle(bundle);

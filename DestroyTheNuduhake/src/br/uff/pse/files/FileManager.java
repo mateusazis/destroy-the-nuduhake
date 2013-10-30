@@ -195,7 +195,7 @@ public class FileManager extends Activity implements BundleReceiver
 	{		
 		loadListFile(ctx);
 		loadCheckListFile(ctx);
-		Asset[] builtins = AssetDatabase.getOriginalAssets();
+		Asset[] builtins = AssetDatabase.getEditableBuiltinAssets();
 		//fazemos um mapa associando cada AssetID a uma lista de assets com esse ID
 		HashMap<AssetID, ArrayList<Item>> itemListMap = new HashMap<AssetID, ArrayList<Item>>();
 
