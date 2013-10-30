@@ -1,5 +1,8 @@
 package br.uff.pse.destroythenuduhake.game.control;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -7,9 +10,20 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public abstract class Level extends Stage implements ApplicationListener{
 	private AssetBundle usedBundle;
 	private Game parent;
+	private Set<AssetID> requiredAssets;
 	
 	public Level(){
 		super();
+	}
+	
+	public void setRequiredAssets(AssetID...ids){
+		requiredAssets = new HashSet<AssetID>();
+		for(AssetID id : ids)
+			requiredAssets.add(id);
+	}
+	
+	private boolean shouldLoadAllAssets(){
+		return requiredAssets == null;
 	}
 	
 	protected void setParent(Game g){
@@ -26,7 +40,11 @@ public abstract class Level extends Stage implements ApplicationListener{
 	public void createWithAssetBundle(AssetBundle bundle){
 		Gdx.input.setInputProcessor(this);
 		usedBundle = bundle;
-		bundle.load();
+		
+		if(shouldLoadAllAssets())
+			bundle.loadAllAssets();
+		else
+			bundle.loadAssets(requiredAssets);
 	}
 
 	public void definitiveDispose(){
