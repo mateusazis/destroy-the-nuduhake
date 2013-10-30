@@ -18,11 +18,11 @@ public class ControlableEntity extends LevelObject {
 	private int atackPower;
 	private float velocity;
 	private Fixture fixture;
-	private TextureRegion r;
+	protected TextureRegion r;
 
 	Rectangle bounds = new Rectangle();
 	private State state = State.IDLE;
-	private boolean turnedLeft = true;
+	protected boolean turnedLeft = true;
 
 	public enum State {
 		IDLE, WALKING, JUMPING, DYING
@@ -35,8 +35,9 @@ public class ControlableEntity extends LevelObject {
 		super(x, y, asset);
 		velocity = 1f;
 		r = new TextureRegion(getGraphic().getTexture());
-//		setSize(getGraphic().getWidth(), getGraphic().getHeight());
-//		setScaleX(4); setScaleY(4);
+//		if(turnedLeft){
+//			r.flip(true, false);
+//		} Está comentado porque acabei fazendo o inimigo olhando pra direita, ai ia ficar estranho
 	}
 
 	public void setJumpVelocity(float value) {
@@ -129,16 +130,15 @@ public class ControlableEntity extends LevelObject {
 
 	public void turnLeft() {
 		turnedLeft = true;
-		setRotation(-30);
+		r.flip(true, false);
 	}
 
 	public void turnRight() {
 		turnedLeft = false;
-		setRotation(90);
+		r.flip(true, false);
 	}
 
 	public boolean isTurnedLeft() {
-		
 		return turnedLeft;
 	}
 
@@ -160,7 +160,6 @@ public class ControlableEntity extends LevelObject {
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		super.draw(batch, parentAlpha);
 		float x = getX(),
 				y = getY(),
 				originX = getWidth()/2,
@@ -176,10 +175,6 @@ public class ControlableEntity extends LevelObject {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if(!isTurnedLeft()){
-			setRotation(-30);
-		}
-		
 	}
 
 }
