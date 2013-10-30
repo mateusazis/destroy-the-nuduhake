@@ -17,8 +17,14 @@ public final class AssetDatabase {
 		SPRITE_BULLET = new AssetID(0x0007, "Bullet", ""),
 		SPRITE_SHOOTER = new AssetID(0x0008, "Shooter", ""),
 		SPRITE_SWORD = new AssetID(0x0009, "Sword", ""),
+		
+		//input
 		SPRITE_INPUT_SLIDER = new AssetID(0x000A, "Input Slider", ""),
 		SPRITE_INPUT_SLIDER_PRESSED = new AssetID(0x000B, "Input Slider Pressed", ""),
+		SPRITE_INPUT_ATTACK = new AssetID(0x000C, "Input Attack", ""),
+		SPRITE_INPUT_ATTACK_PRESSED = new AssetID(0x000D, "Input Attack Pressed", ""),
+		SPRITE_INPUT_JUMP = new AssetID(0x000E, "Input Jump", ""),
+		SPRITE_INPUT_JUMP_PRESSED = new AssetID(0x000F, "Input Jump Pressed", ""),
 	
 	//musics
 	MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", "");
@@ -48,6 +54,10 @@ public final class AssetDatabase {
 			new GraphicAsset(AssetDatabase.SPRITE_SWORD, "images/sword.png"),
 			new GraphicAsset(AssetDatabase.SPRITE_INPUT_SLIDER, "images/Input_slider.png"),
 			new GraphicAsset(AssetDatabase.SPRITE_INPUT_SLIDER_PRESSED, "images/Input_slider_pressed.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_INPUT_JUMP, "images/jump_icon.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_INPUT_JUMP_PRESSED, "images/jump_icon_pressed.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_INPUT_ATTACK, "images/sword_icon.png"),
+			new GraphicAsset(AssetDatabase.SPRITE_INPUT_ATTACK_PRESSED, "images/sword_icon_pressed.png"),
 			
 			new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening.mp3"),
 		};

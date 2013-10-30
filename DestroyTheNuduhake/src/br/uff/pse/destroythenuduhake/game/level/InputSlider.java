@@ -23,7 +23,7 @@ public class InputSlider extends InputActor {
 	@Override
 	public void setPressed(boolean pressed){
 		super.setPressed(pressed);
-		if(pressed){
+		if(!pressed){
 			DefaultController ctrl = getController();
 			ctrl.leftReleased();
 			ctrl.rightReleased();

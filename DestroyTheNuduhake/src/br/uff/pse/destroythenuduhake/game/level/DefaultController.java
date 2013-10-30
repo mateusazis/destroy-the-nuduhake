@@ -6,15 +6,9 @@ import java.util.Map;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
-
 public class DefaultController {
 
 	private Player player;
-	private InputSlider slider;
 	
 	enum Keys {
 		LEFT, RIGHT, JUMP, FIRE
@@ -30,8 +24,16 @@ public class DefaultController {
 
 	public DefaultController(Player player, AssetBundle b, Level l) {
 		this.player = player;
-		slider = new InputSlider(100, 100, b, this);
+		final float ITEMS_HEIGHT = -700;
+		
+		InputSlider slider = new InputSlider(-1100, ITEMS_HEIGHT, b, this);
 		l.addActor(slider);
+		
+		JumpButton jmp = new JumpButton(600, ITEMS_HEIGHT, b, this);
+		l.addActor(jmp);
+		
+		AttackButton atk = new AttackButton(900, ITEMS_HEIGHT, b, this);
+		l.addActor(atk);
 	}
 
 	// ** Key presses and touches **************** //
@@ -49,7 +51,7 @@ public class DefaultController {
 		}
 
 		public void firePressed() {
-			keys.get(keys.put(Keys.FIRE, false));
+			keys.get(keys.put(Keys.FIRE, true));
 		}
 
 		public void leftReleased() {
@@ -80,26 +82,7 @@ public class DefaultController {
 				player.moveRight();
 			if (keys.get(Keys.JUMP)) 
 				player.jump();
-			if(Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.MENU))
+			if(keys.get(Keys.FIRE))
 				player.atack();
 		}
-		
-	public boolean touchDown(int x, int y, int pointer, int button) {
-//		float xPlayer = player.getStage().stageToScreenCoordinates(player.localToStageCoordinates(new Vector2(player.getX(), player.getY()))).x;
-//		if (x < xPlayer) 
-//			leftPressed();
-//		if(x > xPlayer)
-//			rightPressed();
-//		if(y < 200)
-//			jumpPressed();
-		return true;
-	}
-
-	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
-		leftReleased();
-		rightReleased();
-		jumpReleased();
-		return false;
-	}
-
 }

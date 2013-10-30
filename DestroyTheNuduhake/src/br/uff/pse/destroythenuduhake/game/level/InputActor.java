@@ -38,11 +38,9 @@ public class InputActor extends LevelObject implements EventListener {
 		switch(e.getType()){
 //		case enter:
 		case touchDown:
-			setGraphic(pressedTex);
 			setPressed(true);
 			break;
 		case exit:
-			setGraphic(normalTex);
 			setPressed(false);
 			break;
 		}
@@ -59,6 +57,7 @@ public class InputActor extends LevelObject implements EventListener {
 	
 	public void setPressed(boolean pressed){
 		this.isPressed = pressed;
+		setGraphic(pressed ? pressedTex : normalTex);
 	}
 	
 	@Override

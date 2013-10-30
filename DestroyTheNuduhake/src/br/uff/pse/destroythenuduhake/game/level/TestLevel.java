@@ -133,21 +133,6 @@ public class TestLevel extends Level {
 //		}
 	}
 
-	// @Override
-	// public void act(float delta) {
-	// // TODO Auto-generated method stub
-	// super.act(delta);
-	// if(Gdx.input.justTouched()){
-	// choiceSound.play();
-	// }
-	// }
-
-	// @Override
-	// public void dispose() {
-	// super.dispose();
-	// raiTex.dispose();
-	// }
-
 	class LevelContactListener implements ContactListener {
 
 		@Override
@@ -185,17 +170,5 @@ public class TestLevel extends Level {
 			b.onContactStart(a);
 			
 		}
-	}
-	
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		super.touchUp(screenX, screenY, pointer, button);
-		return controllerPadrao.touchUp(screenX, screenY, pointer, button);
-	}
-	
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		super.touchDown(screenX, screenY, pointer, button);
-		return controllerPadrao.touchDown(screenX, screenY, pointer, button);
 	}
 }
