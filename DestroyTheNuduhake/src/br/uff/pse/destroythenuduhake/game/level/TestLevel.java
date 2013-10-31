@@ -5,6 +5,7 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
+import br.uff.pse.destroythenuduhake.game.level.enemies.BallShooter;
 import br.uff.pse.destroythenuduhake.game.level.enemies.ShooterEnemy;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -44,6 +45,10 @@ public class TestLevel extends Level {
 		shellTex = b.getAsset(AssetDatabase.SPRITE_SHELL);
 		
 		// setup objects
+		LevelObject bg = new FixedObject(-3*400, -3*240, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BACKGROUND));
+		addActor(bg);
+		bg.setScale(3);
+		
 		ground = new LevelObject(100, 30,
 				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_GROUND));
 		ground.setupPhysics(world);
@@ -76,17 +81,18 @@ public class TestLevel extends Level {
 		se.setupPhysics(world);
 		
 		manager = new IAManager(player);
-		manager.addEnemies(se);
+		
 
-//		BallShooter ball = new BallShooter(400, 100, b);
-//		ball.setupPhysics(world);
-//		addActor(ball);
+		BallShooter ball = new BallShooter(800, 120, b);
+		ball.setupPhysics(world);
+		addActor(ball);
 		
 //		Ball ball = new Ball(400, 100, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BALL));
 //		ball.setupPhysics(world);
 //		addActor(ball);
 		
 		//manager = new IAManager(player, ball);
+		manager.addEnemies(se, ball);
 		addActor(manager);
 
 		// setup input
