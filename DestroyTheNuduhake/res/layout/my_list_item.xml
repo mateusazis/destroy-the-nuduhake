@@ -35,14 +35,11 @@
         android:textColor="#4A1F0F"
         android:textSize="17dip" />
 
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="52dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.29"
-        android:enabled="false"
-        android:focusable="false"
-        android:text="" />
+        android:src="@drawable/check" />
 
     <ImageView
         android:id="@+id/imageView1"
