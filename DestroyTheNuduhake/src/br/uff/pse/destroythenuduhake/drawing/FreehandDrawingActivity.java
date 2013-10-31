@@ -3,6 +3,8 @@ package br.uff.pse.destroythenuduhake.drawing;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -19,10 +21,15 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import br.uff.pse.destroythenuduhake.AssetsWorkshopActivity;
 import br.uff.pse.destroythenuduhake.R;
+import br.uff.pse.destroythenuduhake.dtn.AuthorRetriever;
+import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
+import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.files.FileManager;
 
 public class FreehandDrawingActivity extends Activity {
 	private static final String TAG = "FreehandDrawing";
@@ -45,13 +52,17 @@ public class FreehandDrawingActivity extends Activity {
         
         setContentView(R.layout.freehand_drawing_main);
         drawView = (DrawView)findViewById(R.id.draw_view);
-		drawView.setGraphicAsset(AssetsWorkshopActivity.asset);
+        drawView.setGraphicAsset(AssetsWorkshopActivity.asset);
 		if(drawView.image != null){
 	        OnGlobalLayoutListener list = new OnGlobalLayoutListener() {
 				
 				@Override
 				public void onGlobalLayout() {
-					drawView.setCenter(drawView.getWidth(), drawView.getHeight());
+					drawView.iv = (ImageView)findViewById(R.id.imTest);
+					int viewWidth = drawView.getWidth();
+					int viewHeight = drawView.getHeight();
+					drawView.setAllScreen(viewWidth, viewHeight);
+//					drawView.setCenter(viewWidth, viewHeight);
 					if(Build.VERSION.SDK_INT < 16){
 					drawView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 					} else {
@@ -110,7 +121,36 @@ public class FreehandDrawingActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+//				Bitmap tmp = Bitmap.createBitmap(drawView.getWidth(), drawView.getHeight(), Config.ARGB_8888);
+				Bitmap save = Bitmap.createBitmap(drawView.getWidth(), drawView.getHeight(), Config.ARGB_8888);
+				drawView.iv.setImageBitmap(save);
+				Canvas c = new Canvas(save);
+				drawView.draw(c);
+//				drawView.iv.setImageBitmap(null);
+				drawView.savedAsset = Bitmap.createBitmap(save);
+				drawView.save();
+				drawView.draw(c);
+				save = drawView.savedAsset;
+//				c.setBitmap(save);
+//				c.drawColor(Color.BLACK);
+			
+//				drawView.draw(c);
+				//Canvas cv = new Canvas(save);
+				//c.drawBitmap(save, drawView.transformationInverse, null);
+				//drawView.draw(c);
+				//drawView.draw(cv);
+//				GraphicAsset oldGA = drawView.getGraphicAsset();
+//				GraphicAsset newGA;
+//				if(oldGA.isOriginal())
+//					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), FileManager.getAvaiableFilepath(drawView.getContext(),getFilesDir().getAbsolutePath(),true));
+////					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), FileManager.getAvaiableFilepath(drawView.getContext(),getFilesDir().getAbsolutePath(),true));
+//				else
+//					newGA = oldGA;
+//				newGA.setBitmap(save);
+//				finish();
+				//Bitmap test = Bitmap.createBitmap(save);
 				
+				drawView.iv.invalidate();
 			}
 		});
         Button undoButton = (Button)findViewById(R.id.undo_button);
@@ -128,7 +168,6 @@ public class FreehandDrawingActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				drawView.clearScreen();
-				
 			}
 		});
         builder = new AlertDialog.Builder(this);

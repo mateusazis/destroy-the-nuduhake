@@ -16,6 +16,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.ImageView;
 import br.uff.pse.destroythenuduhake.AssetsWorkshopActivity;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
@@ -33,6 +34,9 @@ public class DrawView extends View implements OnTouchListener {
 	Bitmap image = null;
 	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	Matrix transformation = new Matrix();
+	Matrix inverseTransformation = new Matrix();
+	Bitmap savedAsset;
+	boolean save = false;
 	int centerX, centerY;
 	int bgColor = Color.TRANSPARENT;
 	private int wid = 20;
@@ -40,6 +44,7 @@ public class DrawView extends View implements OnTouchListener {
 	float[] rightmostPoint;
 	float x = 0;
 	float y = 0;
+	ImageView iv;
 	
 	public int getWid() {
 		return wid;
@@ -58,6 +63,39 @@ public class DrawView extends View implements OnTouchListener {
 		this.graphicAsset = ga;
 		if(graphicAsset != null)
 			image = graphicAsset.getBitmap(getContext());
+	}
+	
+	public void setAllScreen(int x, int y){
+		float imageWidth = image.getWidth();
+		float imageHeight = image.getHeight();
+		float ratioX = x/imageWidth;
+		float ratioY = y/imageHeight;
+		boolean rotate = false;
+		float ratio = 0;
+		if(imageHeight >= imageWidth){
+			if(ratioY <= ratioX)
+				ratio = ratioY;
+			else
+				ratio = ratioX;
+		} else {
+			rotate = true;
+			float aux = imageHeight;
+			imageHeight = imageWidth;
+			imageWidth = aux;
+			if(ratioX <= ratioY)
+				ratio = ratioX;
+			else
+				ratio = ratioY;
+		}
+		
+		if(rotate){
+			transformation.setRotate(90);
+			transformation.postTranslate(imageWidth, 0);
+		}
+		transformation.postScale(ratio, ratio);
+		transformation.postTranslate((getWidth() - imageWidth*ratio)/2, (getHeight() - imageHeight*ratio)/2);
+		
+		transformation.invert(inverseTransformation);
 	}
 	
 	public void setCenter(int x, int y){
@@ -145,27 +183,36 @@ public class DrawView extends View implements OnTouchListener {
 	
 	@Override
 	public void onDraw(Canvas canvas) {
-		if(image != null)
-			canvas.drawBitmap(image, transformation, null);
-		for (int i = 0; i < pathList.size(); i++) {
-			canvas.drawPath(pathList.get(i), paintList.get(i));
+		if(!save){
+			if(image != null)
+				canvas.drawBitmap(image, transformation, null);
+			for (int i = 0; i < pathList.size(); i++) {
+				canvas.drawPath(pathList.get(i), paintList.get(i));
+			}
+		} else {
+			canvas.drawColor(Color.BLACK);
+			canvas.drawBitmap(savedAsset, inverseTransformation, null);
 		}
 	}
 		
+	public void save(){
+		save = true;
+	}
+	
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {
 	    x = event.getX();
 	    y = event.getY();
 	    
-	    if((x-wid)/2 < leftmostPoint[0])
-	    	leftmostPoint[0] = (x-wid)/2;
-	    else if((x-wid)/2 > rightmostPoint[0])
-	    	rightmostPoint[0] = (x+wid)/2;
-	    
-	    if((y+wid)/2 < leftmostPoint[1])
-	    	leftmostPoint[1] = (y-wid)/2;
-	    else if(y > rightmostPoint[1])
-	    	rightmostPoint[1] = (y+wid)/2;
+//	    if((x-wid)/2 < leftmostPoint[0])
+//	    	leftmostPoint[0] = (x-wid)/2;
+//	    else if((x-wid)/2 > rightmostPoint[0])
+//	    	rightmostPoint[0] = (x+wid)/2;
+//	    
+//	    if((y+wid)/2 < leftmostPoint[1])
+//	    	leftmostPoint[1] = (y-wid)/2;
+//	    else if(y > rightmostPoint[1])
+//	    	rightmostPoint[1] = (y+wid)/2;
 	    
 	    switch (event.getAction()) {
 	    case MotionEvent.ACTION_DOWN:
