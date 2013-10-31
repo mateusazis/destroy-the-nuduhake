@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff.Mode;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,7 +39,6 @@ public class DrawView extends View implements OnTouchListener {
 	Bitmap savedAsset;
 	boolean save = false;
 	int centerX, centerY;
-	int bgColor = Color.TRANSPARENT;
 	private int wid = 20;
 	float[] leftmostPoint;
 	float[] rightmostPoint;
@@ -116,6 +116,7 @@ public class DrawView extends View implements OnTouchListener {
 	    paint.setColor(Color.WHITE);
 	    paint.setStrokeCap(Paint.Cap.ROUND);
 		paint.setStrokeWidth(getWid());
+		setBackgroundColor(Color.TRANSPARENT);
 	    setFocusable(true);
 		setFocusableInTouchMode(true);
 		
@@ -164,22 +165,22 @@ public class DrawView extends View implements OnTouchListener {
 		dialog.show();
 	}
 	
-	public void bgColorPicker() {
-		AmbilWarnaDialog dialog = new AmbilWarnaDialog(getContext(), bgColor, new OnAmbilWarnaListener() {
-			
-			@Override
-			public void onOk(AmbilWarnaDialog dialog, int color) {
-				bgColor = color;
-				setBackgroundColor(bgColor);
-			} 	
-			
-			@Override
-			public void onCancel(AmbilWarnaDialog arg0) {
-				// TODO Auto-generated method stub
-			}
-		});	
-		dialog.show();
-	}
+//	public void bgColorPicker() {
+//		AmbilWarnaDialog dialog = new AmbilWarnaDialog(getContext(), bgColor, new OnAmbilWarnaListener() {
+//			
+//			@Override
+//			public void onOk(AmbilWarnaDialog dialog, int color) {
+//				bgColor = color;
+//				setBackgroundColor(bgColor);
+//			} 	
+//			
+//			@Override
+//			public void onCancel(AmbilWarnaDialog arg0) {
+//				// TODO Auto-generated method stub
+//			}
+//		});	
+//		dialog.show();
+//	}
 	
 	@Override
 	public void onDraw(Canvas canvas) {
@@ -190,7 +191,7 @@ public class DrawView extends View implements OnTouchListener {
 				canvas.drawPath(pathList.get(i), paintList.get(i));
 			}
 		} else {
-			canvas.drawColor(Color.BLACK);
+			canvas.drawColor(0, Mode.CLEAR);
 			canvas.drawBitmap(savedAsset, inverseTransformation, null);
 		}
 	}

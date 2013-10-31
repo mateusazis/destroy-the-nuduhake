@@ -59,6 +59,7 @@ public class FreehandDrawingActivity extends Activity {
 				@Override
 				public void onGlobalLayout() {
 					drawView.iv = (ImageView)findViewById(R.id.imTest);
+					drawView.iv.setBackgroundColor(Color.WHITE);
 					int viewWidth = drawView.getWidth();
 					int viewHeight = drawView.getHeight();
 					drawView.setAllScreen(viewWidth, viewHeight);

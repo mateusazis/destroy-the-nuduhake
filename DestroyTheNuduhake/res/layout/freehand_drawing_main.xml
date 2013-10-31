@@ -57,13 +57,15 @@
 
         <ImageView
             android:id="@+id/imTest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.85" />
 
         <br.uff.pse.destroythenuduhake.drawing.DrawView
             android:id="@+id/draw_view"
             android:layout_width="wrap_content"
-            android:layout_height="221dp" />
+            android:layout_height="203dp"
+            android:layout_weight="0.03" />
 
     </LinearLayout>
 
