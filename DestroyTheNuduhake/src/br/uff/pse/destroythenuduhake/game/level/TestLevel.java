@@ -31,6 +31,8 @@ public class TestLevel extends Level {
 
 	// physics
 	private World world;
+	
+	private static final float CAMERA_SIZE = 3f;
 
 	@Override
 	public void createWithAssetBundle(AssetBundle b) {
@@ -45,9 +47,9 @@ public class TestLevel extends Level {
 		shellTex = b.getAsset(AssetDatabase.SPRITE_SHELL);
 		
 		// setup objects
-		LevelObject bg = new FixedObject(-3*400, -3*240, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BACKGROUND));
+		LevelObject bg = new FixedObject(-CAMERA_SIZE*400, -CAMERA_SIZE*240, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BACKGROUND));
 		addActor(bg);
-		bg.setScale(3);
+		bg.setScale(CAMERA_SIZE);
 		
 		ground = new LevelObject(100, 30,
 				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_GROUND));
@@ -103,7 +105,7 @@ public class TestLevel extends Level {
 		world.setContactListener(new LevelContactListener());
 
 		camera = (OrthographicCamera) this.getCamera();
-		camera.zoom = 3f;
+		camera.zoom = CAMERA_SIZE;
 	}
 	
 	@Override
