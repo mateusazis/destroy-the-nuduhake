@@ -60,7 +60,8 @@ public class Enemy extends ControlableEntity {
 
 	public void patrol() {}
 
-	public boolean isLeft() {
-		return this.getX() < getTarget().getX();
+	public boolean isTurnedLeft() {
+		return true;
 	}
+	
 }

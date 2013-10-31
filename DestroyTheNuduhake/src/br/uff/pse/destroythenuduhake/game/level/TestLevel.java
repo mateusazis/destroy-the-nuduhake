@@ -5,9 +5,9 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
+import br.uff.pse.destroythenuduhake.game.level.enemies.BallShooter;
 import br.uff.pse.destroythenuduhake.game.level.enemies.ShooterEnemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -31,6 +31,8 @@ public class TestLevel extends Level {
 
 	// physics
 	private World world;
+	
+	private static final float CAMERA_SIZE = 3f;
 
 	@Override
 	public void createWithAssetBundle(AssetBundle b) {
@@ -45,6 +47,10 @@ public class TestLevel extends Level {
 		shellTex = b.getAsset(AssetDatabase.SPRITE_SHELL);
 		
 		// setup objects
+		LevelObject bg = new FixedObject(-CAMERA_SIZE*400, -CAMERA_SIZE*240, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BACKGROUND));
+		addActor(bg);
+		bg.setScale(CAMERA_SIZE);
+		
 		ground = new LevelObject(100, 30,
 				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_GROUND));
 		ground.setupPhysics(world);
@@ -77,17 +83,18 @@ public class TestLevel extends Level {
 		se.setupPhysics(world);
 		
 		manager = new IAManager(player);
-		manager.addEnemies(se);
+		
 
-//		BallShooter ball = new BallShooter(400, 100, b);
-//		ball.setupPhysics(world);
-//		addActor(ball);
+		BallShooter ball = new BallShooter(800, 120, b);
+		ball.setupPhysics(world);
+		addActor(ball);
 		
 //		Ball ball = new Ball(400, 100, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BALL));
 //		ball.setupPhysics(world);
 //		addActor(ball);
 		
 		//manager = new IAManager(player, ball);
+		manager.addEnemies(se, ball);
 		addActor(manager);
 
 		// setup input
@@ -98,7 +105,7 @@ public class TestLevel extends Level {
 		world.setContactListener(new LevelContactListener());
 
 		camera = (OrthographicCamera) this.getCamera();
-		camera.zoom = 3f;
+		camera.zoom = CAMERA_SIZE;
 	}
 	
 	@Override

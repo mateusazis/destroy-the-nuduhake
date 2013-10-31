@@ -84,8 +84,9 @@ public class LevelObject extends Actor{
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		float x = getX(), y = getY();
-		getGraphic().render(batch, x, y);
+//		float x = getX(), y = getY();
+//		getGraphic().render(batch, x, y);
+		getGraphic().render(batch, this);
 	}
 
 	public BodyDef getBodyDef() {

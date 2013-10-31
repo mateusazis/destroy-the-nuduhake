@@ -3,6 +3,8 @@ package br.uff.pse.destroythenuduhake.game.level;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -16,10 +18,11 @@ public class ControlableEntity extends LevelObject {
 	private int atackPower;
 	private float velocity;
 	private Fixture fixture;
+	protected TextureRegion r;
 
 	Rectangle bounds = new Rectangle();
 	private State state = State.IDLE;
-	private boolean facingLeft = true;
+	protected boolean turnedLeft = true;
 
 	public enum State {
 		IDLE, WALKING, JUMPING, DYING
@@ -31,6 +34,10 @@ public class ControlableEntity extends LevelObject {
 	public ControlableEntity(float x, float y, GraphicAsset asset) {
 		super(x, y, asset);
 		velocity = 1f;
+		r = new TextureRegion(getGraphic().getTexture());
+//		if(turnedLeft){
+//			r.flip(true, false);
+//		} Está comentado porque acabei fazendo o inimigo olhando pra direita, ai ia ficar estranho
 	}
 
 	public void setJumpVelocity(float value) {
@@ -53,13 +60,17 @@ public class ControlableEntity extends LevelObject {
 	}
 
 	public void moveLeft() {
-		this.setFacingLeft(true);
+		if (!turnedLeft) {
+			turnLeft();
+		}
 		if (getBody().getLinearVelocity().x > -maxMoveVelocity)
 			getBody().applyLinearImpulse(-velocity, 0, getX(), getY());
 	}
 
 	public void moveRight() {
-		this.setFacingLeft(false);
+		if(turnedLeft){
+			turnRight();
+		}
 		if (getBody().getLinearVelocity().x < maxMoveVelocity)
 			getBody().applyLinearImpulse(velocity, 0, getX(), getY());
 	}
@@ -117,12 +128,18 @@ public class ControlableEntity extends LevelObject {
 		this.velocity = velocity;
 	}
 
-	public boolean isFacingLeft() {
-		return facingLeft;
+	public void turnLeft() {
+		turnedLeft = true;
+		r.flip(true, false);
 	}
 
-	public void setFacingLeft(boolean facingLeft) {
-		this.facingLeft = facingLeft;
+	public void turnRight() {
+		turnedLeft = false;
+		r.flip(true, false);
+	}
+
+	public boolean isTurnedLeft() {
+		return turnedLeft;
 	}
 
 	public State getState() {
@@ -139,6 +156,25 @@ public class ControlableEntity extends LevelObject {
 
 	public void setFixture(Fixture fixture) {
 		this.fixture = fixture;
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		float x = getX(),
+				y = getY(),
+				originX = getWidth()/2,
+				originY = 0,
+				width = getWidth(),
+				height = getHeight(),
+				scaleX = getScaleX(),
+				scaleY = getScaleY(),
+				rotation = getRotation();
+		batch.draw(r, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
 	}
 
 }

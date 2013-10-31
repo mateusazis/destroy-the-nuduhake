@@ -27,6 +27,8 @@ public final class AssetDatabase {
 		SPRITE_INPUT_ATTACK_PRESSED = new AssetID(0x000D, "Input Attack Pressed", ""),
 		SPRITE_INPUT_JUMP = new AssetID(0x000E, "Input Jump", ""),
 		SPRITE_INPUT_JUMP_PRESSED = new AssetID(0x000F, "Input Jump Pressed", ""),
+		
+		SPRITE_BACKGROUND = new AssetID(0x0010, "Background", ""),
 	
 	//musics
 	MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", "");
@@ -66,6 +68,7 @@ public final class AssetDatabase {
 				new GraphicAsset(AssetDatabase.SPRITE_BULLET, "images/bullet.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_SHOOTER, "images/shooter.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_SWORD, "images/sword.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_BACKGROUND, "images/game_background.png"),
 				
 				new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening.mp3"),
 			};

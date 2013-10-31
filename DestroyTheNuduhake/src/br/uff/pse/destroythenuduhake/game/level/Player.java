@@ -1,8 +1,10 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
-import com.badlogic.gdx.math.Vector2;
-
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 
 public class Player extends ControlableEntity {
@@ -16,6 +18,7 @@ public class Player extends ControlableEntity {
 		super(x, y, asset);
 		swordRelativePos = new Vector2(getWidth(), getHeight() / 2f);
 		this.swordAsset = swordAsset;
+		turnedLeft = false;
 	}
 	
 	public Sword getWeapon(){
@@ -33,10 +36,12 @@ public class Player extends ControlableEntity {
 		swordPos.set(swordRelativePos);
 		localToStageCoordinates(swordPos);
 		s.setPosition(swordPos.x, swordPos.y);
+		
 	}
 	
 	@Override
 	public void atack(){
 		s.swing();
 	}
+	
 }
