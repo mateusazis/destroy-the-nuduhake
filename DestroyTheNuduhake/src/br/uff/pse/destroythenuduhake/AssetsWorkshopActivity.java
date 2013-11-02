@@ -49,7 +49,7 @@ public class AssetsWorkshopActivity extends Activity
 				GraphicAsset ga =  (GraphicAsset) ((ListItem)(values.get(arg2))).getAsset();
 				setAsset(ga);
 				Intent intent = new Intent(AssetsWorkshopActivity.this, FreehandDrawingActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, 0);
 			}
 			catch(Exception e)
 			{
@@ -64,6 +64,7 @@ public class AssetsWorkshopActivity extends Activity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
+		showContents();
 	}
 	
 	

@@ -1,5 +1,6 @@
 package br.uff.pse.destroythenuduhake.drawing;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -39,7 +40,8 @@ public class FreehandDrawingActivity extends Activity {
     AlertDialog alert;
     
     /** Called when the activity is first created. */
-    @Override
+    @SuppressLint("NewApi")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set full screen view
@@ -140,15 +142,18 @@ public class FreehandDrawingActivity extends Activity {
 				//c.drawBitmap(save, drawView.transformationInverse, null);
 				//drawView.draw(c);
 				//drawView.draw(cv);
-//				GraphicAsset oldGA = drawView.getGraphicAsset();
-//				GraphicAsset newGA;
-//				if(oldGA.isOriginal())
+				
+				GraphicAsset oldGA = drawView.getGraphicAsset();
+				GraphicAsset newGA;
+				if(oldGA.isOriginal()){
+					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), FileManager.getAvaiableFilepath(FreehandDrawingActivity.this,getFilesDir().getAbsolutePath(),true));
+					FileManager.writeAsset(newGA, FreehandDrawingActivity.this);
+				}
 //					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), FileManager.getAvaiableFilepath(drawView.getContext(),getFilesDir().getAbsolutePath(),true));
-////					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), FileManager.getAvaiableFilepath(drawView.getContext(),getFilesDir().getAbsolutePath(),true));
-//				else
-//					newGA = oldGA;
-//				newGA.setBitmap(save);
-//				finish();
+				else
+					newGA = oldGA;
+				newGA.setBitmap(save);
+				finish();
 				//Bitmap test = Bitmap.createBitmap(save);
 				
 				drawView.iv.invalidate();
