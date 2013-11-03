@@ -2,6 +2,7 @@ package br.uff.pse.destroythenuduhake.game.level;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -36,8 +37,21 @@ public class Player extends ControlableEntity {
 		swordPos.set(swordRelativePos);
 		localToStageCoordinates(swordPos);
 		s.setPosition(swordPos.x, swordPos.y);
-		
 	}
+	
+//	@Override
+//	public void turnLeft() {
+//		super.turnLeft();
+//		s.setFlipped(true);
+//		swordRelativePos.x = -1 * (swordRelativePos.x - getWidth());
+//	}
+//	
+//	@Override
+//	public void turnRight() {
+//		super.turnRight();
+//		s.setFlipped(false);
+//		swordRelativePos.x = (-1 * swordRelativePos.x + getWidth());
+//	}
 	
 	@Override
 	public void atack(){

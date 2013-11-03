@@ -3,8 +3,6 @@ package br.uff.pse.destroythenuduhake.game.level;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -18,7 +16,6 @@ public class ControlableEntity extends LevelObject {
 	private int atackPower;
 	private float velocity;
 	private Fixture fixture;
-	protected TextureRegion r;
 
 	Rectangle bounds = new Rectangle();
 	private State state = State.IDLE;
@@ -34,7 +31,6 @@ public class ControlableEntity extends LevelObject {
 	public ControlableEntity(float x, float y, GraphicAsset asset) {
 		super(x, y, asset);
 		velocity = 1f;
-		r = new TextureRegion(getGraphic().getTexture());
 //		if(turnedLeft){
 //			r.flip(true, false);
 //		} Está comentado porque acabei fazendo o inimigo olhando pra direita, ai ia ficar estranho
@@ -130,12 +126,12 @@ public class ControlableEntity extends LevelObject {
 
 	public void turnLeft() {
 		turnedLeft = true;
-		r.flip(true, false);
+		setFlipped(true);
 	}
 
 	public void turnRight() {
 		turnedLeft = false;
-		r.flip(true, false);
+		setFlipped(false);
 	}
 
 	public boolean isTurnedLeft() {
@@ -156,20 +152,6 @@ public class ControlableEntity extends LevelObject {
 
 	public void setFixture(Fixture fixture) {
 		this.fixture = fixture;
-	}
-	
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		float x = getX(),
-				y = getY(),
-				originX = getWidth()/2,
-				originY = 0,
-				width = getWidth(),
-				height = getHeight(),
-				scaleX = getScaleX(),
-				scaleY = getScaleY(),
-				rotation = getRotation();
-		batch.draw(r, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
 	}
 	
 	@Override

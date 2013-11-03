@@ -4,6 +4,7 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.Physics;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -19,6 +20,7 @@ public class LevelObject extends Actor{
 	private BodyDef bodyDef;
 	private Body body;
 	private Rectangle r;
+	private TextureRegion region;
 	
 	public LevelObject(float x, float y, GraphicAsset asset){
 		super();
@@ -26,6 +28,20 @@ public class LevelObject extends Actor{
 		setGraphic(asset);
 		setSize(asset.getWidth(), asset.getHeight());
 		r = new Rectangle(0, 0, getWidth(), getHeight());
+		region = new TextureRegion(asset.getTexture());
+	}
+	
+	public void setFlipped(boolean flipped){
+		if(flipped != region.isFlipX())
+			region.flip(true, false);
+	}
+	
+	public boolean isFlipped(){
+		return region.isFlipX();
+	}
+	
+	public TextureRegion getTextureRegion(){
+		return region;
 	}
 	
 	public Rectangle getRect(){

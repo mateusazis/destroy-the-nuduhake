@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class GraphicAsset extends Asset{
 
@@ -26,7 +25,6 @@ public class GraphicAsset extends Asset{
 	 */
 	private static final long serialVersionUID = -6114353327388248403L;
 	private Texture texture;
-	private TextureRegion region;
 	
 	public GraphicAsset(AssetID id,String filepath){
 		super(id,filepath);
@@ -40,8 +38,6 @@ public class GraphicAsset extends Asset{
 	public void load() {
 		texture = new Texture(getFileHandle());
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		region = new TextureRegion(texture);
 	};
 	
 	public Texture getTexture(){
@@ -66,6 +62,8 @@ public class GraphicAsset extends Asset{
 	}
 	
 	public void render(SpriteBatch batch, LevelObject a){
+		TextureRegion region = a.getTextureRegion();
+		
 		float x = a.getX(),
 				y = a.getY(),
 				width = a.getWidth(),
@@ -75,7 +73,6 @@ public class GraphicAsset extends Asset{
 				originX = a.getOriginX(),
 				originY = a.getOriginY(),
 				rotation = a.getRotation();
-//		batch.draw(region, x-originX, y-originY, originX, originY, width, height, scaleX, scaleY, rotation);
 		batch.draw(region, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
 	}
 	
