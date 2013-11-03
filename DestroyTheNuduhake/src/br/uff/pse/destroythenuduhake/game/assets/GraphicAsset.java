@@ -107,7 +107,7 @@ public class GraphicAsset extends Asset{
 			bm.compress(Bitmap.CompressFormat.PNG, 100, fos);
 			fos.flush();
 			fos.close();
-			
+			markModification();
 		} 
 		catch (Exception e)
 		{

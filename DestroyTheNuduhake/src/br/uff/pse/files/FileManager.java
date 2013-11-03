@@ -43,6 +43,11 @@ public class FileManager extends Activity implements BundleReceiver
 	private static ArrayList<Boolean> checkedAssets = new ArrayList<Boolean>();
 	//private static String assetFilePath ="/data/data/br.uff.pse.dest/assets/";
 
+	public static void addAsset(Asset a, Context ctx){
+		loadListFile(ctx);
+		filesPaths.add(a);
+	}
+	
 	public static void writeAsset(Asset asset,  Context ctx) 
 	{
 		loadListFile(ctx);

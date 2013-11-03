@@ -3,6 +3,7 @@ package br.uff.pse.destroythenuduhake.drawing;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -143,16 +144,23 @@ public class FreehandDrawingActivity extends Activity {
 				//drawView.draw(c);
 				//drawView.draw(cv);
 				
+				Context ctx = FreehandDrawingActivity.this;
+				
 				GraphicAsset oldGA = drawView.getGraphicAsset();
 				GraphicAsset newGA;
 				if(oldGA.isOriginal()){
-					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), FileManager.getAvaiableFilepath(FreehandDrawingActivity.this,getFilesDir().getAbsolutePath(),true));
-					FileManager.writeAsset(newGA, FreehandDrawingActivity.this);
+					String newAssetPath = FileManager.getAvaiableFilepath(ctx,getFilesDir().getAbsolutePath(),true);
+					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), newAssetPath);
+					FileManager.addAsset(newGA, ctx);
 				}
 //					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), FileManager.getAvaiableFilepath(drawView.getContext(),getFilesDir().getAbsolutePath(),true));
 				else
 					newGA = oldGA;
 				newGA.setBitmap(save);
+				
+				
+				FileManager.saveListFile(FreehandDrawingActivity.this);
+				
 				finish();
 				//Bitmap test = Bitmap.createBitmap(save);
 				
