@@ -19,11 +19,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import br.uff.pse.destroythenuduhake.R;
 import br.uff.pse.destroythenuduhake.dtn.BundleReceiver;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
@@ -211,6 +213,8 @@ public class FileManager extends Activity implements BundleReceiver
 			Bitmap b = null;
 			if(current instanceof GraphicAsset)
 				b = ((GraphicAsset)current).getBitmap(ctx);
+			else
+				b = BitmapFactory.decodeResource(ctx.getResources(),R.drawable.speakericon);
 			
 			ArrayList<Item> myList;
 			if(!itemListMap.containsKey(id)){
@@ -240,7 +244,8 @@ public class FileManager extends Activity implements BundleReceiver
 			Bitmap b = null;
 			if(current instanceof GraphicAsset)
 				b = ((GraphicAsset)current).getBitmap(ctx);
-			
+			else
+				b = BitmapFactory.decodeResource(ctx.getResources(),R.drawable.speakericon);
 			ArrayList<Item> myList;
 			if(!itemListMap.containsKey(id)){
 				//se for um tipo de asset inédito, crie uma lista nova pra ele
