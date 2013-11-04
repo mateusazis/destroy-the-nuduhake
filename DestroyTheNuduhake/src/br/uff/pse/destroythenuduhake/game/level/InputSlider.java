@@ -40,7 +40,7 @@ public class InputSlider extends InputActor {
 			
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY());
 			touchPos = parent.screenToStageCoordinates(touchPos);
-			
+//			Gdx.app.log("", "pressed");
 			float x = touchPos.x;
 			if(x > getX() + getWidth() * getScaleX() / 2f)
 				ctrl.rightPressed();

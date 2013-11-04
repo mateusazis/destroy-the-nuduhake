@@ -24,11 +24,11 @@ public class LevelObject extends Actor{
 	
 	public LevelObject(float x, float y, GraphicAsset asset){
 		super();
+		region = new TextureRegion();
 		setPosition(x, y);
 		setGraphic(asset);
 		setSize(asset.getWidth(), asset.getHeight());
 		r = new Rectangle(0, 0, getWidth(), getHeight());
-		region = new TextureRegion(asset.getTexture());
 	}
 	
 	public void setFlipped(boolean flipped){
@@ -78,8 +78,8 @@ public class LevelObject extends Actor{
 		
 		PolygonShape groundBox = new PolygonShape();
 		float w = getWidth() * Physics.WORLD_TO_BOX, h = getHeight() * Physics.WORLD_TO_BOX;
-		float hX = w / 2f, hY = h / 2f;
-		groundBox.setAsBox(hX, hY, new Vector2(hX, hY), 0);
+		float hW = w / 2f, hH = h / 2f;
+		groundBox.setAsBox(hW, hH, new Vector2(hW, hH), 0);
 		createBodyFixture(body, groundBox);
 	}
 	
@@ -127,6 +127,7 @@ public class LevelObject extends Actor{
 
 	public void setGraphic(GraphicAsset graphic) {
 		this.graphic = graphic;
+		region.setRegion(graphic.getTexture());
 	}
 	
 //	@Override

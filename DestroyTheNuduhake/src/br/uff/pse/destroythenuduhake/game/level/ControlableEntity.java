@@ -60,7 +60,7 @@ public class ControlableEntity extends LevelObject {
 			turnLeft();
 		}
 		if (getBody().getLinearVelocity().x > -maxMoveVelocity)
-			getBody().applyLinearImpulse(-velocity, 0, getX(), getY());
+			getBody().applyLinearImpulse(-velocity, 0, getX(), getY(), true);
 	}
 
 	public void moveRight() {
@@ -68,7 +68,7 @@ public class ControlableEntity extends LevelObject {
 			turnRight();
 		}
 		if (getBody().getLinearVelocity().x < maxMoveVelocity)
-			getBody().applyLinearImpulse(velocity, 0, getX(), getY());
+			getBody().applyLinearImpulse(velocity, 0, getX(), getY(), true);
 	}
 
 	public void touchGround() {
@@ -78,7 +78,7 @@ public class ControlableEntity extends LevelObject {
 	public void jump() {
 		if (getState() != State.JUMPING) {
 			setState(State.JUMPING);
-			getBody().applyLinearImpulse(0.0f, jumpVelocity, getX(), getY());
+			getBody().applyLinearImpulse(0.0f, jumpVelocity, getX(), getY(), true);
 		}
 	}
 

@@ -1,6 +1,8 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,13 +25,13 @@ public class InputActor extends FixedObject implements EventListener {
 	}
 
 	@Override
-	public boolean handle(Event event) {		
+	public boolean handle(Event event) {
 		InputEvent e = (InputEvent)event;
 		switch(e.getType()){
-//		case enter:
 		case touchDown:
 			setPressed(true);
 			break;
+		case touchUp:
 		case exit:
 			setPressed(false);
 			break;
