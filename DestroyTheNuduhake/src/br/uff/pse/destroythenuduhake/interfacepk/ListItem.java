@@ -57,6 +57,8 @@ public class ListItem implements Item {
         	cb.setVisibility(View.VISIBLE);
         else
         	cb.setVisibility(View.INVISIBLE);
+      
+        
         iv.setImageBitmap(b);
         if(!visible)
         {
