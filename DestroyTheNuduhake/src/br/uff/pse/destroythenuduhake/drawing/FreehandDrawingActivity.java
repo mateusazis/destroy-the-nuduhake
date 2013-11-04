@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.Matrix;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -61,8 +63,8 @@ public class FreehandDrawingActivity extends Activity {
 				
 				@Override
 				public void onGlobalLayout() {
-					drawView.iv = (ImageView)findViewById(R.id.imTest);
-					drawView.iv.setBackgroundColor(Color.WHITE);
+//					drawView.iv = (ImageView)findViewById(R.id.imTest);
+//					drawView.iv.setBackgroundColor(Color.WHITE);
 					int viewWidth = drawView.getWidth();
 					int viewHeight = drawView.getHeight();
 					drawView.setAllScreen(viewWidth, viewHeight);
@@ -119,31 +121,19 @@ public class FreehandDrawingActivity extends Activity {
 				drawView.colorPicker();
 			}
 		});
-        Button eraserButton = (Button)findViewById(R.id.eraser_button);
+        Button eraserButton = (Button)findViewById(R.id.save_button);
         eraserButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-//				Bitmap tmp = Bitmap.createBitmap(drawView.getWidth(), drawView.getHeight(), Config.ARGB_8888);
 				Bitmap save = Bitmap.createBitmap(drawView.getWidth(), drawView.getHeight(), Config.ARGB_8888);
-				drawView.iv.setImageBitmap(save);
+//				drawView.iv.setImageBitmap(save);
 				Canvas c = new Canvas(save);
 				drawView.draw(c);
-//				drawView.iv.setImageBitmap(null);
 				drawView.savedAsset = Bitmap.createBitmap(save);
 				drawView.save();
 				drawView.draw(c);
-				save = drawView.savedAsset;
-//				c.setBitmap(save);
-//				c.drawColor(Color.BLACK);
-			
-//				drawView.draw(c);
-				//Canvas cv = new Canvas(save);
-				//c.drawBitmap(save, drawView.transformationInverse, null);
-				//drawView.draw(c);
-				//drawView.draw(cv);
-				
 				Context ctx = FreehandDrawingActivity.this;
 				
 				GraphicAsset oldGA = drawView.getGraphicAsset();
@@ -153,18 +143,14 @@ public class FreehandDrawingActivity extends Activity {
 					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), newAssetPath);
 					FileManager.addAsset(newGA, ctx);
 				}
-//					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), FileManager.getAvaiableFilepath(drawView.getContext(),getFilesDir().getAbsolutePath(),true));
 				else
 					newGA = oldGA;
+				save = Bitmap.createBitmap(save, 0, 0, drawView.image.getWidth(), drawView.image.getHeight());
 				newGA.setBitmap(save);
-				
 				
 				FileManager.saveListFile(FreehandDrawingActivity.this);
 				
 				finish();
-				//Bitmap test = Bitmap.createBitmap(save);
-				
-				drawView.iv.invalidate();
 			}
 		});
         Button undoButton = (Button)findViewById(R.id.undo_button);

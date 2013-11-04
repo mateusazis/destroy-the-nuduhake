@@ -44,7 +44,7 @@ public class DrawView extends View implements OnTouchListener {
 	float[] rightmostPoint;
 	float x = 0;
 	float y = 0;
-	ImageView iv;
+//	ImageView iv;
 	
 	public int getWid() {
 		return wid;
@@ -71,21 +71,13 @@ public class DrawView extends View implements OnTouchListener {
 		float ratioX = x/imageWidth;
 		float ratioY = y/imageHeight;
 		boolean rotate = false;
-		float ratio = 0;
-		if(imageHeight >= imageWidth){
-			if(ratioY <= ratioX)
-				ratio = ratioY;
-			else
-				ratio = ratioX;
-		} else {
+		float ratio = Math.min(ratioX, ratioY);
+		if(imageHeight < imageWidth){
+//			ratio = ratioX/ratioY;
 			rotate = true;
 			float aux = imageHeight;
 			imageHeight = imageWidth;
 			imageWidth = aux;
-			if(ratioX <= ratioY)
-				ratio = ratioX;
-			else
-				ratio = ratioY;
 		}
 		
 		if(rotate){
@@ -117,7 +109,7 @@ public class DrawView extends View implements OnTouchListener {
 	    paint.setStrokeCap(Paint.Cap.ROUND);
 		paint.setStrokeWidth(getWid());
 		setBackgroundColor(Color.TRANSPARENT);
-	    setFocusable(true);
+		setFocusable(true);
 		setFocusableInTouchMode(true);
 		
 		this.setOnTouchListener(this);
