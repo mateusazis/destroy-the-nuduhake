@@ -7,31 +7,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.graphics.Matrix;
-import android.graphics.PorterDuff.Mode;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import br.uff.pse.destroythenuduhake.AssetsWorkshopActivity;
 import br.uff.pse.destroythenuduhake.R;
 import br.uff.pse.destroythenuduhake.dtn.AuthorRetriever;
-import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.files.FileManager;
 
@@ -61,14 +51,12 @@ public class FreehandDrawingActivity extends Activity {
 		if(drawView.image != null){
 	        OnGlobalLayoutListener list = new OnGlobalLayoutListener() {
 				
+				@SuppressWarnings("deprecation")
 				@Override
 				public void onGlobalLayout() {
-//					drawView.iv = (ImageView)findViewById(R.id.imTest);
-//					drawView.iv.setBackgroundColor(Color.WHITE);
 					int viewWidth = drawView.getWidth();
 					int viewHeight = drawView.getHeight();
 					drawView.setAllScreen(viewWidth, viewHeight);
-//					drawView.setCenter(viewWidth, viewHeight);
 					if(Build.VERSION.SDK_INT < 16){
 					drawView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 					} else {
@@ -124,16 +112,20 @@ public class FreehandDrawingActivity extends Activity {
         Button eraserButton = (Button)findViewById(R.id.save_button);
         eraserButton.setOnClickListener(new OnClickListener() {
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Bitmap save = Bitmap.createBitmap(drawView.getWidth(), drawView.getHeight(), Config.ARGB_8888);
-//				drawView.iv.setImageBitmap(save);
-				Canvas c = new Canvas(save);
+				// TODO Auto-generated method stub				
+				Bitmap save = Bitmap.createBitmap(drawView.image.getWidth(), drawView.image.getHeight(), Config.ARGB_8888);
+				Bitmap work = Bitmap.createBitmap(drawView.getWidth(), drawView.getHeight(), Config.ARGB_8888);
+				Canvas c = new Canvas(work);
 				drawView.draw(c);
-				drawView.savedAsset = Bitmap.createBitmap(save);
+				drawView.showAsset = Bitmap.createBitmap(work);
 				drawView.save();
 				drawView.draw(c);
+				Canvas saveCanvas = new Canvas(save);
+				saveCanvas.drawBitmap(drawView.showAsset, drawView.inverseTransformation, null);
+				
 				Context ctx = FreehandDrawingActivity.this;
 				
 				GraphicAsset oldGA = drawView.getGraphicAsset();
@@ -145,7 +137,8 @@ public class FreehandDrawingActivity extends Activity {
 				}
 				else
 					newGA = oldGA;
-				save = Bitmap.createBitmap(save, 0, 0, drawView.image.getWidth(), drawView.image.getHeight());
+				
+				save = Bitmap.createBitmap(save);
 				newGA.setBitmap(save);
 				
 				FileManager.saveListFile(FreehandDrawingActivity.this);

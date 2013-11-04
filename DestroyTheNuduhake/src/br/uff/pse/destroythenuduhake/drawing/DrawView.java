@@ -17,9 +17,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.ImageView;
-import br.uff.pse.destroythenuduhake.AssetsWorkshopActivity;
-import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
 public class DrawView extends View implements OnTouchListener {
@@ -36,7 +33,9 @@ public class DrawView extends View implements OnTouchListener {
 	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	Matrix transformation = new Matrix();
 	Matrix inverseTransformation = new Matrix();
+	Bitmap showAsset;
 	Bitmap savedAsset;
+	float ratio;
 	boolean save = false;
 	int centerX, centerY;
 	private int wid = 20;
@@ -71,9 +70,10 @@ public class DrawView extends View implements OnTouchListener {
 		float ratioX = x/imageWidth;
 		float ratioY = y/imageHeight;
 		boolean rotate = false;
-		float ratio = Math.min(ratioX, ratioY);
+		ratio = Math.min(ratioX, ratioY);
+		if(ratio < 1)
+			ratio = (x*y)/(imageHeight*imageWidth);
 		if(imageHeight < imageWidth){
-//			ratio = ratioX/ratioY;
 			rotate = true;
 			float aux = imageHeight;
 			imageHeight = imageWidth;
@@ -184,7 +184,7 @@ public class DrawView extends View implements OnTouchListener {
 			}
 		} else {
 			canvas.drawColor(0, Mode.CLEAR);
-			canvas.drawBitmap(savedAsset, inverseTransformation, null);
+			canvas.drawBitmap(showAsset, new Matrix(), null);
 		}
 	}
 		
