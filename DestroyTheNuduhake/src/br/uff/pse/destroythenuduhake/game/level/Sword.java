@@ -35,7 +35,7 @@ public class Sword extends LevelObject{
 		this.owner = owner;
 //		r = new TextureRegion(swordAsset.getTexture());
 		setSize(swordAsset.getWidth(), swordAsset.getHeight());
-		setScaleX(4); setScaleY(4);
+//		setScaleX(4); setScaleY(4);
 		
 		
 		//update the sword rectangle

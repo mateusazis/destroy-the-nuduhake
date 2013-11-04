@@ -1,7 +1,6 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.badlogic.gdx.math.Rectangle;

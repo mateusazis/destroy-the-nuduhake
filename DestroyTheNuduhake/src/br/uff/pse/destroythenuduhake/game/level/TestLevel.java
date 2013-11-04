@@ -11,6 +11,7 @@ import br.uff.pse.destroythenuduhake.game.level.enemies.ShooterEnemy;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -22,20 +23,16 @@ import com.badlogic.gdx.physics.box2d.World;
 public class TestLevel extends Level {
 
 	private GraphicAsset playerTex;
-	private GraphicAsset shellTex;
-	private LevelObject ground, ground2;
-	private ControlableEntity shell;
 	private Player player;
-	private DefaultController controllerPadrao;
+	private DefaultController defaultController;
 	private OrthographicCamera camera;
-	private Enemy e;
-	private ShooterEnemy se;
 	private IAManager manager;
 	private Map map;
 	OrthogonalTiledMapRenderer renderer;
+	
 	// physics
 	private World world;
-	Box2DDebugRenderer r;
+	private Box2DDebugRenderer r;
 	
 	private static final float CAMERA_SIZE = 1f;
 
@@ -62,69 +59,41 @@ public class TestLevel extends Level {
 
 		// setup assets
 		playerTex = b.getAsset(AssetDatabase.SPRITE_MARIO);
-
-		shellTex = b.getAsset(AssetDatabase.SPRITE_SHELL);
-		
 		// setup objects
-		
-		
-//		ground = new LevelObject(100, 30,
-//				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_GROUND));
-//		ground.setupPhysics(world);
-//		addActor(ground);
-		
-//		LevelObject ground3 = new LevelObject(-350, 30,
-//				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_GROUND));
-//		ground3.setupPhysics(world);
-//		addActor(ground3);
 
-//		ground2 = new LevelObject(700, 120,
-//				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_GROUND));
-//		ground2.setupPhysics(world);
-//		addActor(ground2);
-
-//		shell = new ControlableEntity(70, 20, shellTex);
-//		addActor(shell);
-//		shell.setupPhysics(world);
-
-		player = new Player(100, 140, playerTex, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_SWORD));
+		Vector2 playerPos = map.getPlayerPosition();
+		player = new Player(playerPos.x, playerPos.y, playerTex, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_SWORD));
 		addActor(player);
 		player.setupPhysics(world);
 		
-//		e = new Enemy(200, 40, shellTex);
-//		addActor(e);
-//		e.setupPhysics(world);
 		
-//		se = new ShooterEnemy(200, 40, b);
-//		addActor(se);
-//		se.setupPhysics(world);
-		
+		//IA---------------------------------------------------------------------------------------
 		manager = new IAManager(player);
 		
-
-//		BallShooter ball = new BallShooter(800, 120, b);
-//		ball.setupPhysics(world);
-//		addActor(ball);
+		//Enemies----------------------------------------------------------------------------------
+		for(Rectangle r : map.findObjects("shooter")){
+			ShooterEnemy e = new ShooterEnemy(r.x, r.y, b);
+			e.setupPhysics(world);
+			addActor(e);
+			
+			manager.addEnemies(e);
+		}
 		
-//		Ball ball = new Ball(400, 100, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BALL));
-//		ball.setupPhysics(world);
-//		addActor(ball);
+		for(Rectangle r : map.findObjects("ball_shooter")){
+			BallShooter ball = new BallShooter(r.x, r.y, b);
+			ball.setupPhysics(world);
+			addActor(ball);
+			
+			manager.addEnemies(ball);
+		}
 		
-		//manager = new IAManager(player, ball);
-//		manager.addEnemies(se, ball);
 		addActor(manager);
 
 		// setup input
-		controllerPadrao = new DefaultController(player, b, this);
-
-		// debugRenderer = new Box2DDebugRenderer();
+		defaultController = new DefaultController(player, b, this);
 
 		world.setContactListener(new LevelContactListener());
-
-		
 		camera.zoom = CAMERA_SIZE;
-		
-//		map.setZIndex(1000);
 	}
 	
 	@Override
@@ -136,77 +105,38 @@ public class TestLevel extends Level {
 	@Override
 	public void render() {
 		super.render();
-//		
-		controllerPadrao.update();
+		defaultController.update();
 		camera.position.set(player.getX(), camera.position.y, 0);
 		world.step(1/60f, 6, 2);
 		
-//		map.draw(getSpriteBatch(), 1);
-		
 //		r.render(world, camera.combined.scale(Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD));
-//		Iterator<Body> bi = world.getBodies();
-//
-//		while (bi.hasNext()) {
-//			Body b = bi.next();
-//
-//			// Get the bodies user data - in this example, our user
-//			// data is an instance of the Entity class
-//			Actor e = (Actor) b.getUserData();
-//
-//			if (e != null) {
-//				// Update the entities/sprites position and angle
-//				float posX, posY;
-////				posX = b.getPosition().x * BOX_TO_WORLD - e.getWidth()/2;
-//				float bodyX = b.getPosition().x;
-//				float bodyY = b.getPosition().y;
-//				posX = bodyX * Physics.BOX_TO_WORLD; 
-//				posY = bodyY * Physics.BOX_TO_WORLD;
-//				e.setPosition(posX,posY);
-//				// We need to convert our angle from radians to degrees
-//				e.setRotation(MathUtils.radiansToDegrees
-//						* b.getAngle());
-//			}
-//		}
 	}
 
 	class LevelContactListener implements ContactListener {
 
 		@Override
-		public void preSolve(Contact contact, Manifold oldManifold) {
-			// TODO Auto-generated method stub
-
-		}
+		public void preSolve(Contact contact, Manifold oldManifold) {	}
 
 		@Override
-		public void postSolve(Contact contact, ContactImpulse impulse) {
-			// TODO Auto-generated method stub
-
-		}
+		public void postSolve(Contact contact, ContactImpulse impulse) {	}
 
 		@Override
-		public void endContact(Contact contact) {
-			// TODO Auto-generated method stub
-
-		}
+		public void endContact(Contact contact) {	}
 
 		@Override
 		public void beginContact(Contact contact) {
 			LevelObject a = (LevelObject) contact.getFixtureA().getBody().getUserData();
 			LevelObject b = (LevelObject) contact.getFixtureB().getBody().getUserData();
 			
-			
-			if(a instanceof ControlableEntity){
+			if(a instanceof ControlableEntity)
 				((ControlableEntity) a).touchGround();
-			}
-			if(b instanceof ControlableEntity){
+			if(b instanceof ControlableEntity)
 				((ControlableEntity) b).touchGround();
-			}
 			
 			if(a != null)
 				a.onContactStart(b);
 			if(b != null)
 				b.onContactStart(a);
-			
 		}
 	}
 }

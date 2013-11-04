@@ -3,10 +3,6 @@ package br.uff.pse.destroythenuduhake.game.level;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-
-import br.uff.pse.destroythenuduhake.game.Configs;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 
@@ -33,10 +29,10 @@ public class DefaultController {
 		InputSlider slider = new InputSlider(-400, ITEMS_HEIGHT, b, this);
 		l.addActor(slider);
 		
-		JumpButton jmp = new JumpButton(300, ITEMS_HEIGHT, b, this);
+		JumpButton jmp = new JumpButton(280, ITEMS_HEIGHT, b, this);
 		l.addActor(jmp);
 		
-		AttackButton atk = new AttackButton(200, ITEMS_HEIGHT, b, this);
+		AttackButton atk = new AttackButton(160, ITEMS_HEIGHT, b, this);
 		l.addActor(atk);
 		
 		slider.setZIndex(Integer.MAX_VALUE);
@@ -47,10 +43,12 @@ public class DefaultController {
 	// ** Key presses and touches **************** //
 
 		public void leftPressed() {
+			rightReleased();
 			keys.get(keys.put(Keys.LEFT, true));
 		}
 
 		public void rightPressed() {
+			leftReleased();
 			keys.get(keys.put(Keys.RIGHT, true));
 		}
 

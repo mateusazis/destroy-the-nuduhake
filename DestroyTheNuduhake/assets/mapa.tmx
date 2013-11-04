@@ -11,7 +11,12 @@
  </tileset>
  <layer name="Camada de Tiles 1" width="256" height="16">
   <data encoding="base64" compression="zlib">
-   eJzt07EJADAMA0FD9t85IwQXQcS5A7XqvgoAAAAAAAAAAAAAmGw1d/oB3qF/+Jf+YYZuyzcGZKTb1z/kbGsgAUU=
+   eJzt2EEKg0AQBMAFf2NiDpr/vy0GEhAFPTgsOlsFfZpLXxqWLQUAAAAAAMimn/MIzLNufeCEcc4UmHfd+sAJ9g/tsn9ol/1Du+60/5p/lf3BHTK40/6/XbvA7HUdD+6QQdb9r3vZP2xF7f+/qVeJfaMvM1TsOvzukFnE/iPf5FcLZPYBgVs4Gw==
   </data>
  </layer>
+ <objectgroup name="Camada de Objetos 1" width="256" height="16">
+  <object name="O1" type="shooter" x="1862" y="216" width="64" height="124"/>
+  <object name="O2" type="ball_shooter" x="2240" y="190" width="68" height="153"/>
+  <object type="player" x="700" y="262" width="88" height="176"/>
+ </objectgroup>
 </map>
