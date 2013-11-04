@@ -41,32 +41,18 @@
         android:text="Undo" />
 
     <Button
-        android:id="@+id/eraser_button"
+        android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/color_button"
-        android:text="Eraser" />
+        android:text="Save" />
 
-    <LinearLayout
+    <br.uff.pse.destroythenuduhake.drawing.DrawView
+        android:id="@+id/draw_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/width_button"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:id="@+id/imTest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.85" />
-
-        <br.uff.pse.destroythenuduhake.drawing.DrawView
-            android:id="@+id/draw_view"
-            android:layout_width="wrap_content"
-            android:layout_height="203dp"
-            android:layout_weight="0.03" />
-
-    </LinearLayout>
+        android:layout_weight="0.03" />
 
 </RelativeLayout>

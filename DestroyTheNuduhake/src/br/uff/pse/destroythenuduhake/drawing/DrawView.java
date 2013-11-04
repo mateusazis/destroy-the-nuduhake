@@ -17,9 +17,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.ImageView;
-import br.uff.pse.destroythenuduhake.AssetsWorkshopActivity;
-import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
 public class DrawView extends View implements OnTouchListener {
@@ -36,7 +33,9 @@ public class DrawView extends View implements OnTouchListener {
 	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	Matrix transformation = new Matrix();
 	Matrix inverseTransformation = new Matrix();
+	Bitmap showAsset;
 	Bitmap savedAsset;
+	float ratio;
 	boolean save = false;
 	int centerX, centerY;
 	private int wid = 20;
@@ -44,7 +43,7 @@ public class DrawView extends View implements OnTouchListener {
 	float[] rightmostPoint;
 	float x = 0;
 	float y = 0;
-	ImageView iv;
+//	ImageView iv;
 	
 	public int getWid() {
 		return wid;
@@ -71,21 +70,14 @@ public class DrawView extends View implements OnTouchListener {
 		float ratioX = x/imageWidth;
 		float ratioY = y/imageHeight;
 		boolean rotate = false;
-		float ratio = 0;
-		if(imageHeight >= imageWidth){
-			if(ratioY <= ratioX)
-				ratio = ratioY;
-			else
-				ratio = ratioX;
-		} else {
+		ratio = Math.min(ratioX, ratioY);
+		if(ratio < 1)
+			ratio = (x*y)/(imageHeight*imageWidth);
+		if(imageHeight < imageWidth){
 			rotate = true;
 			float aux = imageHeight;
 			imageHeight = imageWidth;
 			imageWidth = aux;
-			if(ratioX <= ratioY)
-				ratio = ratioX;
-			else
-				ratio = ratioY;
 		}
 		
 		if(rotate){
@@ -117,7 +109,7 @@ public class DrawView extends View implements OnTouchListener {
 	    paint.setStrokeCap(Paint.Cap.ROUND);
 		paint.setStrokeWidth(getWid());
 		setBackgroundColor(Color.TRANSPARENT);
-	    setFocusable(true);
+		setFocusable(true);
 		setFocusableInTouchMode(true);
 		
 		this.setOnTouchListener(this);
@@ -192,7 +184,7 @@ public class DrawView extends View implements OnTouchListener {
 			}
 		} else {
 			canvas.drawColor(0, Mode.CLEAR);
-			canvas.drawBitmap(savedAsset, inverseTransformation, null);
+			canvas.drawBitmap(showAsset, new Matrix(), null);
 		}
 	}
 		
