@@ -2,6 +2,7 @@ package br.uff.pse.destroythenuduhake.game.level;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 
@@ -14,6 +15,9 @@ public class Player extends ControlableEntity {
 	
 	public Player(float x, float y, GraphicAsset asset, GraphicAsset swordAsset) {
 		super(x, y, asset);
+		
+		setMaxMoveVelocity(3f);
+		
 		swordRelativePos = new Vector2(getWidth(), getHeight() / 2f);
 		this.swordAsset = swordAsset;
 		turnedLeft = false;
@@ -53,6 +57,14 @@ public class Player extends ControlableEntity {
 	@Override
 	public void atack(){
 		s.swing();
+	}
+	
+	@Override
+	public void touchGround() {
+		// TODO Auto-generated method stub
+		super.touchGround();
+		
+		Gdx.app.log("", "touched ground!");
 	}
 	
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import br.uff.pse.destroythenuduhake.game.Physics;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -55,10 +54,8 @@ public class Map extends Actor {
 		
 		for(MapLayer layer : map.getLayers()){
 			for(MapObject obj : layer.getObjects()){
-				
 				MapProperties props = obj.getProperties();
 				String type = props.get("type", String.class);
-				Gdx.app.log("", "Object: " + type);
 				if(type != null && type.equalsIgnoreCase(objectType)){
 					RectangleMapObject rectObj = (RectangleMapObject)obj;
 					resp.add(rectObj.getRectangle());
