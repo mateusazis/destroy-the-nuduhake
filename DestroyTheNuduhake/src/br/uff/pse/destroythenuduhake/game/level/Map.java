@@ -73,24 +73,44 @@ public class Map extends Actor {
 		TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get(0);
 		int rows = layer.getHeight();
 		int columns = layer.getWidth();
+		CellCoords first = new CellCoords(), last = new CellCoords();
+		
 		for(int i = 0; i < rows; i++){
+			first.clear(); last.clear();
 			for(int j = 0; j < columns; j++){
+				
+				
 				Cell cell = layer.getCell(j, i);
-				if(cell != null && !isInnerCell(j, i, layer)){
-					BodyDef bodyDef = new BodyDef();
-					bodyDef.position.set((x0 + j * 32) * Physics.WORLD_TO_BOX,  (y0 +  i * 32) * Physics.WORLD_TO_BOX);
-					bodyDef.type = BodyDef.BodyType.StaticBody;
-					
-					Body body = world.createBody(bodyDef);
-					
-					PolygonShape groundBox = new PolygonShape();
-					float w = 32 * Physics.WORLD_TO_BOX, h = 32 * Physics.WORLD_TO_BOX;
-					float hX = w / 2f, hY = h / 2f;
-					groundBox.setAsBox(hX, hY, new Vector2(hX, hY), 0);
-					body.createFixture(groundBox, 0.0f);
+				if(cell != null){
+					if(!isInnerCell(j, i, layer)){
+						if(!first.isSet())
+							first.set(i, j);
+						last.set(i, j);
+					} 
+				} else if(first.isSet()){
+					createBody(world, first, last, x0, y0);
+					first.clear(); last.clear();
 				}
 			}
+			if(first.isSet()){
+				createBody(world, first, last, x0, y0);
+				first.clear(); last.clear();
+			}
 		}
+	}
+	
+	private void createBody(World world, CellCoords first, CellCoords last, float x0, float y0){
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.position.set((x0 + first.j * 32) * Physics.WORLD_TO_BOX,  (y0 +  first.i * 32) * Physics.WORLD_TO_BOX);
+		bodyDef.type = BodyDef.BodyType.StaticBody;
+		
+		Body body = world.createBody(bodyDef);
+		
+		PolygonShape groundBox = new PolygonShape();
+		float w = (last.j - first.j + 1) * 32 * Physics.WORLD_TO_BOX, h = (last.i - first.i + 1)* 32 * Physics.WORLD_TO_BOX;
+		float hX = w / 2f, hY = h / 2f;
+		groundBox.setAsBox(hX, hY, new Vector2(hX, hY), 0);
+		body.createFixture(groundBox, 0.0f);
 	}
 	
 	private static boolean isInnerCell(int x, int y, TiledMapTileLayer layer){
@@ -119,5 +139,23 @@ public class Map extends Actor {
 		renderer.setView(camera);
 		renderer.render();
 		batch.begin();
+	}
+	
+	private class CellCoords{
+		public int i = -1, j = -1;
+		
+		public boolean isSet(){
+			return i != -1 && j != -1;
+		}
+		
+		public void clear(){
+			this.i = -1;
+			this.j = -1;
+		}
+		
+		public void set(int i, int j){
+			this.i = i;
+			this.j = j;
+		}
 	}
 }
