@@ -6,13 +6,17 @@ import java.util.List;
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,11 +36,15 @@ public class DrawView extends View implements OnTouchListener {
 	Bitmap image = null;
 	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	Matrix transformation = new Matrix();
+	Matrix inverseRotate = new Matrix();
 	Matrix inverseTransformation = new Matrix();
 	Bitmap showAsset;
 	Bitmap savedAsset;
+	Canvas mCanvas;
+	Bitmap workingBitmap;
 	float ratio;
 	boolean save = false;
+	boolean erase = false;
 	int centerX, centerY;
 	private int wid = 20;
 	float[] leftmostPoint;
@@ -83,11 +91,14 @@ public class DrawView extends View implements OnTouchListener {
 		if(rotate){
 			transformation.setRotate(90);
 			transformation.postTranslate(imageWidth, 0);
+			transformation.invert(inverseRotate);
 		}
 		transformation.postScale(ratio, ratio);
 		transformation.postTranslate((getWidth() - imageWidth*ratio)/2, (getHeight() - imageHeight*ratio)/2);
 		
 		transformation.invert(inverseTransformation);
+		if(rotate)
+			inverseRotate.postConcat(transformation);
 	}
 	
 	public void setCenter(int x, int y){
@@ -111,8 +122,18 @@ public class DrawView extends View implements OnTouchListener {
 		setBackgroundColor(Color.TRANSPARENT);
 		setFocusable(true);
 		setFocusableInTouchMode(true);
-		
 		this.setOnTouchListener(this);
+	}
+	
+
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		// TODO Auto-generated method stub
+		super.onSizeChanged(w, h, oldw, oldh);
+		if(oldw == 0 && oldh == 0){
+			workingBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Config.ARGB_8888);
+			mCanvas = new Canvas(workingBitmap);
+		}
 	}
 	
 	
@@ -147,6 +168,7 @@ public class DrawView extends View implements OnTouchListener {
 			@Override
 			public void onOk(AmbilWarnaDialog dialog, int color) {
 				paint.setColor(color);
+				erase = false;
 			} 	
 			
 			@Override
@@ -176,15 +198,39 @@ public class DrawView extends View implements OnTouchListener {
 	
 	@Override
 	public void onDraw(Canvas canvas) {
+//		
+//		if(erase){
+//			paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+//			if(image != null)
+//				if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+//					mCanvas.drawBitmap(image, inverseRotate, null);
+//				else
+//					mCanvas.drawBitmap(image, transformation, null);
+//			for (int i = 0; i < pathList.size(); i++) {
+//				mCanvas.drawPath(pathList.get(i), paintList.get(i));
+//			}
+//			canvas.drawBitmap(workingBitmap, new Matrix(), null);
+//		}
 		if(!save){
+			canvas.drawColor(Color.WHITE);
 			if(image != null)
-				canvas.drawBitmap(image, transformation, null);
+				if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+					canvas.drawBitmap(image, inverseRotate, null);
+				else
+					canvas.drawBitmap(image, transformation, null);
 			for (int i = 0; i < pathList.size(); i++) {
 				canvas.drawPath(pathList.get(i), paintList.get(i));
 			}
 		} else {
 			canvas.drawColor(0, Mode.CLEAR);
-			canvas.drawBitmap(showAsset, new Matrix(), null);
+			if(image != null)
+				if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+					canvas.drawBitmap(image, inverseRotate, null);
+				else
+					canvas.drawBitmap(image, transformation, null);
+			for (int i = 0; i < pathList.size(); i++) {
+				canvas.drawPath(pathList.get(i), paintList.get(i));
+			}
 		}
 	}
 		

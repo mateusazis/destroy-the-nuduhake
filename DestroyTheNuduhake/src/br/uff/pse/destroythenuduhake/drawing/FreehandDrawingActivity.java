@@ -109,8 +109,8 @@ public class FreehandDrawingActivity extends Activity {
 				drawView.colorPicker();
 			}
 		});
-        Button eraserButton = (Button)findViewById(R.id.save_button);
-        eraserButton.setOnClickListener(new OnClickListener() {
+        Button saveButton = (Button)findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new OnClickListener() {
 			
 			@SuppressWarnings("deprecation")
 			@Override
@@ -120,9 +120,9 @@ public class FreehandDrawingActivity extends Activity {
 				Bitmap work = Bitmap.createBitmap(drawView.getWidth(), drawView.getHeight(), Config.ARGB_8888);
 				Canvas c = new Canvas(work);
 				drawView.draw(c);
-				drawView.showAsset = Bitmap.createBitmap(work);
 				drawView.save();
 				drawView.draw(c);
+				drawView.showAsset = Bitmap.createBitmap(work);
 				Canvas saveCanvas = new Canvas(save);
 				saveCanvas.drawBitmap(drawView.showAsset, drawView.inverseTransformation, null);
 				
@@ -151,7 +151,8 @@ public class FreehandDrawingActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				drawView.undo();
+				drawView.erase = true;
+				//drawView.undo();
 				
 			}
 		});
