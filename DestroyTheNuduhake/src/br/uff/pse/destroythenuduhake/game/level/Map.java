@@ -1,9 +1,11 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import br.uff.pse.destroythenuduhake.game.Physics;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -32,6 +34,7 @@ public class Map extends Actor {
 		renderer = new OrthogonalTiledMapRenderer(map, 1);
 		this.world = w;
 		createTiles(map, x, y);	
+		Body b;
 	}
 	
 	public Vector2 getPlayerPosition(){
@@ -71,6 +74,9 @@ public class Map extends Actor {
 		int rows = layer.getHeight();
 		int columns = layer.getWidth();
 		CellCoords first = new CellCoords(), last = new CellCoords();
+		//USAR ARRAY LIST!
+		//para hashset, está deixando alguns elementos sobrarem na cena!
+		ArrayList<Map.CellCoords> cells = new ArrayList<Map.CellCoords>();
 		
 		for(int i = 0; i < rows; i++){
 			first.clear(); last.clear();
@@ -79,21 +85,135 @@ public class Map extends Actor {
 				
 				Cell cell = layer.getCell(j, i);
 				if(cell != null){
-					if(!isInnerCell(j, i, layer)){
-						if(!first.isSet())
-							first.set(i, j);
-						last.set(i, j);
+					cells.add(new CellCoords(i, j));
+//					Gdx.app.log("", "add cell " + new CellCoords(i, j));
+//					if(!isInnerCell(j, i, layer)){
+//						if(!first.isSet())
+//							first.set(i, j);
+//						last.set(i, j);
 					} 
-				} else if(first.isSet()){
-					createBody(world, first, last, x0, y0);
-					first.clear(); last.clear();
-				}
-			}
-			if(first.isSet()){
-				createBody(world, first, last, x0, y0);
-				first.clear(); last.clear();
+//				} else if(first.isSet()){
+//					createBody(world, first, last, x0, y0);
+//					first.clear(); last.clear();
+//				}
+//			}
+//			if(first.isSet()){
+//				createBody(world, first, last, x0, y0);
+//				first.clear(); last.clear();
 			}
 		}
+		bakeBodies(cells, columns, rows);
+	}
+	
+	private void bakeBodies(ArrayList<CellCoords> cells, int width, int height){
+		CellCoords minCell, maxCell;
+		
+		CellCoords testCell = new CellCoords();
+		int k =0;
+		while(cells.size() > 0){
+			minCell = getFirstElement(cells).clone();
+			maxCell = getFirstElement(cells).clone();
+//			cells.remove(minCell);
+			
+			//expand max cell right
+			for(int j = maxCell.j + 1; j < width; j++){
+				testCell.set(maxCell.i, j);
+				if(cells.remove(testCell)){
+					maxCell.j = j;
+				} else{
+					break;
+				}
+			}
+			
+			//expand max cell down
+			for(int i = maxCell.i + 1; i < height; i++){
+				boolean breakOut = false;
+				for(int j = minCell.j; j <= maxCell.j; j++){
+					testCell.set(i, j);
+					if(!cells.contains(testCell)){
+						breakOut = true;
+						break;
+					}
+				}
+				if(breakOut)
+					break;
+				else{
+					for(int j = minCell.j; j <= maxCell.j; j++){
+						testCell.set(i, j);
+						cells.remove(testCell);
+					}
+					maxCell.i = i;
+				}
+			}
+			
+//			expand min cell left
+			for(int j = minCell.j - 1; j >= 0; j--){
+				boolean breakOut = false;
+				for(int i = minCell.i; i <= maxCell.i; i++){
+					testCell.set(i, j);
+					if(!cells.contains(testCell)){
+						breakOut = true;
+						break;
+					}
+				}
+				if(breakOut)
+					break;
+				else{
+					for(int i = minCell.i; i <= maxCell.i; i++){
+						testCell.set(i, j);
+						cells.remove(testCell);
+					}
+					minCell.j = j;
+				}
+			}
+			
+			//expand min cell up
+			for(int i = minCell.i - 1; i >= 0; i--){
+				boolean breakOut = false;
+				for(int j = minCell.j; j <= maxCell.j; j++){
+					testCell.set(i, j);
+					if(!cells.contains(testCell)){
+						breakOut = true;
+						break;
+					}
+				}
+				if(breakOut)
+					break;
+				else{
+					for(int j = minCell.j; j <= maxCell.j; j++){
+						testCell.set(i, j);
+						cells.remove(testCell);
+					}
+					Gdx.app.log("", "set min i to " + minCell.i);
+					minCell.i = i;
+				}
+			}
+			
+			//expand min cell
+			Gdx.app.log("", "create body from " + minCell + " to " + maxCell);
+			cells.remove(minCell);
+			cells.remove(maxCell);
+			createBody(world, minCell, maxCell, 0, 0);
+//			for(int i = minCell.i; i <= maxCell.i; i++)
+//				for(int j = minCell.j; j <= maxCell.j; j++){
+//					testCell.set(i, j);
+//					Gdx.app.log("", "removing cell " + testCell);
+//					cells.remove(testCell);
+//				}
+//			k++;
+//			if(k > 40)
+//				break;
+		}
+	}
+	
+	private static CellCoords getFirstElement(HashSet<CellCoords> cells){
+		for(CellCoords c : cells)
+			return c;
+		return null;
+	}
+	
+	private static CellCoords getFirstElement(ArrayList<CellCoords> cells){
+		return cells.get(0);
 	}
 	
 	private void createBody(World world, CellCoords first, CellCoords last, float x0, float y0){
@@ -141,6 +261,12 @@ public class Map extends Actor {
 	private class CellCoords{
 		public int i = -1, j = -1;
 		
+		public CellCoords(){}
+		public CellCoords(int i, int j){
+			this.i = i;
+			this.j = j;
+		}
+		
 		public boolean isSet(){
 			return i != -1 && j != -1;
 		}
@@ -153,6 +279,28 @@ public class Map extends Actor {
 		public void set(int i, int j){
 			this.i = i;
 			this.j = j;
+		}
+		
+		@Override
+		public boolean equals(Object o){
+			if(!(o instanceof CellCoords))
+				return false;
+			CellCoords other = (CellCoords)o;
+			return (this.i == other.i) && (this.j == other.j);
+		}
+		
+		@Override
+		public int hashCode() {
+			return i ^ j;
+		}
+		
+		@Override
+		public String toString() {
+			return "Cell Coords: (" + i + ", " + j + ")";
+		}
+		
+		public CellCoords clone(){
+			return new CellCoords(i, j);
 		}
 	}
 }
