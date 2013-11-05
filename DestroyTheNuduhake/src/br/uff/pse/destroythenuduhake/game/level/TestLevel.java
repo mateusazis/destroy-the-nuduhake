@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -92,7 +93,7 @@ public class TestLevel extends Level {
 		// setup input
 		defaultController = new DefaultController(player, b, this);
 
-		world.setContactListener(new LevelContactListener());
+		world.setContactListener(new Physics.LevelContactListener());
 		camera.zoom = CAMERA_SIZE;
 	}
 	
@@ -109,34 +110,6 @@ public class TestLevel extends Level {
 		camera.position.set(player.getX(), camera.position.y, 0);
 		world.step(1/60f, 6, 2);
 		
-//		r.render(world, camera.combined.scale(Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD));
-	}
-
-	class LevelContactListener implements ContactListener {
-
-		@Override
-		public void preSolve(Contact contact, Manifold oldManifold) {	}
-
-		@Override
-		public void postSolve(Contact contact, ContactImpulse impulse) {	}
-
-		@Override
-		public void endContact(Contact contact) {	}
-
-		@Override
-		public void beginContact(Contact contact) {
-			LevelObject a = (LevelObject) contact.getFixtureA().getBody().getUserData();
-			LevelObject b = (LevelObject) contact.getFixtureB().getBody().getUserData();
-			
-			if(a instanceof ControlableEntity)
-				((ControlableEntity) a).touchGround();
-			if(b instanceof ControlableEntity)
-				((ControlableEntity) b).touchGround();
-			
-			if(a != null)
-				a.onContactStart(b);
-			if(b != null)
-				b.onContactStart(a);
-		}
+		r.render(world, camera.combined.scale(Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD));
 	}
 }
