@@ -115,8 +115,9 @@ public class MainActivity extends Activity {
 		{
 			@Override
 			public void onClick(View v)
-			{				
-				FileManager.deleteAllFiles(MainActivity.this);
+			{		
+				sendTestDtnBundle();
+				//FileManager.deleteAllFiles(MainActivity.this);
 			}
 		});
 		Button b4 = (Button) findViewById(R.id.assetWorkshop);
