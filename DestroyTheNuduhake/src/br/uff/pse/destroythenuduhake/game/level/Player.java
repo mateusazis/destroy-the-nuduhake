@@ -29,7 +29,6 @@ public class Player extends ControlableEntity {
 		if(s == null){
 			s = new Sword(this, swordAsset);
 			getParent().addActor(s);
-//			s.setZIndex(1);
 		}
 		
 		swordPos.set(swordRelativePos);
@@ -41,14 +40,14 @@ public class Player extends ControlableEntity {
 	public void turnLeft() {
 		super.turnLeft();
 		s.setFlipped(true);
-		swordRelativePos.x -= 2 * getWidth();
+		swordRelativePos.x = -s.getWidth();
 	}
-//	
+	
 	@Override
 	public void turnRight() {
 		super.turnRight();
 		s.setFlipped(false);
-		swordRelativePos.x += 2 * getWidth();
+		swordRelativePos.x = getWidth();
 	}
 	
 	@Override
