@@ -106,13 +106,12 @@ public class Map extends Actor {
 	}
 	
 	private void bakeBodies(ArrayList<CellCoords> cells, int width, int height){
-		CellCoords minCell, maxCell;
+		CellCoords minCell = new CellCoords(), maxCell = new CellCoords();
 		
 		CellCoords testCell = new CellCoords();
 		int k =0;
 		while(cells.size() > 0){
-			minCell = getFirstElement(cells).clone();
-			maxCell = getFirstElement(cells).clone();
+			maxCell.set(minCell.set(getFirstElement(cells)));
 //			cells.remove(minCell);
 			
 			//expand max cell right
@@ -200,10 +199,11 @@ public class Map extends Actor {
 //					Gdx.app.log("", "removing cell " + testCell);
 //					cells.remove(testCell);
 //				}
-//			k++;
+			k++;
 //			if(k > 40)
 //				break;
 		}
+		Gdx.app.log("Map", "created " + k + " colliders!");
 	}
 	
 	private static CellCoords getFirstElement(HashSet<CellCoords> cells){
@@ -230,17 +230,17 @@ public class Map extends Actor {
 		body.createFixture(groundBox, 0.0f);
 	}
 	
-	private static boolean isInnerCell(int x, int y, TiledMapTileLayer layer){
-		for(int i = -1; i <= 1; i++)
-			for(int j = -1; j <= 1; j++){
-				int newX = x + i;
-				int newY = y + j;
-				if((newX != 0 || newY != 0) && layer.getCell(newX, newY) == null)
-					return false;
-			}
-		
-		return true;
-	}
+//	private static boolean isInnerCell(int x, int y, TiledMapTileLayer layer){
+//		for(int i = -1; i <= 1; i++)
+//			for(int j = -1; j <= 1; j++){
+//				int newX = x + i;
+//				int newY = y + j;
+//				if((newX != 0 || newY != 0) && layer.getCell(newX, newY) == null)
+//					return false;
+//			}
+//		
+//		return true;
+//	}
 	
 	public void dispose(){
 		map.dispose();
@@ -259,16 +259,12 @@ public class Map extends Actor {
 	}
 	
 	private class CellCoords{
-		public int i = -1, j = -1;
+		public int i = 0, j = 0;
 		
 		public CellCoords(){}
 		public CellCoords(int i, int j){
 			this.i = i;
 			this.j = j;
-		}
-		
-		public boolean isSet(){
-			return i != -1 && j != -1;
 		}
 		
 		public void clear(){
@@ -279,6 +275,12 @@ public class Map extends Actor {
 		public void set(int i, int j){
 			this.i = i;
 			this.j = j;
+		}
+		
+		public CellCoords set(CellCoords other){
+			this.i = other.i;
+			this.j = other.j;
+			return this;
 		}
 		
 		@Override
@@ -297,10 +299,6 @@ public class Map extends Actor {
 		@Override
 		public String toString() {
 			return "Cell Coords: (" + i + ", " + j + ")";
-		}
-		
-		public CellCoords clone(){
-			return new CellCoords(i, j);
 		}
 	}
 }
