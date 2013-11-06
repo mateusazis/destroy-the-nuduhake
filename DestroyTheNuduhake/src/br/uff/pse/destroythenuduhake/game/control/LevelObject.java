@@ -51,14 +51,6 @@ public class LevelObject extends Actor{
 	
 	public void onContactStart(LevelObject other){	}
 	
-//	public boolean removeFromLevel(){
-//		//in case physics is not used, the body is null
-//		if(body != null){
-//			World w = body.getWorld();
-//			w.destroyBody(body);
-//		}
-//		return super.remove();
-//	}
 	
 	public void dispose(){
 		if(body != null){
@@ -95,6 +87,20 @@ public class LevelObject extends Actor{
 			setPosition(physicsPosition.x * Physics.BOX_TO_WORLD, physicsPosition.y * Physics.BOX_TO_WORLD);
 			setRotation(MathUtils.radiansToDegrees * body.getAngle());
 		}
+	}
+	
+	public void superRemove(){
+		super.remove();
+	}
+	
+	@Override
+	public boolean remove() {
+		Level l = (Level)getStage();
+		boolean resp = super.remove();
+		if(resp)
+			l.addToDisposeList(this);
+		return resp;
+//			return false;
 	}
 	
 	@Override

@@ -72,13 +72,13 @@ public class TestLevel extends Level {
 		manager = new IAManager(player);
 		
 		//Enemies----------------------------------------------------------------------------------
-//		for(Rectangle r : map.findObjects("shooter")){
-//			ShooterEnemy e = new ShooterEnemy(r.x, r.y, b);
-//			e.setupPhysics(world);
-//			addActor(e);
-//			
-//			manager.addEnemies(e);
-//		}
+		for(Rectangle r : map.findObjects("shooter")){
+			ShooterEnemy e = new ShooterEnemy(r.x, r.y, b);
+			e.setupPhysics(world);
+			addActor(e);
+			
+			manager.addEnemies(e);
+		}
 		
 		for(Rectangle r : map.findObjects("ball_shooter")){
 			BallShooter ball = new BallShooter(r.x, r.y, b);

@@ -1,6 +1,8 @@
 package br.uff.pse.destroythenuduhake.game.control;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -11,9 +13,11 @@ public abstract class Level extends Stage implements ApplicationListener{
 	private AssetBundle usedBundle;
 	private Game parent;
 	private Set<AssetID> requiredAssets;
+	private List<LevelObject> disposeList;
 	
 	public Level(){
 		super();
+		disposeList = new LinkedList<LevelObject>();
 	}
 	
 	public void setRequiredAssets(AssetID...ids){
@@ -66,6 +70,11 @@ public abstract class Level extends Stage implements ApplicationListener{
 
 	@Override
 	public void render() {
+		if(disposeList.size() > 0){
+			for(LevelObject obj : disposeList)
+				obj.dispose();
+			disposeList.clear();
+		}
 		draw();
 	}
 
@@ -80,5 +89,9 @@ public abstract class Level extends Stage implements ApplicationListener{
 
 	@Override
 	public void resume() {
+	}
+
+	public void addToDisposeList(LevelObject levelObject) {
+		disposeList.add(levelObject);
 	}
 }

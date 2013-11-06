@@ -102,91 +102,64 @@ public class Map extends Actor {
 			//expand max cell right
 			for(int j = maxCell.j + 1; j < width; j++){
 				testCell.set(maxCell.i, j);
-				if(cells.remove(testCell)){
+				if(cells.remove(testCell))
 					maxCell.j = j;
-				} else{
+				else
 					break;
-				}
 			}
 			
 			//expand max cell down
+			maxCellDown:
 			for(int i = maxCell.i + 1; i < height; i++){
-				boolean breakOut = false;
 				for(int j = minCell.j; j <= maxCell.j; j++){
 					testCell.set(i, j);
-					if(!cells.contains(testCell)){
-						breakOut = true;
-						break;
-					}
+					if(!cells.contains(testCell))
+						break maxCellDown; //achou buraco na linha debaixo, cancela 
 				}
-				if(breakOut)
-					break;
-				else{
-					for(int j = minCell.j; j <= maxCell.j; j++){
-						testCell.set(i, j);
-						cells.remove(testCell);
-					}
-					maxCell.i = i;
+				//remove os tiles da linha
+				for(int j = minCell.j; j <= maxCell.j; j++){
+					testCell.set(i, j);
+					cells.remove(testCell);
 				}
+				maxCell.i = i;
 			}
 			
 //			expand min cell left
+			minCellLeft:
 			for(int j = minCell.j - 1; j >= 0; j--){
-				boolean breakOut = false;
 				for(int i = minCell.i; i <= maxCell.i; i++){
 					testCell.set(i, j);
-					if(!cells.contains(testCell)){
-						breakOut = true;
-						break;
-					}
+					if(!cells.contains(testCell))
+						break minCellLeft; //achou buraco na linha à esquerda, cancela
 				}
-				if(breakOut)
-					break;
-				else{
-					for(int i = minCell.i; i <= maxCell.i; i++){
-						testCell.set(i, j);
-						cells.remove(testCell);
-					}
-					minCell.j = j;
+				//remove os tiles da coluna
+				for(int i = minCell.i; i <= maxCell.i; i++){
+					testCell.set(i, j);
+					cells.remove(testCell);
 				}
+				minCell.j = j;
 			}
 			
 			//expand min cell up
+			minCellUp:
 			for(int i = minCell.i - 1; i >= 0; i--){
-				boolean breakOut = false;
 				for(int j = minCell.j; j <= maxCell.j; j++){
 					testCell.set(i, j);
-					if(!cells.contains(testCell)){
-						breakOut = true;
-						break;
-					}
+					if(!cells.contains(testCell))
+						break minCellUp; //achou buraco acima, cancela
 				}
-				if(breakOut)
-					break;
-				else{
-					for(int j = minCell.j; j <= maxCell.j; j++){
-						testCell.set(i, j);
-						cells.remove(testCell);
-					}
-//					Gdx.app.log("", "set min i to " + minCell.i);
-					minCell.i = i;
+				//remove os tiles da linha
+				for(int j = minCell.j; j <= maxCell.j; j++){
+					testCell.set(i, j);
+					cells.remove(testCell);
 				}
+				minCell.i = i;
 			}
 			
-			//expand min cell
-//			Gdx.app.log("", "create body from " + minCell + " to " + maxCell);
 			cells.remove(minCell);
 			cells.remove(maxCell);
 			createBody(world, minCell, maxCell, 0, 0);
-//			for(int i = minCell.i; i <= maxCell.i; i++)
-//				for(int j = minCell.j; j <= maxCell.j; j++){
-//					testCell.set(i, j);
-//					Gdx.app.log("", "removing cell " + testCell);
-//					cells.remove(testCell);
-//				}
 			k++;
-//			if(k > 40)
-//				break;
 		}
 		Gdx.app.log("Map", "created " + k + " colliders!");
 	}
