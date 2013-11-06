@@ -16,7 +16,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MainMenu extends Level implements TextListener{
 
-	private static final boolean SKIP_INTRO = false;
+	private static final boolean SKIP_INTRO = true;
 	private Text title, startText, editText, dtnText;
 	private LevelObject bg;
 	private MusicAsset music;

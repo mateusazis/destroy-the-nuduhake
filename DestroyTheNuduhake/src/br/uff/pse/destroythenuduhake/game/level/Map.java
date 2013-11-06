@@ -1,7 +1,6 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import br.uff.pse.destroythenuduhake.game.Physics;
 
@@ -33,8 +32,7 @@ public class Map extends Actor {
 		this.camera = c;
 		renderer = new OrthogonalTiledMapRenderer(map, 1);
 		this.world = w;
-		createTiles(map, x, y);	
-		Body b;
+		createTiles(map, x, y);
 	}
 	
 	public Vector2 getPlayerPosition(){
@@ -74,6 +72,7 @@ public class Map extends Actor {
 		int rows = layer.getHeight();
 		int columns = layer.getWidth();
 		CellCoords first = new CellCoords(), last = new CellCoords();
+		
 		//USAR ARRAY LIST!
 		//para hashset, está deixando alguns elementos sobrarem na cena!
 		ArrayList<Map.CellCoords> cells = new ArrayList<Map.CellCoords>();
@@ -84,35 +83,21 @@ public class Map extends Actor {
 				
 				
 				Cell cell = layer.getCell(j, i);
-				if(cell != null){
+				if(cell != null)
 					cells.add(new CellCoords(i, j));
-//					Gdx.app.log("", "add cell " + new CellCoords(i, j));
-//					if(!isInnerCell(j, i, layer)){
-//						if(!first.isSet())
-//							first.set(i, j);
-//						last.set(i, j);
-					} 
-//				} else if(first.isSet()){
-//					createBody(world, first, last, x0, y0);
-//					first.clear(); last.clear();
-//				}
-//			}
-//			if(first.isSet()){
-//				createBody(world, first, last, x0, y0);
-//				first.clear(); last.clear();
 			}
 		}
 		bakeBodies(cells, columns, rows);
 	}
 	
 	private void bakeBodies(ArrayList<CellCoords> cells, int width, int height){
+		Gdx.app.log("", "collection size: " + cells.size());
 		CellCoords minCell = new CellCoords(), maxCell = new CellCoords();
 		
 		CellCoords testCell = new CellCoords();
 		int k =0;
 		while(cells.size() > 0){
-			maxCell.set(minCell.set(getFirstElement(cells)));
-//			cells.remove(minCell);
+			maxCell.set(minCell.set(cells.get(0)));
 			
 			//expand max cell right
 			for(int j = maxCell.j + 1; j < width; j++){
@@ -183,13 +168,13 @@ public class Map extends Actor {
 						testCell.set(i, j);
 						cells.remove(testCell);
 					}
-					Gdx.app.log("", "set min i to " + minCell.i);
+//					Gdx.app.log("", "set min i to " + minCell.i);
 					minCell.i = i;
 				}
 			}
 			
 			//expand min cell
-			Gdx.app.log("", "create body from " + minCell + " to " + maxCell);
+//			Gdx.app.log("", "create body from " + minCell + " to " + maxCell);
 			cells.remove(minCell);
 			cells.remove(maxCell);
 			createBody(world, minCell, maxCell, 0, 0);
@@ -204,16 +189,6 @@ public class Map extends Actor {
 //				break;
 		}
 		Gdx.app.log("Map", "created " + k + " colliders!");
-	}
-	
-	private static CellCoords getFirstElement(HashSet<CellCoords> cells){
-		for(CellCoords c : cells)
-			return c;
-		return null;
-	}
-	
-	private static CellCoords getFirstElement(ArrayList<CellCoords> cells){
-		return cells.get(0);
 	}
 	
 	private void createBody(World world, CellCoords first, CellCoords last, float x0, float y0){
