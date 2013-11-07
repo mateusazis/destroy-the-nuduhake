@@ -11,10 +11,12 @@ import android.graphics.BitmapFactory;
 import br.uff.pse.destroythenuduhake.dtn.Author;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetID;
+import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class GraphicAsset extends Asset{
 
@@ -59,6 +61,21 @@ public class GraphicAsset extends Asset{
 		batch.draw(texture, x, y);
 	}
 	
+	public void render(SpriteBatch batch, LevelObject a){
+		TextureRegion region = a.getTextureRegion();
+		
+		float x = a.getX(),
+				y = a.getY(),
+				width = a.getWidth(),
+				height = a.getHeight(),
+				scaleX = a.getScaleX(),
+				scaleY = a.getScaleY(),
+				originX = a.getOriginX(),
+				originY = a.getOriginY(),
+				rotation = a.getRotation();
+		batch.draw(region, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
+	}
+	
 	@Override
 	public GraphicAsset makeCopy(Author author, String newPath) {
 		return new GraphicAsset(getId(), newPath, author);
@@ -78,7 +95,11 @@ public class GraphicAsset extends Asset{
 		}
 		return BitmapFactory.decodeFile(getFilePath());
 	}
-	
+	public void editBitmap(Bitmap bm)
+	{
+		setBitmap(bm);
+		markModification();
+	}
 	public void setBitmap(Bitmap bm)
 	{
 		try 
@@ -87,7 +108,7 @@ public class GraphicAsset extends Asset{
 			bm.compress(Bitmap.CompressFormat.PNG, 100, fos);
 			fos.flush();
 			fos.close();
-			
+			//markModification();
 		} 
 		catch (Exception e)
 		{

@@ -4,14 +4,17 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.Physics;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 
 public class LevelObject extends Actor{
 
@@ -19,13 +22,28 @@ public class LevelObject extends Actor{
 	private BodyDef bodyDef;
 	private Body body;
 	private Rectangle r;
+	private TextureRegion region;
+	private Fixture fixture;
 	
 	public LevelObject(float x, float y, GraphicAsset asset){
 		super();
+		r = new Rectangle();
+		region = new TextureRegion();
 		setPosition(x, y);
 		setGraphic(asset);
-		setSize(asset.getWidth(), asset.getHeight());
-		r = new Rectangle(0, 0, getWidth(), getHeight());
+	}
+	
+	public void setFlipped(boolean flipped){
+		if(flipped != region.isFlipX())
+			region.flip(true, false);
+	}
+	
+	public boolean isFlipped(){
+		return region.isFlipX();
+	}
+	
+	public TextureRegion getTextureRegion(){
+		return region;
 	}
 	
 	public Rectangle getRect(){
@@ -35,14 +53,6 @@ public class LevelObject extends Actor{
 	
 	public void onContactStart(LevelObject other){	}
 	
-//	public boolean removeFromLevel(){
-//		//in case physics is not used, the body is null
-//		if(body != null){
-//			World w = body.getWorld();
-//			w.destroyBody(body);
-//		}
-//		return super.remove();
-//	}
 	
 	public void dispose(){
 		if(body != null){
@@ -60,15 +70,32 @@ public class LevelObject extends Actor{
 		body = world.createBody(bodyDef);
 		body.setUserData(this);
 		
-		PolygonShape groundBox = new PolygonShape();
-		float w = getWidth() * Physics.WORLD_TO_BOX, h = getHeight() * Physics.WORLD_TO_BOX;
-		float hX = w / 2f, hY = h / 2f;
-		groundBox.setAsBox(hX, hY, new Vector2(hX, hY), 0);
-		createBodyFixture(body, groundBox);
+		rebuildShape();
+//		PolygonShape groundBox = new PolygonShape();
+//		float w = getWidth() * Physics.WORLD_TO_BOX, h = getHeight() * Physics.WORLD_TO_BOX;
+//		float hW = w / 2f, hH = h / 2f;
+//		groundBox.setAsBox(hW, hH, new Vector2(hW, hH), 0);
+//		this.fixture = createBodyFixture(body, groundBox);
 	}
 	
-	public void createBodyFixture(Body b, PolygonShape boxShape){
-		body.createFixture(boxShape, 0.0f);
+	protected void rebuildShape(){
+		Array<Fixture> fixtures = body.getFixtureList();
+		for(Fixture f : fixtures)
+			body.destroyFixture(f);
+		
+		PolygonShape groundBox = new PolygonShape();
+		float w = getWidth() * Physics.WORLD_TO_BOX, h = getHeight() * Physics.WORLD_TO_BOX;
+		float hW = w / 2f, hH = h / 2f;
+		groundBox.setAsBox(hW, hH, new Vector2(hW, hH), 0);
+		this.fixture = createBodyFixture(body, groundBox);
+	}
+	
+	public Fixture getFixture(){
+		return fixture;
+	}
+	
+	public Fixture createBodyFixture(Body b, PolygonShape boxShape){
+		return body.createFixture(boxShape, 0.0f);
 	}
 	
 	@Override
@@ -81,11 +108,26 @@ public class LevelObject extends Actor{
 		}
 	}
 	
+	public void superRemove(){
+		super.remove();
+	}
+	
+	@Override
+	public boolean remove() {
+		Level l = (Level)getStage();
+		boolean resp = super.remove();
+		if(resp)
+			l.addToDisposeList(this);
+		return resp;
+//			return false;
+	}
+	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		float x = getX(), y = getY();
-		getGraphic().render(batch, x, y);
+//		float x = getX(), y = getY();
+//		getGraphic().render(batch, x, y);
+		getGraphic().render(batch, this);
 	}
 
 	public BodyDef getBodyDef() {
@@ -110,6 +152,9 @@ public class LevelObject extends Actor{
 
 	public void setGraphic(GraphicAsset graphic) {
 		this.graphic = graphic;
+		region.setRegion(graphic.getTexture());
+		r.setSize(graphic.getWidth(), graphic.getHeight());
+		setSize(graphic.getWidth(), graphic.getHeight());
 	}
 	
 //	@Override

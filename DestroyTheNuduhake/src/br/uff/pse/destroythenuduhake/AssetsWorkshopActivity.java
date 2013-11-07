@@ -3,6 +3,8 @@ package br.uff.pse.destroythenuduhake;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import br.uff.pse.destroythenuduhake.drawing.FreehandDrawingActivity;
 import br.uff.pse.destroythenuduhake.game.MainAndroid;
+import br.uff.pse.destroythenuduhake.game.assets.AudioAsset;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
@@ -30,6 +33,8 @@ public class AssetsWorkshopActivity extends Activity
 	private ListView listView;
 	private List<Item> values;	
 	public static GraphicAsset asset;
+	private AlertDialog speakerDialog;
+	private AlertDialog.Builder speakerBuilder;
 
 	
 	public static GraphicAsset getAsset() {
@@ -46,14 +51,24 @@ public class AssetsWorkshopActivity extends Activity
 				int arg2, long arg3) {
 			try
 			{
-				GraphicAsset ga =  (GraphicAsset) ((ListItem)(values.get(arg2))).getAsset();
-				setAsset(ga);
-				Intent intent = new Intent(AssetsWorkshopActivity.this, FreehandDrawingActivity.class);
-				startActivity(intent);
+				if(((ListItem)(values.get(arg2))).getAsset() instanceof GraphicAsset)
+				{
+					GraphicAsset ga =  (GraphicAsset) ((ListItem)(values.get(arg2))).getAsset();
+					setAsset(ga);
+					Intent intent = new Intent(AssetsWorkshopActivity.this, FreehandDrawingActivity.class);
+					startActivityForResult(intent, 0);
+				}
+				else
+					if(((ListItem)(values.get(arg2))).getAsset() instanceof AudioAsset)
+					{
+						setSpeakerDialogBuilder();
+						speakerDialog.show();
+					}
 			}
 			catch(Exception e)
 			{
 				
+				Exception x = e;
 			}
 
 		}
@@ -64,6 +79,7 @@ public class AssetsWorkshopActivity extends Activity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
+		showContents();
 	}
 	
 	
@@ -115,6 +131,14 @@ public class AssetsWorkshopActivity extends Activity
 		{
 
 		}
+	}
+	private void setSpeakerDialogBuilder()
+	{
+		speakerBuilder = new AlertDialog.Builder(this);
+		speakerBuilder.setMessage("Destroy The Nuduhake does not support audio edition yet.");
+		
+		
+		speakerDialog = speakerBuilder.create();
 	}
 
 }

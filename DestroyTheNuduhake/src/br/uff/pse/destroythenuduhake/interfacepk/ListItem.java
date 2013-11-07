@@ -18,7 +18,7 @@ public class ListItem implements Item {
     private  boolean        checked;
     private final Asset         asset;
     private final Bitmap b;
-    private CheckBox cb;
+    private ImageView cb;
     private ImageView iv;
     private boolean visible = true;
     public ListItem(Asset a,boolean c,Bitmap b) {
@@ -52,8 +52,13 @@ public class ListItem implements Item {
         TextView text1 = (TextView) view.findViewById(R.id.list_content1);
         TextView text2 = (TextView) view.findViewById(R.id.list_content2);
         iv = (ImageView) view.findViewById(R.id.imageView1);
-        cb = (CheckBox) view.findViewById(R.id.checkBox1);
-        cb.setChecked(checked);
+        cb = (ImageView) view.findViewById(R.id.imageView2);
+        if(checked)
+        	cb.setVisibility(View.VISIBLE);
+        else
+        	cb.setVisibility(View.INVISIBLE);
+      
+        
         iv.setImageBitmap(b);
         if(!visible)
         {
@@ -72,7 +77,10 @@ public class ListItem implements Item {
     public void setChecked(boolean b)
     {
     	checked = b;
-    	cb.setChecked(checked);
+    	 if(checked)
+         	cb.setVisibility(View.VISIBLE);
+         else
+         	cb.setVisibility(View.INVISIBLE);
     }
     public void setCheckBoxInv()
     {

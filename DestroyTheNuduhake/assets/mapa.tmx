@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="256" height="16" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32">
+  <image source="tiles.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="2" name="desert" tilewidth="32" tileheight="32">
+  <image source="desert.png" width="256" height="608"/>
+  <terraintypes>
+   <terrain name="Novo Terreno" tile="-1"/>
+  </terraintypes>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="256" height="16">
+  <data encoding="base64" compression="zlib">
+   eJzt2EEKg0AQBMAFf2NiDpr/vy0GEhAFPTgsOlsFfZpLXxqWLQUAAAAAAMimn/MIzLNufeCEcc4UmHfd+sAJ9g/tsn9ol/1Du+60/5p/lf3BHTK40/6/XbvA7HUdD+6QQdb9r3vZP2xF7f+/qVeJfaMvM1TsOvzukFnE/iPf5FcLZPYBgVs4Gw==
+  </data>
+ </layer>
+ <objectgroup name="Camada de Objetos 1" width="256" height="16">
+  <object name="O1" type="shooter" x="1862" y="216" width="64" height="124"/>
+  <object name="O2" type="ball_shooter" x="2233" y="193" width="68" height="153"/>
+  <object type="player" x="700" y="262" width="88" height="176"/>
+ </objectgroup>
+</map>

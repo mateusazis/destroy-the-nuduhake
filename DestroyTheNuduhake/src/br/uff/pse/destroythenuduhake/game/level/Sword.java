@@ -6,8 +6,7 @@ import java.util.Set;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
@@ -20,7 +19,7 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class Sword extends LevelObject{
 	
-	private TextureRegion r;
+//	private TextureRegion r;
 	private enum State{IDLE, SWINGING_FRONT, SWINGING_BACK, RESTORE}
 	private State state = State.IDLE;
 	
@@ -35,9 +34,9 @@ public class Sword extends LevelObject{
 	public Sword(Player owner, GraphicAsset swordAsset){
 		super(0, 0, swordAsset);
 		this.owner = owner;
-		r = new TextureRegion(swordAsset.getTexture());
+//		r = new TextureRegion(swordAsset.getTexture());
 		setSize(swordAsset.getWidth(), swordAsset.getHeight());
-		setScaleX(4); setScaleY(4);
+//		setScaleX(4); setScaleY(4);
 		
 		
 		//update the sword rectangle
@@ -46,19 +45,10 @@ public class Sword extends LevelObject{
 		r.height = getHeight() * getScaleY();
 		r.width = r.height;
 	}
-		
+	
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		float x = getX(),
-				y = getY(),
-				originX = getWidth()/2,
-				originY = 0,
-				width = getWidth(),
-				height = getHeight(),
-				scaleX = getScaleX(),
-				scaleY = getScaleY(),
-				rotation = getRotation();
-		batch.draw(r, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
+	public void setFlipped(boolean flipped){
+		super.setFlipped(flipped);
 	}
 	
 	public void swing(){
@@ -74,7 +64,14 @@ public class Sword extends LevelObject{
 	}
 	
 	@Override
+	public void setRotation(float degrees) {
+		float newAngle = isFlipped() ? -degrees : degrees;
+		super.setRotation(newAngle);
+	}
+	
+	@Override
 		public void act(float delta) {
+//		setRotation(45);
 			super.act(delta);
 			switch(state){
 			case IDLE:
@@ -116,6 +113,7 @@ public class Sword extends LevelObject{
 	
 	public void onOverlap(Enemy e){
 		if(!hitEnemies.contains(e)){
+			Gdx.app.log("", "enemy attacked!");
 			hitEnemies.add(e);
 			e.onAtacked(owner.getAtackPower());
 		}

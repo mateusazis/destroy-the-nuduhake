@@ -1,25 +1,29 @@
 package br.uff.pse.destroythenuduhake.drawing;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import br.uff.pse.destroythenuduhake.AssetsWorkshopActivity;
 import br.uff.pse.destroythenuduhake.R;
+import br.uff.pse.destroythenuduhake.dtn.AuthorRetriever;
+import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.files.FileManager;
 
 public class FreehandDrawingActivity extends Activity {
 	private static final String TAG = "FreehandDrawing";
@@ -29,7 +33,8 @@ public class FreehandDrawingActivity extends Activity {
     AlertDialog alert;
     
     /** Called when the activity is first created. */
-    @Override
+    @SuppressLint("NewApi")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set full screen view
@@ -42,13 +47,16 @@ public class FreehandDrawingActivity extends Activity {
         
         setContentView(R.layout.freehand_drawing_main);
         drawView = (DrawView)findViewById(R.id.draw_view);
-		drawView.setGraphicAsset(AssetsWorkshopActivity.asset);
+        drawView.setGraphicAsset(AssetsWorkshopActivity.asset);
 		if(drawView.image != null){
 	        OnGlobalLayoutListener list = new OnGlobalLayoutListener() {
 				
+				@SuppressWarnings("deprecation")
 				@Override
 				public void onGlobalLayout() {
-					drawView.setCenter(drawView.getWidth(), drawView.getHeight());
+					int viewWidth = drawView.getWidth();
+					int viewHeight = drawView.getHeight();
+					drawView.setAllScreen(viewWidth, viewHeight);
 					if(Build.VERSION.SDK_INT < 16){
 					drawView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 					} else {
@@ -59,6 +67,103 @@ public class FreehandDrawingActivity extends Activity {
 			drawView.getViewTreeObserver().addOnGlobalLayoutListener(list);
 		}
         drawView.requestFocus();
+        Button widthButton = (Button)findViewById(R.id.width_button);
+        widthButton.setOnClickListener(new OnClickListener() {
+		
+			@Override
+			public void onClick(View v) {
+	    		alert.show();
+	    		CircleView circle = (CircleView)alert.findViewById(R.id.circle_view);
+	            seekBar = (SeekBar)alert.findViewById(R.id.seek_bar);
+	            circle.setWid(drawView.getWid());
+	            circle.setPaintFill(drawView.paint);
+	            seekBar.setProgress(drawView.getWid());
+				
+		        seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+		            CircleView circle = (CircleView)alert.findViewById(R.id.circle_view);
+				            @Override
+							public void onStopTrackingTouch(SeekBar arg0) {
+				                // TODO Auto-generated method stub
+				            }
+				
+				            @Override
+							public void onStartTrackingTouch(SeekBar arg0) {
+				                // TODO Auto-generated method stub
+				            }
+				
+				            @Override
+							public void onProgressChanged(SeekBar sb, int progress, boolean arg2) {
+				                // TODO Auto-generated method stub
+				            	circle.setWid(progress);
+				            	Canvas c = new Canvas();
+				            	circle.draw(c);
+				            }
+				        });				
+			}
+		});
+        Button colorButton = (Button)findViewById(R.id.color_button);
+        colorButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				drawView.colorPicker();
+			}
+		});
+        Button saveButton = (Button)findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new OnClickListener() {
+			
+			@SuppressWarnings("deprecation")
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub				
+				Bitmap save = Bitmap.createBitmap(drawView.image.getWidth(), drawView.image.getHeight(), Config.ARGB_8888);
+				Bitmap work = Bitmap.createBitmap(drawView.getWidth(), drawView.getHeight(), Config.ARGB_8888);
+				Canvas c = new Canvas(work);
+				drawView.draw(c);
+				drawView.save();
+				drawView.draw(c);
+				drawView.showAsset = Bitmap.createBitmap(work);
+				Canvas saveCanvas = new Canvas(save);
+				saveCanvas.drawBitmap(drawView.showAsset, drawView.inverseTransformation, null);
+				
+				Context ctx = FreehandDrawingActivity.this;
+				
+				GraphicAsset oldGA = drawView.getGraphicAsset();
+				GraphicAsset newGA;
+				if(oldGA.isOriginal()){
+					String newAssetPath = FileManager.getAvaiableFilepath(ctx,getFilesDir().getAbsolutePath(),true);
+					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), newAssetPath);
+					FileManager.addAsset(newGA, ctx);
+				}
+				else
+					newGA = oldGA;
+				
+				save = Bitmap.createBitmap(save);
+				//newGA.setBitmap(save);
+				newGA.editBitmap(save);
+				FileManager.saveListFile(FreehandDrawingActivity.this);
+				
+				finish();
+			}
+		});
+        Button undoButton = (Button)findViewById(R.id.undo_button);
+        undoButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				drawView.erase = true;
+				//drawView.undo();
+				
+			}
+		});
+        Button clearButton = (Button)findViewById(R.id.clear_button);
+        clearButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				drawView.clearScreen();
+			}
+		});
         builder = new AlertDialog.Builder(this);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			
@@ -80,59 +185,7 @@ public class FreehandDrawingActivity extends Activity {
         builder.setView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.width_picker_dialog, null));        
         alert = builder.create();
     }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-    	MenuInflater inflater = getMenuInflater();
-    	inflater.inflate(R.layout.paint_menu, menu);
-    	return true;
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-    	// Handle item selection
-    	int itemID = item.getItemId();
-    	if(itemID == R.id.clear_id)
-    		drawView.clearScreen();
-    	if(itemID == R.id.undo_id)
-    		drawView.undo();
-    	//if(itemID == R.id.eraser_id)
-    	if(itemID == R.id.change_color_id)
-    		drawView.colorPicker();
-    	if(itemID == R.id.change_bg_color_id)
-    		drawView.bgColorPicker();
-    	if(itemID == R.id.change_width_id){    		
-    		alert.show();
-    		CircleView circle = (CircleView)alert.findViewById(R.id.circle_view);
-            seekBar = (SeekBar)alert.findViewById(R.id.seek_bar);
-            circle.setWid(drawView.getWid());
-            circle.setPaintFill(drawView.paint);
-            seekBar.setProgress(drawView.getWid());
-			
-	        seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-	            CircleView circle = (CircleView)alert.findViewById(R.id.circle_view);
-			            @Override
-						public void onStopTrackingTouch(SeekBar arg0) {
-			                // TODO Auto-generated method stub
-			            }
-			
-			            @Override
-						public void onStartTrackingTouch(SeekBar arg0) {
-			                // TODO Auto-generated method stub
-			            }
-			
-			            @Override
-						public void onProgressChanged(SeekBar sb, int progress, boolean arg2) {
-			                // TODO Auto-generated method stub
-			            	circle.setWid(progress);
-			            	Canvas c = new Canvas();
-			            	circle.draw(c);
-			            }
-			        });
-    	}
-    	return true;
-    }
-
+        
 //    
 //    void setCustomBackground(DrawView v) {
 //    	Intent fileChooserIntent = new Intent();

@@ -3,6 +3,10 @@ package br.uff.pse.destroythenuduhake.game.level;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+
+import br.uff.pse.destroythenuduhake.game.Configs;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 
@@ -24,25 +28,31 @@ public class DefaultController {
 
 	public DefaultController(Player player, AssetBundle b, Level l) {
 		this.player = player;
-		final float ITEMS_HEIGHT = -700;
+		final float ITEMS_HEIGHT = -240;
 		
-		InputSlider slider = new InputSlider(-1100, ITEMS_HEIGHT, b, this);
+		InputSlider slider = new InputSlider(-400, ITEMS_HEIGHT, b, this);
 		l.addActor(slider);
 		
-		JumpButton jmp = new JumpButton(600, ITEMS_HEIGHT, b, this);
+		JumpButton jmp = new JumpButton(280, ITEMS_HEIGHT, b, this);
 		l.addActor(jmp);
 		
-		AttackButton atk = new AttackButton(900, ITEMS_HEIGHT, b, this);
+		AttackButton atk = new AttackButton(160, ITEMS_HEIGHT, b, this);
 		l.addActor(atk);
+		
+		slider.setZIndex(Integer.MAX_VALUE);
+		jmp.setZIndex(Integer.MAX_VALUE);
+		atk.setZIndex(Integer.MAX_VALUE);
 	}
 
 	// ** Key presses and touches **************** //
 
 		public void leftPressed() {
+			rightReleased();
 			keys.get(keys.put(Keys.LEFT, true));
 		}
 
 		public void rightPressed() {
+			leftReleased();
 			keys.get(keys.put(Keys.RIGHT, true));
 		}
 
@@ -72,6 +82,28 @@ public class DefaultController {
 
 		public void update() {
 			processInput();
+			
+			if(!Configs.isAndroid()){
+				if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+					rightPressed();
+				else
+					rightReleased();
+				
+				if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
+					leftPressed();
+				else
+					leftReleased();
+				
+				if(Gdx.input.isKeyPressed(Input.Keys.UP))
+					jumpPressed();
+				else
+					jumpReleased();
+				
+				if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+					firePressed();
+				else
+					fireReleased();
+			}
 		}
 
 		/** Change Bob's state and parameters based on input controls **/

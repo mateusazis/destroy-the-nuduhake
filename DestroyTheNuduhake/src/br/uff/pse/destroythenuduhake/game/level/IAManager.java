@@ -1,7 +1,6 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.badlogic.gdx.math.Rectangle;
@@ -34,14 +33,14 @@ public class IAManager extends Actor{
 		
 		for(int i = 0; i < enemies.size(); i++){
 			Enemy e = enemies.get(i);
-			if(s.canHitEnemies() && sRect.overlaps(e.getRect()))
-				s.onOverlap(e);
-			
 			if(e.isDead()){
 				enemies.remove(i);
 				e.setManager(null);
 				i--;
 			} else {
+				if(s.canHitEnemies() && sRect.overlaps(e.getRect()))
+					s.onOverlap(e);
+				
 				float xDistance = Math.abs(e.getX() - player.getX());
 				boolean isNear = xDistance <= e.getMinXPlayerDistance(); 
 				if(isNear && e.isSleeping())

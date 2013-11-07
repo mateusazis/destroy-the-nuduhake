@@ -13,7 +13,7 @@ public final class AssetDatabase {
 		SPRITE_SHELL = new AssetID(0x0001, "Shell", ""),
 		SPRITE_GROUND = new AssetID(0x0002, "Ground", ""),
 		SPRITE_DRAGON = new AssetID(0x0003, "Dragon", ""),
-		SPRITE_BALL_SHOOTER = new AssetID(0x0004, "Ball Shooter", ""),
+		SPRITE_BALL_SHOOTER_3 = new AssetID(0x0004, "Ball Shooter 3", ""),
 		SPRITE_BALL = new AssetID(0x0005, "Ball", ""),
 		SPRITE_SMOKE = new AssetID(0x0006, "Smoke", ""),
 		SPRITE_BULLET = new AssetID(0x0007, "Bullet", ""),
@@ -27,6 +27,11 @@ public final class AssetDatabase {
 		SPRITE_INPUT_ATTACK_PRESSED = new AssetID(0x000D, "Input Attack Pressed", ""),
 		SPRITE_INPUT_JUMP = new AssetID(0x000E, "Input Jump", ""),
 		SPRITE_INPUT_JUMP_PRESSED = new AssetID(0x000F, "Input Jump Pressed", ""),
+		
+		SPRITE_BACKGROUND = new AssetID(0x0010, "Background", ""),
+		SPRITE_BALL_SHOOTER_2 = new AssetID(0x0011, "Ball Shooter 2", ""),
+		SPRITE_BALL_SHOOTER_1 = new AssetID(0x0012, "Ball Shooter 1", ""),
+		
 	
 	//musics
 	MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", "");
@@ -62,10 +67,13 @@ public final class AssetDatabase {
 				new GraphicAsset(AssetDatabase.SPRITE_GROUND, "images/ground.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_DRAGON, "images/dragon.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_BALL, "images/ball.png"),
-				new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER, "images/ball_shooter.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER_3, "images/ball_shooter_3.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_BULLET, "images/bullet.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_SHOOTER, "images/shooter.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_SWORD, "images/sword.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_BACKGROUND, "images/game_background.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER_2, "images/ball_shooter_2.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER_1, "images/ball_shooter_1.png"),
 				
 				new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening.mp3"),
 			};

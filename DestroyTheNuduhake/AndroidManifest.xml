@@ -65,7 +65,7 @@
 	        <!-- Add intent filter for notification of incoming bundles -->
 	        <intent-filter>
 	            <action android:name="de.tubs.ibr.dtn.intent.RECEIVE" />
-	            <category android:name="uff.br.pse.destroythenuduhake" />
+	            <category android:name="br.uff.pse.destroythenuduhake" />
 	        </intent-filter>
 
 	    </receiver>
