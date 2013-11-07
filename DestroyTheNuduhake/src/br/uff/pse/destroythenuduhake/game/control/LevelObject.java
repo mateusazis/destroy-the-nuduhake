@@ -21,6 +21,8 @@ public class LevelObject extends Actor{
 	private Body body;
 	private Rectangle r;
 	private TextureRegion region;
+	private Rectangle rBot;
+	private Rectangle rTop;
 	
 	public LevelObject(float x, float y, GraphicAsset asset){
 		super();
@@ -28,7 +30,10 @@ public class LevelObject extends Actor{
 		setPosition(x, y);
 		setGraphic(asset);
 		setSize(asset.getWidth(), asset.getHeight());
-		r = new Rectangle(0, 0, getWidth(), getHeight());
+		r = new Rectangle(getWidth()/2, 0, getWidth(), getHeight());
+		
+		rBot = new Rectangle(0, 0, 5, 5);
+		rTop = new Rectangle(getWidth()/2, getHeight(), 5, 5);
 	}
 	
 	public void setFlipped(boolean flipped){
@@ -129,6 +134,15 @@ public class LevelObject extends Actor{
 		this.graphic = graphic;
 		region.setRegion(graphic.getTexture());
 	}
+	
+	public Rectangle getRbot(){
+		return rBot;
+	}
+	
+	public Rectangle getRTop(){
+		return rTop;
+	}
+	
 	
 //	@Override
 //	public void act(float delta) {

@@ -31,9 +31,10 @@ public class ControlableEntity extends LevelObject {
 	public ControlableEntity(float x, float y, GraphicAsset asset) {
 		super(x, y, asset);
 		velocity = 1f;
-//		if(turnedLeft){
-//			r.flip(true, false);
-//		} Está comentado porque acabei fazendo o inimigo olhando pra direita, ai ia ficar estranho
+		// if(turnedLeft){
+		// r.flip(true, false);
+		// } Está comentado porque acabei fazendo o inimigo olhando pra direita,
+		// ai ia ficar estranho
 	}
 
 	public void setJumpVelocity(float value) {
@@ -64,7 +65,7 @@ public class ControlableEntity extends LevelObject {
 	}
 
 	public void moveRight() {
-		if(turnedLeft){
+		if (turnedLeft) {
 			turnRight();
 		}
 		if (getBody().getLinearVelocity().x < maxMoveVelocity)
@@ -78,7 +79,8 @@ public class ControlableEntity extends LevelObject {
 	public void jump() {
 		if (getState() != State.JUMPING) {
 			setState(State.JUMPING);
-			getBody().applyLinearImpulse(0.0f, jumpVelocity, getX(), getY(), true);
+			getBody().applyLinearImpulse(0.0f, jumpVelocity, getX(), getY(),
+					true);
 		}
 	}
 
@@ -153,10 +155,22 @@ public class ControlableEntity extends LevelObject {
 	public void setFixture(Fixture fixture) {
 		this.fixture = fixture;
 	}
-	
+
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+	}
+
+	@Override
+	public void onContactStart(LevelObject other) {
+		if (other != null) {
+			if (getRTop().overlaps(other.getRbot())) {
+//				touchGround();
+			}
+		}
+		//else{
+			//touchGround();
+		//}
 	}
 
 }
