@@ -49,14 +49,15 @@ public class ControlableEntity extends LevelObject {
 	}
 
 	@Override
-	public void createBodyFixture(Body b, PolygonShape boxShape) {
+	public Fixture createBodyFixture(Body b, PolygonShape boxShape) {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = boxShape;
 		fixtureDef.density = 0.0f;
 		fixtureDef.friction = 8.0f;
 		fixtureDef.restitution = 0;
-		b.createFixture(fixtureDef);
+		Fixture f = b.createFixture(fixtureDef);
 		b.setType(BodyType.DynamicBody);
+		return f;
 	}
 
 	public void moveLeft() {
@@ -155,14 +156,6 @@ public class ControlableEntity extends LevelObject {
 
 	public void setState(State state) {
 		this.state = state;
-	}
-
-	public Fixture getFixture() {
-		return fixture;
-	}
-
-	public void setFixture(Fixture fixture) {
-		this.fixture = fixture;
 	}
 	
 	@Override

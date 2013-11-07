@@ -16,7 +16,7 @@
  </layer>
  <objectgroup name="Camada de Objetos 1" width="256" height="16">
   <object name="O1" type="shooter" x="1862" y="216" width="64" height="124"/>
-  <object name="O2" type="ball_shooter" x="2240" y="190" width="68" height="153"/>
+  <object name="O2" type="ball_shooter" x="2233" y="193" width="68" height="153"/>
   <object type="player" x="700" y="262" width="88" height="176"/>
  </objectgroup>
 </map>
