@@ -95,7 +95,11 @@ public class GraphicAsset extends Asset{
 		}
 		return BitmapFactory.decodeFile(getFilePath());
 	}
-	
+	public void editBitmap(Bitmap bm)
+	{
+		setBitmap(bm);
+		markModification();
+	}
 	public void setBitmap(Bitmap bm)
 	{
 		try 
@@ -104,7 +108,7 @@ public class GraphicAsset extends Asset{
 			bm.compress(Bitmap.CompressFormat.PNG, 100, fos);
 			fos.flush();
 			fos.close();
-			markModification();
+			//markModification();
 		} 
 		catch (Exception e)
 		{

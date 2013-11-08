@@ -3,6 +3,10 @@ package br.uff.pse.destroythenuduhake.game.level;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+
+import br.uff.pse.destroythenuduhake.game.Configs;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 
@@ -78,6 +82,28 @@ public class DefaultController {
 
 		public void update() {
 			processInput();
+			
+			if(!Configs.isAndroid()){
+				if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+					rightPressed();
+				else
+					rightReleased();
+				
+				if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
+					leftPressed();
+				else
+					leftReleased();
+				
+				if(Gdx.input.isKeyPressed(Input.Keys.UP))
+					jumpPressed();
+				else
+					jumpReleased();
+				
+				if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+					firePressed();
+				else
+					fireReleased();
+			}
 		}
 
 		/** Change Bob's state and parameters based on input controls **/

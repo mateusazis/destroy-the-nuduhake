@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,15 +12,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.TextView;
 import br.uff.pse.destroythenuduhake.drawing.FreehandDrawingActivity;
 import br.uff.pse.destroythenuduhake.game.MainAndroid;
+import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.AudioAsset;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
+import br.uff.pse.destroythenuduhake.game.control.AssetID;
 import br.uff.pse.destroythenuduhake.interfacepk.Item;
 import br.uff.pse.destroythenuduhake.interfacepk.ListItem;
 import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter;
@@ -33,8 +38,9 @@ public class AssetsWorkshopActivity extends Activity
 	private ListView listView;
 	private List<Item> values;	
 	public static GraphicAsset asset;
-	private AlertDialog speakerDialog;
+	private Dialog speakerDialog;
 	private AlertDialog.Builder speakerBuilder;
+	private Dialog  dialog;
 
 	
 	public static GraphicAsset getAsset() {
@@ -53,10 +59,14 @@ public class AssetsWorkshopActivity extends Activity
 			{
 				if(((ListItem)(values.get(arg2))).getAsset() instanceof GraphicAsset)
 				{
+					
+					
+					
 					GraphicAsset ga =  (GraphicAsset) ((ListItem)(values.get(arg2))).getAsset();
 					setAsset(ga);
-					Intent intent = new Intent(AssetsWorkshopActivity.this, FreehandDrawingActivity.class);
-					startActivityForResult(intent, 0);
+					setImageBuilder(ga);
+					dialog.show();
+					
 				}
 				else
 					if(((ListItem)(values.get(arg2))).getAsset() instanceof AudioAsset)
@@ -139,6 +149,40 @@ public class AssetsWorkshopActivity extends Activity
 		
 		
 		speakerDialog = speakerBuilder.create();
+		
+		
+		
 	}
+
+	private void setImageBuilder(GraphicAsset ga)
+	{
+		dialog = new Dialog(this);
+		dialog.setContentView(R.layout.awdialog);
+		dialog.setTitle("Asset Edition");
+		
+        TextView text = (TextView) dialog.findViewById(R.id.textView1);
+        text.setText(ga.getId().getDescription());
+        ImageView image = (ImageView) dialog.findViewById(R.id.imageView1);
+        image.setImageBitmap(ga.getBitmap(AssetsWorkshopActivity.this));
+
+        
+        Button dialogButtonCancel = (Button) dialog.findViewById(R.id.button2);
+        dialogButtonCancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Button dialogButtonProceed = (Button) dialog.findViewById(R.id.button1);
+        dialogButtonProceed.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	Intent intent = new Intent(AssetsWorkshopActivity.this, FreehandDrawingActivity.class);
+				startActivityForResult(intent, 0);
+				dialog.dismiss();
+            }
+        });
+	}
+
 
 }

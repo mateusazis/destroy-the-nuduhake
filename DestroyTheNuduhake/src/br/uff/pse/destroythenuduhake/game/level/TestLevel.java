@@ -108,8 +108,9 @@ public class TestLevel extends Level {
 		super.render();
 		defaultController.update();
 		camera.position.set(player.getX(), camera.position.y, 0);
+//		camera.position.set(player.getX(), player.getY(), 0);
 		world.step(1/60f, 6, 2);
 		
-		r.render(world, camera.combined.scale(Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD));
+//		r.render(world, camera.combined.scale(Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD));
 	}
 }

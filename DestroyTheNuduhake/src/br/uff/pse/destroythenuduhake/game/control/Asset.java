@@ -15,6 +15,11 @@ public abstract class Asset implements Disposable,Serializable{
 	 */
 	private static final long serialVersionUID = -387636279654201957L;
 	
+	/**
+	 * Um número aleatório identificador do asset. Dois assets que têm a mesma origem mantém 
+	 * esse serialNumber ao longo da sua vida
+	 */
+	private int serialNumber;
 	private AssetID id;
 	private int versionNumber;
 	private Author author;
@@ -30,6 +35,7 @@ public abstract class Asset implements Disposable,Serializable{
 	}
 	
 	public Asset(AssetID id,String filePath, Author author){
+		this.serialNumber = (int)(Math.random() * Integer.MAX_VALUE);
 		this.id = id;
 		this.versionNumber = 0;
 		this.author = author;
@@ -85,6 +91,29 @@ public abstract class Asset implements Disposable,Serializable{
 
 	public boolean isOriginal() {
 		return original;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(!(o instanceof Asset))
+			return false;
+		
+		Asset other = (Asset)o;
+		
+		//se ambos forem originais, é só comparar os IDs
+		if(this.isOriginal() && other.isOriginal())
+			return this.id.equals(other.id);
+		
+		//se algum não for original, verifica se os IDs batem
+		if(!this.id.equals(other.id))
+			return false;
+		
+		//se ambos forem editados, precisam ter o mesmo autor
+		if(!this.isOriginal() && !other.isOriginal() && !this.author.equals(other.author))
+			return false;
+		
+		//pelo menos um editado. IDs iguais. Sem conflito de autor. Verificar se o SerialNumber confere
+		return this.serialNumber == other.serialNumber;
 	}
 
 }

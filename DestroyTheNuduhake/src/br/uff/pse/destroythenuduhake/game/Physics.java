@@ -97,7 +97,7 @@ public class Physics {
 			// System.out.println("xMinB:" + xB +
 			// "\nxB: " + xB);
 
-			if (xB >= xMinA && xB <= xMaxA) {
+//			if (xB >= xMinA && xB <= xMaxA) {
 				if (yMinA >= yMaxB) {
 					if (a instanceof ControlableEntity) {
 						((ControlableEntity) a).touchGround();
@@ -108,7 +108,7 @@ public class Physics {
 						((ControlableEntity) b).touchGround();
 					}
 				}
-			}
+//			}
 		}
 
 		// if (bodyA.getLinearVelocity().y < 0

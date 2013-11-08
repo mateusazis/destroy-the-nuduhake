@@ -130,7 +130,7 @@ public class DTNService extends IntentService implements ShareService
 				List<Node> neighbours = mClient.getDTNService().getNeighbors();
 				for (int i = 0; i < neighbours.size(); i++)
 				{
-					String destAddress = neighbours.get(i).endpoint.toString() + "/example-app";
+					String destAddress = neighbours.get(i).endpoint.toString() + "/nuduhake";
 					SingletonEndpoint destination = new SingletonEndpoint(destAddress);
 	
 					// create a new bundle
@@ -325,7 +325,7 @@ public class DTNService extends IntentService implements ShareService
 		// create registration with "example-app" as endpoint
 		// if the EID of this device is "dtn://device" then the
 		// address of this app will be "dtn://device/example-app"
-		Registration registration = new Registration("example-app");
+		Registration registration = new Registration("nuduhake");
 
 		// additionally join a group
 		registration.add(PING_GROUP_EID);
@@ -433,7 +433,7 @@ public class DTNService extends IntentService implements ShareService
 					{
 
 					  Asset c = FileManager.getAssetFromBytes(streamBytes);
-					 
+					  if(c!=null)
 					  FileManager.writeAsset(c, DTNService.this);
 					  
 

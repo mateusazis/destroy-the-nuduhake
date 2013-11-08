@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import br.uff.pse.destroythenuduhake.game.Physics;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -31,7 +32,7 @@ public class Map extends Actor {
 		this.camera = c;
 		renderer = new OrthogonalTiledMapRenderer(map, 1);
 		this.world = w;
-		createTiles(map, x, y);	
+		createTiles(map, x, y);
 	}
 	
 	public Vector2 getPlayerPosition(){
@@ -72,28 +73,95 @@ public class Map extends Actor {
 		int columns = layer.getWidth();
 		CellCoords first = new CellCoords(), last = new CellCoords();
 		
+		//USAR ARRAY LIST!
+		//para hashset, está deixando alguns elementos sobrarem na cena!
+		ArrayList<Map.CellCoords> cells = new ArrayList<Map.CellCoords>();
+		
 		for(int i = 0; i < rows; i++){
 			first.clear(); last.clear();
 			for(int j = 0; j < columns; j++){
 				
 				
 				Cell cell = layer.getCell(j, i);
-				if(cell != null){
-					if(!isInnerCell(j, i, layer)){
-						if(!first.isSet())
-							first.set(i, j);
-						last.set(i, j);
-					} 
-				} else if(first.isSet()){
-					createBody(world, first, last, x0, y0);
-					first.clear(); last.clear();
-				}
-			}
-			if(first.isSet()){
-				createBody(world, first, last, x0, y0);
-				first.clear(); last.clear();
+				if(cell != null)
+					cells.add(new CellCoords(i, j));
 			}
 		}
+		bakeBodies(cells, columns, rows);
+	}
+	
+	private void bakeBodies(ArrayList<CellCoords> cells, int width, int height){
+		Gdx.app.log("", "collection size: " + cells.size());
+		CellCoords minCell = new CellCoords(), maxCell = new CellCoords();
+		
+		CellCoords testCell = new CellCoords();
+		int k =0;
+		while(cells.size() > 0){
+			maxCell.set(minCell.set(cells.get(0)));
+			
+			//expand max cell right
+			for(int j = maxCell.j + 1; j < width; j++){
+				testCell.set(maxCell.i, j);
+				if(cells.remove(testCell))
+					maxCell.j = j;
+				else
+					break;
+			}
+			
+			//expand max cell down
+			maxCellDown:
+			for(int i = maxCell.i + 1; i < height; i++){
+				for(int j = minCell.j; j <= maxCell.j; j++){
+					testCell.set(i, j);
+					if(!cells.contains(testCell))
+						break maxCellDown; //achou buraco na linha debaixo, cancela 
+				}
+				//remove os tiles da linha
+				for(int j = minCell.j; j <= maxCell.j; j++){
+					testCell.set(i, j);
+					cells.remove(testCell);
+				}
+				maxCell.i = i;
+			}
+			
+//			expand min cell left
+			minCellLeft:
+			for(int j = minCell.j - 1; j >= 0; j--){
+				for(int i = minCell.i; i <= maxCell.i; i++){
+					testCell.set(i, j);
+					if(!cells.contains(testCell))
+						break minCellLeft; //achou buraco na linha à esquerda, cancela
+				}
+				//remove os tiles da coluna
+				for(int i = minCell.i; i <= maxCell.i; i++){
+					testCell.set(i, j);
+					cells.remove(testCell);
+				}
+				minCell.j = j;
+			}
+			
+			//expand min cell up
+			minCellUp:
+			for(int i = minCell.i - 1; i >= 0; i--){
+				for(int j = minCell.j; j <= maxCell.j; j++){
+					testCell.set(i, j);
+					if(!cells.contains(testCell))
+						break minCellUp; //achou buraco acima, cancela
+				}
+				//remove os tiles da linha
+				for(int j = minCell.j; j <= maxCell.j; j++){
+					testCell.set(i, j);
+					cells.remove(testCell);
+				}
+				minCell.i = i;
+			}
+			
+			cells.remove(minCell);
+			cells.remove(maxCell);
+			createBody(world, minCell, maxCell, 0, 0);
+			k++;
+		}
+		Gdx.app.log("Map", "created " + k + " colliders!");
 	}
 	
 	private void createBody(World world, CellCoords first, CellCoords last, float x0, float y0){
@@ -110,17 +178,17 @@ public class Map extends Actor {
 		body.createFixture(groundBox, 0.0f);
 	}
 	
-	private static boolean isInnerCell(int x, int y, TiledMapTileLayer layer){
-		for(int i = -1; i <= 1; i++)
-			for(int j = -1; j <= 1; j++){
-				int newX = x + i;
-				int newY = y + j;
-				if((newX != 0 || newY != 0) && layer.getCell(newX, newY) == null)
-					return false;
-			}
-		
-		return true;
-	}
+//	private static boolean isInnerCell(int x, int y, TiledMapTileLayer layer){
+//		for(int i = -1; i <= 1; i++)
+//			for(int j = -1; j <= 1; j++){
+//				int newX = x + i;
+//				int newY = y + j;
+//				if((newX != 0 || newY != 0) && layer.getCell(newX, newY) == null)
+//					return false;
+//			}
+//		
+//		return true;
+//	}
 	
 	public void dispose(){
 		map.dispose();
@@ -139,10 +207,12 @@ public class Map extends Actor {
 	}
 	
 	private class CellCoords{
-		public int i = -1, j = -1;
+		public int i = 0, j = 0;
 		
-		public boolean isSet(){
-			return i != -1 && j != -1;
+		public CellCoords(){}
+		public CellCoords(int i, int j){
+			this.i = i;
+			this.j = j;
 		}
 		
 		public void clear(){
@@ -153,6 +223,30 @@ public class Map extends Actor {
 		public void set(int i, int j){
 			this.i = i;
 			this.j = j;
+		}
+		
+		public CellCoords set(CellCoords other){
+			this.i = other.i;
+			this.j = other.j;
+			return this;
+		}
+		
+		@Override
+		public boolean equals(Object o){
+			if(!(o instanceof CellCoords))
+				return false;
+			CellCoords other = (CellCoords)o;
+			return (this.i == other.i) && (this.j == other.j);
+		}
+		
+		@Override
+		public int hashCode() {
+			return i ^ j;
+		}
+		
+		@Override
+		public String toString() {
+			return "Cell Coords: (" + i + ", " + j + ")";
 		}
 	}
 }

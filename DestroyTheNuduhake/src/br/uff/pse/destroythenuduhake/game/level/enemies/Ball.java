@@ -7,9 +7,9 @@ public class Ball extends Shot{
 	private boolean firstGroundTouched = false;
 	private static final float SPEED = 1f;
 	
-	public Ball(float x, float y, GraphicAsset asset, GraphicAsset smokeAsset) {
+	public Ball(float x, float y, float jumpVelocity, GraphicAsset asset, GraphicAsset smokeAsset) {
 		super(x, y, asset, smokeAsset);
-		setJumpVelocity(6);
+		setJumpVelocity(jumpVelocity);
 		setVelocity(SPEED);
 		setMaxMoveVelocity(SPEED);
 		setState(State.WALKING);

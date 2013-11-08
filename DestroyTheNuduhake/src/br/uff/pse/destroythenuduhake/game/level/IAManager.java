@@ -33,14 +33,14 @@ public class IAManager extends Actor{
 		
 		for(int i = 0; i < enemies.size(); i++){
 			Enemy e = enemies.get(i);
-			if(s.canHitEnemies() && sRect.overlaps(e.getRect()))
-				s.onOverlap(e);
-			
 			if(e.isDead()){
 				enemies.remove(i);
 				e.setManager(null);
 				i--;
 			} else {
+				if(s.canHitEnemies() && sRect.overlaps(e.getRect()))
+					s.onOverlap(e);
+				
 				float xDistance = Math.abs(e.getX() - player.getX());
 				boolean isNear = xDistance <= e.getMinXPlayerDistance(); 
 				if(isNear && e.isSleeping())
