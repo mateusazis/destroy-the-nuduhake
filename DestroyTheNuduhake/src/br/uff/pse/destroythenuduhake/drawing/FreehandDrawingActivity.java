@@ -141,7 +141,7 @@ public class FreehandDrawingActivity extends Activity {
 				save = Bitmap.createBitmap(save);
 				//newGA.setBitmap(save);
 				newGA.editBitmap(save);
-				FileManager.saveListFile(FreehandDrawingActivity.this);
+//				FileManager.saveListFile(FreehandDrawingActivity.this);
 				
 				finish();
 			}
