@@ -69,7 +69,7 @@ public class ControlableEntity extends LevelObject {
 	}
 
 	public void moveRight() {
-		if(turnedLeft){
+		if (turnedLeft) {
 			turnRight();
 		}
 		if (getBody().getLinearVelocity().x < maxMoveVelocity)
@@ -83,7 +83,9 @@ public class ControlableEntity extends LevelObject {
 	public void jump() {
 		if (getState() != State.JUMPING) {
 			setState(State.JUMPING);
-			getBody().applyLinearImpulse(0.0f, jumpVelocity, getX(), getY(), true);
+			getBody().setLinearVelocity(getBody().getLinearVelocity().x, 0);
+			getBody().applyLinearImpulse(0.0f, jumpVelocity, getX(), getY(),
+					true);
 		}
 	}
 
@@ -163,11 +165,16 @@ public class ControlableEntity extends LevelObject {
 		if(blinker.isVisible())
 			super.draw(batch, parentAlpha);
 	}
-	
+
 	@Override
 	public void act(float delta) {
 		super.act(delta);
 		blinker.update(delta);
+	}
+
+	@Override
+	public void onContactStart(LevelObject other) {
+		
 	}
 
 }

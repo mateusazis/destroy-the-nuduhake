@@ -43,30 +43,32 @@ public class FileManager extends Activity implements BundleReceiver
 {
 	// Lista que conter� o nome dos assets
 	//private static ArrayList<Component> filesPaths = new ArrayList<Component>();
-	private static ArrayList<Asset> filesPaths = new ArrayList<Asset>();
+	//private static ArrayList<Asset> filesPaths = new ArrayList<Asset>();
 	private static Context ctx;
 //	private static ArrayList<Boolean> checkedAssets = new ArrayList<Boolean>();
 	//private static String assetFilePath ="/data/data/br.uff.pse.dest/assets/";
 
 	public static void addAsset(Asset a, Context ctx){
-		loadListFile(ctx);
-		filesPaths.add(a);
+		ArrayList<Asset> list = loadListFile(ctx);
+//		filesPaths.add(a);
+		list.add(a);
+		saveListFile(list,ctx);
 	}
 	
 	public static void writeAsset(Asset asset,  Context ctx) 
 	{
-		loadListFile(ctx);
+		ArrayList<Asset> list = loadListFile(ctx);
 
 			try
 			{													
 		//				output.writeObject(asset);	
 		//				Component cmp = new Component(asset.getFilePath(),asset.getVersionNumber(),asset.getAuthor(),asset.isDefault(),asset.getId());
-						filesPaths.add(asset);
+						list.add(asset);
 					//	if(asset.type.equals("Default"))
 					//		checkedAssets.add(true);
 					//	else
 					//		checkedAssets.add(false);
-						saveListFile(ctx);
+						saveListFile(list,ctx);
 					//	saveCheckListFile(ctx);
 			}
 			catch (Exception e)
@@ -85,11 +87,11 @@ public class FileManager extends Activity implements BundleReceiver
 	}
 	public static void updateAsset(Asset a,Context ctx)
 	{
-
+		ArrayList<Asset> list = loadListFile(ctx);
 		//Author author = a.getAuthor();
-		for(int i = 0; i < filesPaths.size() ; i++)
+		for(int i = 0; i < list.size() ; i++)
 		{
-			if(a.equals(filesPaths.get(i)))
+			if(a.equals(list.get(i)))
 			{
 				if(a instanceof GraphicAsset)
 				{
@@ -98,15 +100,15 @@ public class FileManager extends Activity implements BundleReceiver
 				}
 			}
 		}
-		saveListFile(ctx);
+		saveListFile(list,ctx);
 	}
 	public static Asset checkAndReturnIfAssetExists(Asset a)
 	{
-
-		for(int i = 0; i < filesPaths.size();i++)
+		ArrayList<Asset> list = loadListFile(ctx);
+		for(int i = 0; i <list.size();i++)
 		{
-			if(a.equals(filesPaths.get(i)))
-				return filesPaths.get(i);
+			if(a.equals(list.get(i)))
+				return list.get(i);
 		}		
 		return null;
 		
@@ -147,7 +149,7 @@ public class FileManager extends Activity implements BundleReceiver
 //	}
 	public static void deleteAsset(Asset a,Context ctx)
 	{
-		loadListFile(ctx);
+		ArrayList<Asset> list = loadListFile(ctx);
 	/*	loadCheckListFile(ctx);
 		int pos = getAssetListPosition(fileName);
 		if(pos != -1)
@@ -162,15 +164,16 @@ public class FileManager extends Activity implements BundleReceiver
 		saveListFile(ctx);
 	//	saveCheckListFile(ctx);
  */
-		for(int i = 0; i<filesPaths.size() ; i++)
+		for(int i = 0; i<list.size() ; i++)
 		{
-			if(filesPaths.get(i).equals(a))
+			if(list.get(i).equals(a))
 			{
 				File f = new File(a.getFilePath());
 				f.delete();
-				filesPaths.remove(i);
+				list.remove(i);
 			}
 		}
+		saveListFile(list,ctx);
 	 
 	}
 /*	public static int getAssetListPosition(String filename)
@@ -185,16 +188,16 @@ public class FileManager extends Activity implements BundleReceiver
 	*/
 	public static void deleteAllFiles(Context ctx)
 	{
-		loadListFile(ctx);
-		for(int i = 0; i < filesPaths.size() ; i++)
+		ArrayList<Asset> list = loadListFile(ctx);
+		for(int i = 0; i < list.size() ; i++)
 		{
 		//	ctx.deleteFile(filesPaths.get(i).getFilepath());
-			File f = new File(filesPaths.get(i).getFilePath());
+			File f = new File(list.get(i).getFilePath());
 			f.delete();
 		}
-		filesPaths.clear();
+		list.clear();
 		//checkedAssets.clear();
-		saveListFile(ctx);
+		saveListFile(list,ctx);
 		//saveCheckListFile(ctx);
 	}
 	/*public static String writeValidation(String filename,Context ctx, int num)
@@ -226,15 +229,15 @@ public class FileManager extends Activity implements BundleReceiver
 	*/
 	public static ArrayList<Item> readAllFilesNames(Context ctx)
 	{		
-		loadListFile(ctx);
+		ArrayList<Asset> list = loadListFile(ctx);
 //		loadCheckListFile(ctx);
 		Asset[] builtins = AssetDatabase.getEditableBuiltinAssets();
 		//fazemos um mapa associando cada AssetID a uma lista de assets com esse ID
 		HashMap<AssetID, ArrayList<Item>> itemListMap = new HashMap<AssetID, ArrayList<Item>>();
 
-		for(int i = 0; i< filesPaths.size();i++)
+		for(int i = 0; i< list.size();i++)
 		{
-			Asset current = filesPaths.get(i);
+			Asset current = list.get(i);
 			AssetID id = current.getId();
 			Bitmap b = null;
 			if(current instanceof GraphicAsset)
@@ -301,7 +304,7 @@ public class FileManager extends Activity implements BundleReceiver
 		return combined;
 	}
 	
-	public static void saveListFile(Context ctx)
+	public static void saveListFile(ArrayList<Asset> listToSave,Context ctx)
 	{
 		try
 		{
@@ -310,7 +313,8 @@ public class FileManager extends Activity implements BundleReceiver
 			ObjectOutput output = new ObjectOutputStream ( buffer);
 			try
 			{													
-						output.writeObject(filesPaths);	
+						//output.writeObject(filesPaths);	
+						output.writeObject(listToSave);	
 			}
 			catch (Exception e)
 			{
@@ -326,7 +330,7 @@ public class FileManager extends Activity implements BundleReceiver
 		    ex.printStackTrace();
 		}	
 	}
-	public static void loadListFile(Context ctx)
+	public static ArrayList<Asset> loadListFile(Context ctx)
 	{
 		ArrayList<Asset> list = new ArrayList<Asset>();
 		try
@@ -352,7 +356,8 @@ public class FileManager extends Activity implements BundleReceiver
 	    {
 	     ex.printStackTrace();
 	    }
-		filesPaths = list;
+		return list;
+//		filesPaths = list;
 		
 
 
@@ -576,13 +581,13 @@ public class FileManager extends Activity implements BundleReceiver
 	}
 	public static ArrayList<Asset> getFilesToSend(Context ctx)
 	{
-		loadListFile(ctx);
+		ArrayList<Asset> list = loadListFile(ctx);
 		ArrayList<Asset> ret = new ArrayList<Asset>();
 		ArrayList<String> types = new ArrayList<String>();		
-		for(int i = 0;i<filesPaths.size();i++)
+		for(int i = 0;i<list.size();i++)
 		{
-			if(!filesPaths.get(i).isOriginal())
-				ret.add(filesPaths.get(i));		
+			if(!list.get(i).isOriginal())
+				ret.add(list.get(i));		
 		}
 
 		
@@ -695,17 +700,17 @@ public class FileManager extends Activity implements BundleReceiver
 	}
 	public static void replaceAssetFromList(Asset a,Context ctx)
 	{
-		loadListFile(ctx);
-		for(int i = 0; i < filesPaths.size();i++)
+		ArrayList<Asset> list = loadListFile(ctx);
+		for(int i = 0; i < list.size();i++)
 		{
-			Asset oldAsset = filesPaths.get(i);
+			Asset oldAsset = list.get(i);
 			if(oldAsset.equals(a))
 			{
 				a.setFilePath(oldAsset.getFilePath());				
-				filesPaths.set(i, a);
+				list.set(i, a);
 			}
 		}
-		saveListFile(ctx);
+		saveListFile(list,ctx);
 		
 	}
 	public static synchronized String writeValidation(String type,int num,Context ctx,String dirPath,boolean isGraphic)
@@ -714,11 +719,11 @@ public class FileManager extends Activity implements BundleReceiver
 	
 		try
 		{
-		loadListFile(ctx);
+			ArrayList<Asset> list = loadListFile(ctx);
 		String fp = dirPath;
-		for(int i = 0; i < filesPaths.size();i++)
+		for(int i = 0; i < list.size();i++)
 		{
-			String fname = filesPaths.get(i).getFilePath().substring(0, filesPaths.get(i).getFilePath().lastIndexOf("."));
+			String fname = list.get(i).getFilePath().substring(0, list.get(i).getFilePath().lastIndexOf("."));
 			if( fname.equals(fp+"/"+type))
 			{
 				if(num == 0 )
