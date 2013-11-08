@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -160,20 +161,19 @@ public class AssetsWorkshopActivity extends Activity
 		dialog.setContentView(R.layout.awdialog);
 		dialog.setTitle("Asset Edition");
 		
+		TextView assetName = (TextView) dialog.findViewById(R.id.textView2);
+		
         TextView text = (TextView) dialog.findViewById(R.id.textView1);
-        text.setText(ga.getId().getDescription());
+        text.setTypeface(null, Typeface.ITALIC);
+        //text.setText(ga.getId().getDescription());
+        text.setText("TESTE!");
         ImageView image = (ImageView) dialog.findViewById(R.id.imageView1);
         image.setImageBitmap(ga.getBitmap(AssetsWorkshopActivity.this));
+        assetName.setText(ga.getId().getName());
 
         
-        Button dialogButtonCancel = (Button) dialog.findViewById(R.id.button2);
-        dialogButtonCancel.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        Button dialogButtonProceed = (Button) dialog.findViewById(R.id.button1);
+
+        Button dialogButtonProceed = (Button) dialog.findViewById(R.id.goButton);
         dialogButtonProceed.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

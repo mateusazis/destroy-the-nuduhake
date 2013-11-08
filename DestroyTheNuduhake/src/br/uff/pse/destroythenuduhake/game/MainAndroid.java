@@ -29,7 +29,7 @@ public class MainAndroid extends AndroidApplication {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FileManager.setContext(this);
+   //     FileManager.setContext(this);
         Configs.setup(true);
         
        

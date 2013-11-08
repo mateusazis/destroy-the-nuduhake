@@ -432,7 +432,7 @@ public class DTNService extends IntentService implements ShareService
 					try 
 					{
 
-					  Asset c = FileManager.getAssetFromBytes(streamBytes);
+					  Asset c = FileManager.getAssetFromBytes(streamBytes,DTNService.this);
 					  if(c!=null)
 					  FileManager.writeAsset(c, DTNService.this);
 					  
