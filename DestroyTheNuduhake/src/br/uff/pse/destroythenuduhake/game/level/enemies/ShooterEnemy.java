@@ -12,24 +12,30 @@ public class ShooterEnemy extends Enemy {
 	private GraphicAsset bulletAsset, smokeAsset;
 	
 	private float elapsed = 0;
-	//private short numAtaques = 0;
+	private float PATROL_TIME = 0.5f;
 
 	private static float SHOOT_INTERVAL = 3f;
-	private static float AIMING_TIME = 5f;
-	//private static float RECHARGE_INTERVAL = 3f;
+	private static float AIMING_TIME = 1f;
 
 	public ShooterEnemy(float x, float y, AssetBundle bundle) {
-		super(x, y, bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_SHOOTER), 800);
+		super(x, y, bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_SHOOTER), 200);
 		this.bulletAsset = bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BULLET);
 		this.smokeAsset = bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_SMOKE);
+		setMaxMoveVelocity(1f);
 	}
 
 	@Override
 	public void atack() {
-		Vector2 shootPos = new Vector2(-bulletAsset.getWidth() - 20,getHeight() - bulletAsset.getHeight() - 75);
+		Vector2 shootPos;
+		if(isTurnedLeft()){
+			shootPos = new Vector2(-bulletAsset.getWidth() - 20,getHeight() - bulletAsset.getHeight() - 75);
+		}
+		else{
+			shootPos = new Vector2(bulletAsset.getWidth() -20, getHeight() - bulletAsset.getHeight() - 75);
+		}
 		shootPos = localToStageCoordinates(shootPos);
 		
-		Bullet bullet = new Bullet(shootPos.x, shootPos.y, bulletAsset, smokeAsset);
+		Bullet bullet = new Bullet(shootPos.x, shootPos.y, bulletAsset, smokeAsset, isTurnedLeft());
 		bullet.setupPhysics(this.getBody().getWorld());
 		getParent().addActor(bullet);
 		
@@ -43,16 +49,36 @@ public class ShooterEnemy extends Enemy {
 		if(elapsed >= SHOOT_INTERVAL){
 			atack();
 			elapsed -= SHOOT_INTERVAL;
-			//numAtaques++;
 		}
-//		if(numAtaques == 3){
-//			numAtaques = 0;
-//			elapsed -= RECHARGE_INTERVAL;
-//		}
+		if(getTarget().getX() < getX()){
+			if(!turnedLeft){
+				turnLeft();
+				elapsed -= AIMING_TIME;
+			}
+		}
+		else{
+			if(turnedLeft){
+				turnRight();
+				elapsed -= AIMING_TIME;
+			}
+		}
 	}
 	
 	@Override
-	public void patrol(){
-		moveLeft();
+	public void patrol(float delta){
+		elapsed += delta;
+		if(elapsed >= PATROL_TIME){
+			if(isTurnedLeft())
+				moveRight();
+			else
+				moveLeft();
+			elapsed -= PATROL_TIME;
+		}
+		else{
+			if(isTurnedLeft())
+				moveLeft();
+			else
+				moveRight();
+		}
 	}
 }

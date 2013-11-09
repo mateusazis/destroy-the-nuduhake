@@ -42,7 +42,7 @@ public class Enemy extends ControlableEntity {
 		if (!isSleeping()) {
 			updateIA(delta);
 		} else {
-			patrol();
+			patrol(delta);
 		}
 	}
 
@@ -58,10 +58,6 @@ public class Enemy extends ControlableEntity {
 		return manager;
 	}
 
-	public void patrol() {}
-
-	public boolean isTurnedLeft() {
-		return true;
-	}
+	public void patrol(float delta) {}
 	
 }
