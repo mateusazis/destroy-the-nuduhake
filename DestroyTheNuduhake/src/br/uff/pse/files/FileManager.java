@@ -44,7 +44,7 @@ public class FileManager extends Activity implements BundleReceiver
 	// Lista que conter� o nome dos assets
 	//private static ArrayList<Component> filesPaths = new ArrayList<Component>();
 	//private static ArrayList<Asset> filesPaths = new ArrayList<Asset>();
-	private static Context ctx;
+//	private static Context ctx;
 //	private static ArrayList<Boolean> checkedAssets = new ArrayList<Boolean>();
 	//private static String assetFilePath ="/data/data/br.uff.pse.dest/assets/";
 
@@ -85,31 +85,34 @@ public class FileManager extends Activity implements BundleReceiver
 		
 		
 	}
-	public static void updateAsset(Asset a,Context ctx)
+//	public static void updateAsset(Asset a,Context ctx)
+//	{
+//		ArrayList<Asset> list = loadListFile(ctx);
+//		//Author author = a.getAuthor();
+//		for(int i = 0; i < list.size() ; i++)
+//		{
+//			if(a.equals(list.get(i)))
+//			{
+//				if(a instanceof GraphicAsset)
+//				{
+//					GraphicAsset ga = (GraphicAsset)a;
+//					
+//				}
+//			}
+//		}
+//		saveListFile(list,ctx);
+//	}
+	public static Asset checkAndReturnIfAssetExists(Asset a,Context ctx)
 	{
 		ArrayList<Asset> list = loadListFile(ctx);
-		//Author author = a.getAuthor();
-		for(int i = 0; i < list.size() ; i++)
-		{
-			if(a.equals(list.get(i)))
-			{
-				if(a instanceof GraphicAsset)
-				{
-					GraphicAsset ga = (GraphicAsset)a;
-					
-				}
-			}
-		}
-		saveListFile(list,ctx);
-	}
-	public static Asset checkAndReturnIfAssetExists(Asset a)
-	{
-		ArrayList<Asset> list = loadListFile(ctx);
-		for(int i = 0; i <list.size();i++)
-		{
-			if(a.equals(list.get(i)))
-				return list.get(i);
-		}		
+//		for(int i = 0; i <list.size();i++)
+//		{
+//			if(a.equals(list.get(i)))
+//				return list.get(i);
+//		}	
+		int pos = list.indexOf(a);
+		if(pos != -1)
+			return list.get(pos);
 		return null;
 		
 	}
@@ -164,14 +167,21 @@ public class FileManager extends Activity implements BundleReceiver
 		saveListFile(ctx);
 	//	saveCheckListFile(ctx);
  */
-		for(int i = 0; i<list.size() ; i++)
+//		for(int i = 0; i<list.size() ; i++)
+//		{
+//			if(list.get(i).equals(a))
+//			{
+//				File f = new File(a.getFilePath());
+//				f.delete();
+//				list.remove(i);
+//			}
+//		}
+		int pos = list.indexOf(a);
+		if(pos != -1)
 		{
-			if(list.get(i).equals(a))
-			{
-				File f = new File(a.getFilePath());
-				f.delete();
-				list.remove(i);
-			}
+			File f = new File(a.getFilePath());
+			f.delete();
+			list.remove(pos);
 		}
 		saveListFile(list,ctx);
 	 
@@ -630,7 +640,7 @@ public class FileManager extends Activity implements BundleReceiver
 		
 		return null;
 	}
-	public static Asset getAssetFromBytes(byte[] b)
+	public static Asset getAssetFromBytes(byte[] b,Context ctx)
 	{
 		byte[] tam = new byte[4];
 		tam[0] = b[0];
@@ -650,7 +660,7 @@ public class FileManager extends Activity implements BundleReceiver
 			Asset c = (Asset) ois.readObject();
 			
 			
-			Asset similarAsset = checkAndReturnIfAssetExists(c) ;
+			Asset similarAsset = checkAndReturnIfAssetExists(c,ctx) ;
 			if(similarAsset == null)
 			{
 
@@ -752,10 +762,10 @@ public class FileManager extends Activity implements BundleReceiver
 		
 		return writeValidation("NuduhakeFile",0,ctx,dirPath,isGraphic);
 	}
-	public static void setContext(Context c) {
-		ctx = c;
-		
-	}
+//	public static void setContext(Context c) {
+//		ctx = c;
+//		
+//	}
 	
 
 	

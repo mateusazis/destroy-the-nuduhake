@@ -3,10 +3,10 @@
 	<classpathentry exported="true" kind="lib" path="libs_sources/gdx.jar" sourcepath="libs_sources/gdx-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs_sources/gdx-backend-android.jar" sourcepath="libs_sources/gdx-backend-android-sources.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="lib" path="libs/android-ibrdtn-api.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

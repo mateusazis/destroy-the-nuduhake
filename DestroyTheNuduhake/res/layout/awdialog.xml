@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_alignParentRight="true"
-        android:text="Proceed" />
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:text="TextView" />
+        android:id="@+id/textView2"
+        android:layout_width="318dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor= "#ccac00"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
+        android:layout_height="130dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/square" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="140dp"
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/imageView1"
-        android:layout_marginTop="28dp"
-        android:text="Back" />
+        android:text="TextView" 
+        android:layout_marginTop="20dp"/>
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/goButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="Proceed" />
+
+</LinearLayout>
