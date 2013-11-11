@@ -32,6 +32,10 @@ public final class AssetDatabase {
 		SPRITE_BALL_SHOOTER_2 = new AssetID(0x0011, "Ball Shooter 2", ""),
 		SPRITE_BALL_SHOOTER_1 = new AssetID(0x0012, "Ball Shooter 1", ""),
 		
+		SPRITE_HEART_FULL = new AssetID(0x0013, "Heart full", ""),
+		SPRITE_HEART_HALF = new AssetID(0x0014, "Heart half", ""),
+		SPRITE_HEART_EMPTY = new AssetID(0x0015, "Heart empty", ""),
+		
 	
 	//musics
 	MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", "");
@@ -55,6 +59,10 @@ public final class AssetDatabase {
 				new GraphicAsset(AssetDatabase.SPRITE_INPUT_JUMP_PRESSED, "images/jump_icon_pressed.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_INPUT_ATTACK, "images/sword_icon.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_INPUT_ATTACK_PRESSED, "images/sword_icon_pressed.png"),
+				
+				new GraphicAsset(AssetDatabase.SPRITE_HEART_FULL, "images/heart_full.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_HEART_FULL, "images/heart_half.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_HEART_FULL, "images/heart_empty.png"),
 			};
 		return privateAssets;
 	}

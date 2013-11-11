@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Player extends ControlableEntity {
 
+	private int score = 0;
 	private Sword s;
 	private GraphicAsset swordAsset;
 	private Vector2 swordRelativePos;
@@ -15,12 +16,16 @@ public class Player extends ControlableEntity {
 	
 	public Player(float x, float y, GraphicAsset asset, GraphicAsset swordAsset) {
 		super(x, y, asset);
-		
+		setLife(6);
 		setMaxMoveVelocity(3f);
 		
 		swordRelativePos = new Vector2(getWidth(), getHeight() / 2f);
 		this.swordAsset = swordAsset;
 		turnedLeft = false;
+	}
+	
+	public int getScore(){
+		return score;
 	}
 	
 	public Sword getWeapon(){

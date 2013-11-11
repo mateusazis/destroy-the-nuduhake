@@ -1,11 +1,14 @@
 package br.uff.pse.destroythenuduhake.game.level.enemies;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.destroythenuduhake.game.control.LevelObject;
+import br.uff.pse.destroythenuduhake.game.level.Enemy;
 
 public class Ball extends Shot{
 
 	private boolean firstGroundTouched = false;
 	private static final float SPEED = 1f;
+	private boolean goingLeft = true;
 	
 	public Ball(float x, float y, float jumpVelocity, GraphicAsset asset, GraphicAsset smokeAsset) {
 		super(x, y, asset, smokeAsset);
@@ -18,7 +21,10 @@ public class Ball extends Shot{
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		moveLeft();
+		if(goingLeft)
+			moveLeft();
+		else
+			moveRight();
 		if(firstGroundTouched)
 			jump();
 	}
@@ -27,5 +33,20 @@ public class Ball extends Shot{
 	public void touchGround() {
 		super.touchGround();
 		this.firstGroundTouched = true;
+	}
+	
+	@Override
+	public void onAtacked(int atackPower) {
+		goingLeft = false;
+	}
+	
+	@Override
+	public void onContactStart(LevelObject other) {
+		super.onContactStart(other);
+		if(other instanceof Enemy){
+			Enemy b = (Enemy)other;
+			b.onAtacked(1);
+			die();
+		}
 	}
 }
