@@ -42,14 +42,14 @@ public class FreehandDrawingActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         
         // lock screen orientation (stops screen clearing when rotating phone)
-        setRequestedOrientation(getResources().getConfiguration().orientation);
+        //setRequestedOrientation(getResources().getConfiguration().orientation);
         
         
         setContentView(R.layout.freehand_drawing_main);
         drawView = (DrawView)findViewById(R.id.draw_view);
         drawView.setGraphicAsset(AssetsWorkshopActivity.asset);
-		if(drawView.image != null){
-	        OnGlobalLayoutListener list = new OnGlobalLayoutListener() {
+        if(drawView.image != null){
+			OnGlobalLayoutListener list = new OnGlobalLayoutListener() {
 				
 				@SuppressWarnings("deprecation")
 				@Override
@@ -58,9 +58,9 @@ public class FreehandDrawingActivity extends Activity {
 					int viewHeight = drawView.getHeight();
 					drawView.setAllScreen(viewWidth, viewHeight);
 					if(Build.VERSION.SDK_INT < 16){
-					drawView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+						drawView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 					} else {
-					drawView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+						drawView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 					}
 				}
 			};
@@ -124,7 +124,10 @@ public class FreehandDrawingActivity extends Activity {
 				drawView.draw(c);
 				drawView.showAsset = Bitmap.createBitmap(work);
 				Canvas saveCanvas = new Canvas(save);
-				saveCanvas.drawBitmap(drawView.showAsset, drawView.inverseTransformation, null);
+				if(getResources().getConfiguration().orientation == drawView.initialOrientation)
+					saveCanvas.drawBitmap(drawView.showAsset, drawView.inverseInitialTransformation, null);
+				else
+					saveCanvas.drawBitmap(drawView.showAsset, drawView.inverseAnotherTransformation, null);
 				
 				Context ctx = FreehandDrawingActivity.this;
 				

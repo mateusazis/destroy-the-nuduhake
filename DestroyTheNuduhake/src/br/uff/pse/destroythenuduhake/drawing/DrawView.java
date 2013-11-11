@@ -5,6 +5,7 @@ import java.util.List;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -13,21 +14,28 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
+@SuppressLint("NewApi")
 public class DrawView extends View implements OnTouchListener {
 	private static final String TAG = "DrawView";
 	
 	Path path = new Path();
 	List<Path> pathList= new ArrayList<Path>();
+	List<Path> transformedPathList= new ArrayList<Path>();
 	List<Paint> paintList= new ArrayList<Paint>();
 	//HashMap<Path, Paint> pathList = new LinkedHashMap<Path, Paint>();
 //	List<List<Point>> drawing = new ArrayList<List<Point>>();
@@ -35,13 +43,15 @@ public class DrawView extends View implements OnTouchListener {
 	private GraphicAsset graphicAsset;
 	Bitmap image = null;
 	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-	Matrix transformation = new Matrix();
-	Matrix inverseRotate = new Matrix();
-	Matrix inverseTransformation = new Matrix();
+	Matrix initialOrientationTransformation = new Matrix();
+	Matrix anotherOrientationTransformation = new Matrix();
+	Matrix inverseInitialTransformation = new Matrix();
+	Matrix inverseAnotherTransformation = new Matrix();
 	Bitmap showAsset;
 	Bitmap savedAsset;
 	Canvas mCanvas;
 	Bitmap workingBitmap;
+	int initialOrientation;
 	float ratio;
 	boolean save = false;
 	boolean erase = false;
@@ -72,37 +82,59 @@ public class DrawView extends View implements OnTouchListener {
 			image = graphicAsset.getBitmap(getContext());
 	}
 	
+	@SuppressLint("NewApi")
+	@SuppressWarnings("deprecation")
 	public void setAllScreen(int x, int y){
 		float imageWidth = image.getWidth();
 		float imageHeight = image.getHeight();
 		float ratioX = x/imageWidth;
 		float ratioY = y/imageHeight;
-		boolean rotate = false;
+		int delta;
+		WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		if(Build.VERSION.SDK_INT < 13)
+			delta = display.getHeight() - y;
+		else{
+			Point size = new Point();
+			display.getSize(size);
+			delta = size.y - y;
+		}
+		
+//		boolean rotate = false;
 		ratio = Math.min(ratioX, ratioY);
-		if(ratio < 1)
-			ratio = (x*y)/(imageHeight*imageWidth);
-		if(imageHeight < imageWidth){
-			rotate = true;
-			float aux = imageHeight;
-			imageHeight = imageWidth;
-			imageWidth = aux;
-		}
+//		if(ratio < 1)
+//			ratio = (x*y)/(imageHeight*imageWidth);
+//		if(imageHeight < imageWidth){
+//			float aux = imageHeight;
+//			imageHeight = imageWidth;
+//			imageWidth = aux;
+//		}
 		
-		if(rotate){
-			transformation.setRotate(90);
-			transformation.postTranslate(imageWidth, 0);
-			transformation.invert(inverseRotate);
-		}
-		transformation.postScale(ratio, ratio);
-		transformation.postTranslate((getWidth() - imageWidth*ratio)/2, (getHeight() - imageHeight*ratio)/2);
 		
-		transformation.invert(inverseTransformation);
-		if(rotate)
-			inverseRotate.postConcat(transformation);
+//		initialOrientationTransformation.postTranslate(imageWidth, 0);
+//		initialOrientationTransformation.invert(inverseRotate);
+		initialOrientationTransformation.setScale(ratio, ratio);
+		initialOrientationTransformation.postTranslate((x - imageWidth*ratio)/2, (y - imageHeight*ratio)/2);
+		
+		initialOrientationTransformation.invert(inverseInitialTransformation);
+		
+		int newX = y + delta;
+		int newY = x - delta;
+		
+		ratioX = newX/imageWidth;
+		ratioY = newY/imageHeight;
+//		boolean rotate = false;
+		ratio = Math.min(ratioX, ratioY);
+		
+		anotherOrientationTransformation.setScale(ratio, ratio);
+		anotherOrientationTransformation.postTranslate((newX - imageWidth*ratio)/2, (newY- imageHeight*ratio)/2);
+		
+		anotherOrientationTransformation.invert(inverseAnotherTransformation);
+		
 	}
 	
 	public void setCenter(int x, int y){
-		transformation.setTranslate((x - image.getWidth())/2, (y - image.getHeight())/2);
+		initialOrientationTransformation.setTranslate((x - image.getWidth())/2, (y - image.getHeight())/2);
 		leftmostPoint = new float[2];
 		leftmostPoint[0] = (x - image.getWidth())/2;
 		leftmostPoint[1] = (y - image.getHeight())/2;
@@ -133,6 +165,7 @@ public class DrawView extends View implements OnTouchListener {
 		if(oldw == 0 && oldh == 0){
 			workingBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Config.ARGB_8888);
 			mCanvas = new Canvas(workingBitmap);
+			initialOrientation = getResources().getConfiguration().orientation;
 		}
 	}
 	
@@ -214,23 +247,36 @@ public class DrawView extends View implements OnTouchListener {
 		if(!save){
 			canvas.drawColor(Color.WHITE);
 			if(image != null)
-				if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-					canvas.drawBitmap(image, inverseRotate, null);
-				else
-					canvas.drawBitmap(image, transformation, null);
-			for (int i = 0; i < pathList.size(); i++) {
-				canvas.drawPath(pathList.get(i), paintList.get(i));
-			}
+				if(getResources().getConfiguration().orientation == initialOrientation){
+					canvas.drawBitmap(image, initialOrientationTransformation, null);
+					for (int i = 0; i < pathList.size(); i++) {
+						pathList.get(i).transform(initialOrientationTransformation, transformedPathList.get(i));
+						canvas.drawPath(transformedPathList.get(i), paintList.get(i));
+					}
+				} else {
+					canvas.drawBitmap(image, anotherOrientationTransformation, null);
+					for (int i = 0; i < pathList.size(); i++) {
+						pathList.get(i).transform(anotherOrientationTransformation, transformedPathList.get(i));
+						canvas.drawPath(transformedPathList.get(i), paintList.get(i));
+					}
+				}
+			
 		} else {
 			canvas.drawColor(0, Mode.CLEAR);
 			if(image != null)
-				if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-					canvas.drawBitmap(image, inverseRotate, null);
-				else
-					canvas.drawBitmap(image, transformation, null);
-			for (int i = 0; i < pathList.size(); i++) {
-				canvas.drawPath(pathList.get(i), paintList.get(i));
-			}
+				if(getResources().getConfiguration().orientation == initialOrientation){
+					canvas.drawBitmap(image, initialOrientationTransformation, null);
+					for (int i = 0; i < pathList.size(); i++) {
+						pathList.get(i).transform(initialOrientationTransformation, transformedPathList.get(i));
+						canvas.drawPath(transformedPathList.get(i), paintList.get(i));
+					}
+				} else {
+					canvas.drawBitmap(image, anotherOrientationTransformation, null);
+					for (int i = 0; i < pathList.size(); i++) {
+						pathList.get(i).transform(anotherOrientationTransformation, transformedPathList.get(i));
+						canvas.drawPath(transformedPathList.get(i), paintList.get(i));
+					}
+				}
 		}
 	}
 		
@@ -255,7 +301,8 @@ public class DrawView extends View implements OnTouchListener {
 	    
 	    switch (event.getAction()) {
 	    case MotionEvent.ACTION_DOWN:
-	        pathList.add(new Path());
+	    	pathList.add(new Path());
+	    	transformedPathList.add(new Path());
 	        paintList.add(new Paint(paint));
 	        path = pathList.get(pathList.size()-1);
 	        path.setLastPoint(--x, y);

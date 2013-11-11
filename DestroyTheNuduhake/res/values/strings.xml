@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Destroy the Nuduhake</string>
-    <string name="ok">Ok</string>
+    <string name="ok">@android:string/ok</string>
     <string name="cancel">Cancel</string>
     <string name ="dialog_title">Choose a Width</string>
+    <string name ="widthB_name">Width</string>
+    <string name ="saveB_name">Save</string>
+    <string name ="colorB_name">Color</string>
+    <string name ="clearB_name">Clear</string>
+    <string name ="undoB_name">Undo</string>
 </resources>

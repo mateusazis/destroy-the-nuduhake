@@ -23,7 +23,8 @@
     </intent-filter>
         </activity>
         <activity 
-            android:name="br.uff.pse.destroythenuduhake.drawing.FreehandDrawingActivity">
+            android:name="br.uff.pse.destroythenuduhake.drawing.FreehandDrawingActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter> 
 	       		<action android:name="br.uff.pse.destroythenuduhake.drawing.FreehandDrawingActivity" />  
 				<category android:name="android.intent.category.DEFAULT" />  
