@@ -1,5 +1,8 @@
 package br.uff.pse.destroythenuduhake.game;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 import br.uff.pse.destroythenuduhake.game.level.ControlableEntity;
 
@@ -17,6 +20,8 @@ public class Physics {
 
 	public static class LevelContactListener implements ContactListener {
 
+		private Queue<BodyTuple> contacts = new LinkedList<BodyTuple>();
+		
 		@Override
 		public void preSolve(Contact contact, Manifold oldManifold) {
 		}
@@ -28,14 +33,28 @@ public class Physics {
 		@Override
 		public void endContact(Contact contact) {
 		}
+		
+		public void processContacts(){
+			while(contacts.size() > 0){
+				BodyTuple c = contacts.poll();
+				c.o1.onContactStart(c.o2);
+				c.o2.onContactStart(c.o1);
+			}
+		}
 
 		@Override
 		public void beginContact(Contact contact) {
+			
+			
 			Body bodyA = contact.getFixtureA().getBody();
 			Body bodyB = contact.getFixtureB().getBody();
 
 			LevelObject a = (LevelObject) bodyA.getUserData();
 			LevelObject b = (LevelObject) bodyB.getUserData();
+			
+			if(a != null && b != null){
+				contacts.offer(new BodyTuple(a, b));
+			}
 
 			float globalYA = bodyA.getPosition().y;
 			float globalYB = bodyB.getPosition().y;
@@ -80,6 +99,14 @@ public class Physics {
 					((ControlableEntity) b).touchGround();
 				}
 			}
+		}
+	}
+	
+	private static class BodyTuple{
+		public LevelObject o1, o2;
+		public BodyTuple(LevelObject a, LevelObject b){
+			o1 = a;
+			o2 = b;
 		}
 	}
 

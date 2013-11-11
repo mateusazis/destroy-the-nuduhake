@@ -1,6 +1,7 @@
 package br.uff.pse.destroythenuduhake.game.level.enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
@@ -31,7 +32,7 @@ public class Shot extends Enemy {
 	
 	@Override
 	public void die(){
-		Group parent = getParent();
+		Stage parent = getStage();
 		//ao chamar o die, é removido do stage!
 		super.die();
 		Smoke smoke = new Smoke(getX(), getY(), smokeAsset);

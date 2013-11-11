@@ -35,6 +35,8 @@ public class TestLevel extends Level {
 	private World world;
 	private Box2DDebugRenderer r;
 	
+	private Physics.LevelContactListener pListener;
+	
 	private static final float CAMERA_SIZE = 1f;
 
 	@Override
@@ -93,7 +95,7 @@ public class TestLevel extends Level {
 		// setup input
 		defaultController = new DefaultController(player, b, this);
 
-		world.setContactListener(new Physics.LevelContactListener());
+		world.setContactListener(pListener = new Physics.LevelContactListener());
 		camera.zoom = CAMERA_SIZE;
 	}
 	
@@ -110,7 +112,7 @@ public class TestLevel extends Level {
 		camera.position.set(player.getX(), camera.position.y, 0);
 //		camera.position.set(player.getX(), player.getY(), 0);
 		world.step(1/60f, 6, 2);
-		
+		pListener.processContacts();
 //		r.render(world, camera.combined.scale(Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD));
 	}
 }
