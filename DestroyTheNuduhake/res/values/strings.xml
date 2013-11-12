@@ -9,4 +9,5 @@
     <string name ="colorB_name">Color</string>
     <string name ="clearB_name">Clear</string>
     <string name ="undoB_name">Undo</string>
+    <string name="first_use_msg">É a primeira vez que você usa o Destroy The Nuduhake. Por favor, informe seu nome.</string>
 </resources>

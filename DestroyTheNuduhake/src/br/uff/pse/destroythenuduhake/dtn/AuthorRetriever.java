@@ -34,7 +34,7 @@ public class AuthorRetriever {
 		View v = inf.inflate(R.layout.dialog_signin, null);
 		final EditText nameField = (EditText)v.findViewById(R.id.username);
 		
-		String msg = "É a primeira vez que você usa o Destroy The Nuduhake. Por favor, informe um nome para identificar seus assets.";
+		String msg = a.getResources().getString(R.string.first_use_msg);
 		
 		b.setTitle("Bem-vindo").
 		setMessage(msg).setView(v).setPositiveButton("OK", new DialogInterface.OnClickListener() {

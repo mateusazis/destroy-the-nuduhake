@@ -161,17 +161,17 @@ public class AssetsWorkshopActivity extends Activity
 		dialog.setContentView(R.layout.awdialog);
 		dialog.setTitle("Asset Edition");
 		
+		
+		
 		TextView assetName = (TextView) dialog.findViewById(R.id.textView2);
 		
         TextView text = (TextView) dialog.findViewById(R.id.textView1);
         text.setTypeface(null, Typeface.ITALIC);
-        //text.setText(ga.getId().getDescription());
-        text.setText("TESTE!");
+        text.setText(ga.getId().getDescription());
+//        text.setText("TESTE!");
         ImageView image = (ImageView) dialog.findViewById(R.id.imageView1);
         image.setImageBitmap(ga.getBitmap(AssetsWorkshopActivity.this));
         assetName.setText(ga.getId().getName());
-
-        
 
         Button dialogButtonProceed = (Button) dialog.findViewById(R.id.goButton);
         dialogButtonProceed.setOnClickListener(new OnClickListener() {
