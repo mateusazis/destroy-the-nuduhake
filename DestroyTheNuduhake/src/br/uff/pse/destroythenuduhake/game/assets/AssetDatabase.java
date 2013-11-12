@@ -64,8 +64,8 @@ public final class AssetDatabase {
 				new GraphicAsset(AssetDatabase.SPRITE_INPUT_ATTACK_PRESSED, "images/sword_icon_pressed.png"),
 				
 				new GraphicAsset(AssetDatabase.SPRITE_HEART_FULL, "images/heart_full.png"),
-				new GraphicAsset(AssetDatabase.SPRITE_HEART_FULL, "images/heart_half.png"),
-				new GraphicAsset(AssetDatabase.SPRITE_HEART_FULL, "images/heart_empty.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_HEART_HALF, "images/heart_half.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_HEART_EMPTY, "images/heart_empty.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_COIN_SHINE, "images/shine.png"),
 			};
 		return privateAssets;

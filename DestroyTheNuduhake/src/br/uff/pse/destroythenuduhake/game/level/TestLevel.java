@@ -9,16 +9,13 @@ import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 import br.uff.pse.destroythenuduhake.game.level.enemies.BallShooter;
 import br.uff.pse.destroythenuduhake.game.level.enemies.ShooterEnemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class TestLevel extends Level {
@@ -30,33 +27,34 @@ public class TestLevel extends Level {
 	private IAManager manager;
 	private Map map;
 	OrthogonalTiledMapRenderer renderer;
-	
+	LifeManager lifeManager;
+	CoinManager coinManager;
+
 	// physics
 	private World world;
 	private Box2DDebugRenderer r;
-	
+
 	private Physics.LevelContactListener pListener;
-	
+
 	private static final float CAMERA_SIZE = 1f;
 
 	@Override
 	public void createWithAssetBundle(AssetBundle b) {
 		super.createWithAssetBundle(b);
-		
+
 		camera = (OrthographicCamera) this.getCamera();
 
-
-		
-		
 		Vector2 gravity = new Vector2(0.0f, -10.0f);
 		world = new World(gravity, true);
 
 		r = new Box2DDebugRenderer();
-		
-		LevelObject bg = new FixedObject(-CAMERA_SIZE*400, -CAMERA_SIZE*240, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BACKGROUND));
+
+		LevelObject bg = new FixedObject(-CAMERA_SIZE * 400,
+				-CAMERA_SIZE * 240,
+				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_BACKGROUND));
 		addActor(bg);
 		bg.setScale(CAMERA_SIZE);
-		
+
 		map = new Map("mapa.tmx", 0, 0, world, camera);
 		addActor(map);
 
@@ -65,33 +63,38 @@ public class TestLevel extends Level {
 		// setup objects
 
 		Vector2 playerPos = map.getPlayerPosition();
-		player = new Player(playerPos.x, playerPos.y, playerTex, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_SWORD));
+		player = new Player(playerPos.x, playerPos.y, playerTex,
+				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_SWORD));
 		addActor(player);
 		player.setupPhysics(world);
 		
+		lifeManager = new LifeManager(b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_FULL), 
+				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_HALF), b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_EMPTY), player);
 		
-		//IA---------------------------------------------------------------------------------------
+		coinManager = new CoinManager(b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_COIN), player);
+
+		// IA---------------------------------------------------------------------------------------
 		manager = new IAManager(player);
-		
-		//Enemies----------------------------------------------------------------------------------
-		for(Rectangle r : map.findObjects("shooter")){
+
+		// Enemies----------------------------------------------------------------------------------
+		for (Rectangle r : map.findObjects("shooter")) {
 			ShooterEnemy e = new ShooterEnemy(r.x, r.y, b);
 			e.setupPhysics(world);
 			addActor(e);
-			
+
 			manager.addEnemies(e);
 		}
-		
-		for(Rectangle r : map.findObjects("ball_shooter")){
+
+		for (Rectangle r : map.findObjects("ball_shooter")) {
 			BallShooter ball = new BallShooter(r.x, r.y, b);
 			ball.setupPhysics(world);
 			addActor(ball);
-			
+
 			manager.addEnemies(ball);
 		}
-		
+
 		addActor(new Coin(player.getX() + 200, player.getY(), b));
-		
+
 		addActor(manager);
 
 		// setup input
@@ -100,23 +103,26 @@ public class TestLevel extends Level {
 		world.setContactListener(pListener = new Physics.LevelContactListener());
 		camera.zoom = CAMERA_SIZE;
 	}
-	
-	
-	
+
 	@Override
 	public void dispose() {
 		super.dispose();
 		map.dispose();
 	}
-	
+
 	@Override
 	public void render() {
 		super.render();
 		defaultController.update();
 		camera.position.set(player.getX(), camera.position.y, 0);
-//		camera.position.set(player.getX(), player.getY(), 0);
-		world.step(1/60f, 6, 2);
+		// camera.position.set(player.getX(), player.getY(), 0);
+		world.step(1 / 60f, 6, 2);
 		pListener.processContacts();
-//		r.render(world, camera.combined.scale(Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD));
+		// r.render(world, camera.combined.scale(Physics.BOX_TO_WORLD,
+		// Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD));
+		
+		lifeManager.update();
+		coinManager.update();
 	}
+
 }

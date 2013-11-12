@@ -23,7 +23,6 @@ public class MainDesktop {
 	    Game g = new Game(b);
 	    g.changeLevel(1);
 		new LwjglApplication(g, cfg);
-		
-		
+	
 	}
 }
