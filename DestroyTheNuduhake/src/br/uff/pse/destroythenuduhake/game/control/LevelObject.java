@@ -24,6 +24,7 @@ public class LevelObject extends Actor{
 	private Rectangle r;
 	private TextureRegion region;
 	private Fixture fixture;
+	private boolean _isOverlapable = true;
 	
 	public LevelObject(float x, float y, GraphicAsset asset){
 		super();
@@ -31,6 +32,18 @@ public class LevelObject extends Actor{
 		region = new TextureRegion();
 		setPosition(x, y);
 		setGraphic(asset);
+	}
+	
+	/**
+	 * Se setar como true, estará sujeito a verificações de sobreposição do seu rect a cada gameloop.
+	 * @param overlapable
+	 */
+	public void setOverlapable(boolean overlapable){
+		this._isOverlapable = overlapable;
+	}
+	
+	public boolean isOverlapable(){
+		return this._isOverlapable;
 	}
 	
 	public void setFlipped(boolean flipped){
@@ -156,6 +169,8 @@ public class LevelObject extends Actor{
 		r.setSize(graphic.getWidth(), graphic.getHeight());
 		setSize(graphic.getWidth(), graphic.getHeight());
 	}
+	
+	public void onOverlap(LevelObject other){	}
 	
 //	@Override
 //	public void act(float delta) {

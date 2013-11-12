@@ -7,17 +7,20 @@ import java.util.Set;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 
 public abstract class Level extends Stage implements ApplicationListener{
 	private AssetBundle usedBundle;
 	private Game parent;
 	private Set<AssetID> requiredAssets;
-	private List<LevelObject> disposeList;
+	private List<LevelObject> disposeList, activeList;
 	
 	public Level(){
 		super();
 		disposeList = new LinkedList<LevelObject>();
+		activeList = new LinkedList<LevelObject>();
 	}
 	
 	public void setRequiredAssets(AssetID...ids){
@@ -66,6 +69,8 @@ public abstract class Level extends Stage implements ApplicationListener{
 			usedBundle.dispose();
 			usedBundle = null;
 		}
+		activeList.clear();
+		disposeList.clear();
 	}
 
 	@Override
@@ -75,7 +80,35 @@ public abstract class Level extends Stage implements ApplicationListener{
 				obj.dispose();
 			disposeList.clear();
 		}
+		
+		checkOverlaps();
+		
 		draw();
+	}
+	
+	/**
+	 * Verifica sobreposição entre os retângulos dos LevelObjects.
+	 */
+	private void checkOverlaps(){
+		for(int i = 0; i < activeList.size() - 1; i++){
+			LevelObject oI = activeList.get(i);
+			if(oI.isOverlapable()){
+				for(int j = i+1; j < activeList.size(); j++){
+					LevelObject oJ = activeList.get(j);
+					if(oJ.isOverlapable() && oI.getRect().overlaps(oJ.getRect())){
+						oI.onOverlap(oJ);
+						oJ.onOverlap(oI);
+					}
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void addActor(Actor actor) {
+		super.addActor(actor);
+		if(actor instanceof LevelObject)
+			activeList.add((LevelObject)actor);
 	}
 
 	@Override
@@ -93,5 +126,6 @@ public abstract class Level extends Stage implements ApplicationListener{
 
 	public void addToDisposeList(LevelObject levelObject) {
 		disposeList.add(levelObject);
+		activeList.remove(levelObject);
 	}
 }

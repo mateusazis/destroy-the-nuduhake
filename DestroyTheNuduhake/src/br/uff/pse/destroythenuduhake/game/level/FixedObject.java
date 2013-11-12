@@ -15,6 +15,8 @@ public class FixedObject extends LevelObject {
 		
 		screenPos = new Vector2(screenX, screenY);
 		stagePos = new Vector2();
+		
+		setOverlapable(false);
 	}
 	
 	@Override

@@ -90,6 +90,8 @@ public class TestLevel extends Level {
 			manager.addEnemies(ball);
 		}
 		
+		addActor(new Coin(player.getX() + 200, player.getY(), b));
+		
 		addActor(manager);
 
 		// setup input
@@ -98,6 +100,8 @@ public class TestLevel extends Level {
 		world.setContactListener(pListener = new Physics.LevelContactListener());
 		camera.zoom = CAMERA_SIZE;
 	}
+	
+	
 	
 	@Override
 	public void dispose() {
