@@ -3,6 +3,7 @@ package br.uff.pse.destroythenuduhake.game.level;
 import br.uff.pse.destroythenuduhake.game.Physics;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
@@ -29,6 +30,7 @@ public class TestLevel extends Level {
 	OrthogonalTiledMapRenderer renderer;
 	LifeManager lifeManager;
 	CoinManager coinManager;
+	private MusicAsset music;
 
 	// physics
 	private World world;
@@ -102,6 +104,9 @@ public class TestLevel extends Level {
 
 		world.setContactListener(pListener = new Physics.LevelContactListener());
 		camera.zoom = CAMERA_SIZE;
+		
+		music = b.<MusicAsset>getAsset(AssetDatabase.MUSIC_LEVEL);
+		music.play();
 	}
 
 	@Override

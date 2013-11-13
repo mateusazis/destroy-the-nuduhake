@@ -46,7 +46,8 @@ public final class AssetDatabase {
 		
 	
 	//musics
-	MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", "");
+	MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", ""),
+	MUSIC_LEVEL = new AssetID(0x0201, "Level BGM", "");
 	
 
 //	public static AssetID[] getAllIDs(){
@@ -75,6 +76,8 @@ public final class AssetDatabase {
 				
 				new GraphicAsset(AssetDatabase.SPRITE_COIN_BG, "images/coin_bg.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_HEART_BG, "images/heart_bg.png"),
+				
+				new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening.mp3"),
 			};
 		return privateAssets;
 	}
@@ -96,7 +99,7 @@ public final class AssetDatabase {
 				new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER_1, "images/ball_shooter_1.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_COIN, "images/coin.png"),
 				
-				new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening.mp3"),
+				new MusicAsset(AssetDatabase.MUSIC_LEVEL, "musics/5.Never Back Down.mp3"),
 			};
 		return editableAssets;
 	}
