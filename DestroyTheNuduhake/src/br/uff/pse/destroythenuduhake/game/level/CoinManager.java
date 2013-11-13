@@ -1,5 +1,6 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
+import android.graphics.Bitmap;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
 import com.badlogic.gdx.graphics.Color;
@@ -18,7 +19,8 @@ public class CoinManager {
 		this.player = player;
 		this.coinAsset = coinAsset;
 		this.font = new BitmapFont();
-		font.setColor(new Color(0f, 0f, 1f, 1f));
+		font.setColor(new Color(0f, 0.8f, 0f, 1f));
+		font.setScale(2f);
 		
 		spriteBatch = new SpriteBatch();
 		
@@ -29,7 +31,7 @@ public class CoinManager {
 	public void update(){
 		spriteBatch.begin();
 		coinCount = player.getScore();
-		font.draw(spriteBatch, coinCount + " (Ainda não soube colocar isso lá em cima u.u)", 400, 400);
+		font.draw(spriteBatch, Integer.toString(coinCount), 740, 475);
 		spriteBatch.end();
 	}
 }

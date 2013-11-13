@@ -36,7 +36,7 @@ public class Shot extends Enemy {
 		//ao chamar o die, é removido do stage!
 		super.die();
 		Smoke smoke = new Smoke(getX(), getY(), smokeAsset);
-		parent.addActor(smoke);
+		//parent.addActor(smoke);
 	}
 	
 	@Override
