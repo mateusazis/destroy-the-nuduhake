@@ -39,6 +39,11 @@ public final class AssetDatabase {
 		SPRITE_COIN = new AssetID(0x0016, "Coin", "TESTE"),
 		SPRITE_COIN_SHINE = new AssetID(0x0017, "Coin Shine", "TESTE"),
 		
+		//GUI
+		SPRITE_COIN_BG = new AssetID(0x0018, "Coin BG", "TESTE"),
+		SPRITE_HEART_BG = new AssetID(0x0019, "Heart BG", "TESTE"),
+		
+		
 	
 	//musics
 	MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", "");
@@ -67,6 +72,9 @@ public final class AssetDatabase {
 				new GraphicAsset(AssetDatabase.SPRITE_HEART_HALF, "images/heart_half.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_HEART_EMPTY, "images/heart_empty.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_COIN_SHINE, "images/shine.png"),
+				
+				new GraphicAsset(AssetDatabase.SPRITE_COIN_BG, "images/coin_bg.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_HEART_BG, "images/heart_bg.png"),
 			};
 		return privateAssets;
 	}

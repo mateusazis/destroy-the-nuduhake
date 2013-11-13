@@ -1,12 +1,11 @@
 package br.uff.pse.destroythenuduhake.game.level.enemies;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
@@ -34,10 +33,10 @@ public class BallShooter extends Enemy {
 	
 	@Override
 	public void onAtacked(int atackPower) {
+		Stage s = super.getStage();
 		super.onAtacked(atackPower);
-		getParent().addActor(new Smoke(getX(), getY(), smokeAsset));
+		s.addActor(new Smoke(getX(), getY(), smokeAsset));
 		int life = getLife();
-		Gdx.app.log("", "life: " + life);
 		
 		if(life == 2){
 			setGraphic(asset2);

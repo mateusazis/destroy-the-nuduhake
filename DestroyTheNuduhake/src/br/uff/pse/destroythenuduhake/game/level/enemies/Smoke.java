@@ -1,23 +1,31 @@
 package br.uff.pse.destroythenuduhake.game.level.enemies;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
-public class Smoke extends Animator{
+public class Smoke extends Actor implements Animator.Listener {
 
 	private static final float DURATION = 3f;
+	private Animator anim;
 	
 	public Smoke(float x, float y, GraphicAsset img) {
-		super(8, 8, DURATION, img);
+		super();
+		anim = new Animator(8, 8, DURATION, img, this);
 		setPosition(x, y);
 		setScale(2);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
-	protected void onEnded() {
-		super.onEnded();
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		super.draw(batch, parentAlpha);
+		anim.draw(batch, getX(), getY());
+	}
+	
+	@Override
+	public void onEnded() {
 		remove();
-		super.dispose();
 	}
 
 }
