@@ -81,7 +81,7 @@ public class MainActivity extends Activity {
 				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
 				FileManager.writeAsset(kibe, MainActivity.this);
 				
-				sendTestDtnBundle();
+				//sendTestDtnBundle();
 //				GraphicAsset dragonkibe = new GraphicAsset(AssetDatabase.SPRITE_DRAGON,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
 //				dragonkibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.square));
 //				FileManager.writeAsset(dragonkibe, MainActivity.this);
@@ -116,8 +116,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v)
 			{		
-				sendTestDtnBundle();
-				//FileManager.deleteAllFiles(MainActivity.this);
+				//sendTestDtnBundle();
+				FileManager.deleteAllFiles(MainActivity.this);
 			}
 		});
 		Button b4 = (Button) findViewById(R.id.assetWorkshop);
@@ -141,7 +141,7 @@ public class MainActivity extends Activity {
 		});
 	}
 
-	public void sendTestDtnBundle()
+	public void alertServiceToSend()
 	{
 		try
 		{

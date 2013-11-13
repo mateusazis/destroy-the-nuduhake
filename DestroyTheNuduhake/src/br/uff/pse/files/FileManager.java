@@ -22,6 +22,7 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -47,12 +48,25 @@ public class FileManager extends Activity implements BundleReceiver
 //	private static Context ctx;
 //	private static ArrayList<Boolean> checkedAssets = new ArrayList<Boolean>();
 	//private static String assetFilePath ="/data/data/br.uff.pse.dest/assets/";
+	public static final String REFRESH = "br.uff.pse.destroythenudhuhake.REFRESH";
 
 	public static void addAsset(Asset a, Context ctx){
 		ArrayList<Asset> list = loadListFile(ctx);
 //		filesPaths.add(a);
-		list.add(a);
+		Asset asset = FileManager.checkAndReturnIfAssetExists(a, ctx);
+		if(asset == null)
+		{
+			list.add(a);
+		}
+		else
+		{
+		int pos = list.indexOf(asset);
+		list.set(pos,a);
+	//	list.add(a);
+		}
 		saveListFile(list,ctx);
+		Intent i = new Intent(REFRESH);
+		ctx.sendBroadcast(i);
 	}
 	
 	public static void writeAsset(Asset asset,  Context ctx) 
@@ -313,7 +327,7 @@ public class FileManager extends Activity implements BundleReceiver
 		
 		return combined;
 	}
-	
+
 	public static void saveListFile(ArrayList<Asset> listToSave,Context ctx)
 	{
 		try
@@ -661,8 +675,8 @@ public class FileManager extends Activity implements BundleReceiver
 			
 			
 			Asset similarAsset = checkAndReturnIfAssetExists(c,ctx) ;
-			if(similarAsset == null)
-			{
+			//if(similarAsset == null)
+			//{
 
 				if(c instanceof GraphicAsset)
 				{
@@ -675,36 +689,39 @@ public class FileManager extends Activity implements BundleReceiver
 					c.setFilePath(getAvaiableFilepath(ctx,ctx.getFilesDir().getAbsolutePath(),false));
 					//RECUPERAR AUDIO
 				}
-	
-				return c;
-			}
-			else
-			{
-				if(c.getVersionNumber() > similarAsset.getVersionNumber())
-				{
-					if(c instanceof GraphicAsset)
-					{
 
-						Bitmap bitmap = BitmapFactory.decodeByteArray(bitMapBytes , 0, bitMapBytes.length);
-						((GraphicAsset)(similarAsset)).setBitmap(bitmap);
-						replaceAssetFromList(c,ctx);
-						//Bitmap bitmap = BitmapFactory.decodeByteArray(bitMapBytes , 0, bitMapBytes.length);
-						//((GraphicAsset)(similarAsset)).setBitmap(bitmap);
-						//similarAsset.se
-					}
-					else
-					{
-						
-						//RECUPERAR AUDIO
-					}
-				}
-			}
+				return c;
+			//}
+//			else
+//			{
+//				if(c.getVersionNumber() > similarAsset.getVersionNumber())
+//				{
+//					if(c instanceof GraphicAsset)
+//					{
+//
+//						Bitmap bitmap = BitmapFactory.decodeByteArray(bitMapBytes , 0, bitMapBytes.length);
+//						((GraphicAsset)(similarAsset)).setBitmap(bitmap);
+//						replaceAssetFromList(c,ctx);
+//						//Bitmap bitmap = BitmapFactory.decodeByteArray(bitMapBytes , 0, bitMapBytes.length);
+//						//((GraphicAsset)(similarAsset)).setBitmap(bitmap);
+//						//similarAsset.se
+//					}
+//					else
+//					{
+//						
+//						//RECUPERAR AUDIO
+//					}
+//					Intent i = new Intent(REFRESH);
+//					ctx.sendBroadcast(i);
+//				}
+//			}
 		
 		}
 		catch(Exception e)
 		{
 			Exception x = e;
 		}
+
 		return null;
 				
 	}
