@@ -71,9 +71,10 @@ public class TestLevel extends Level {
 		player.setupPhysics(world);
 		
 		lifeManager = new LifeManager(b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_FULL), 
-				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_HALF), b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_EMPTY), player);
+				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_HALF), b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_EMPTY), 
+				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_BG), player);
 		
-		coinManager = new CoinManager(b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_COIN), player);
+		coinManager = new CoinManager(b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_COIN_BG), player);
 
 		// IA---------------------------------------------------------------------------------------
 		manager = new IAManager(player);
@@ -118,8 +119,9 @@ public class TestLevel extends Level {
 	@Override
 	public void render() {
 		super.render();
-		defaultController.update();
 		camera.position.set(player.getX(), camera.position.y, 0);
+		defaultController.update();
+		
 		// camera.position.set(player.getX(), player.getY(), 0);
 		world.step(1 / 60f, 6, 2);
 		pListener.processContacts();
