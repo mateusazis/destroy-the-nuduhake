@@ -2,11 +2,15 @@ package br.uff.pse.destroythenuduhake;
 
 import java.util.List;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -98,7 +102,8 @@ public class AssetsWorkshopActivity extends Activity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
+		IntentFilter filter2 = new IntentFilter(FileManager.REFRESH);
+		registerReceiver(mDataReceiver, filter2);
 		setContentView(R.layout.assetsworkshop);
 		listView = (ListView)findViewById(R.id.workshopList);				
 		listView.setOnItemClickListener(listener);
@@ -183,6 +188,15 @@ public class AssetsWorkshopActivity extends Activity
             }
         });
 	}
+	private BroadcastReceiver mDataReceiver = new BroadcastReceiver()
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			showContents();
+
+		}
+	};
 
 
 }

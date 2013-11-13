@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -22,6 +23,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import br.uff.pse.destroythenuduhake.AssetsWorkshopActivity;
 import br.uff.pse.destroythenuduhake.R;
 import br.uff.pse.destroythenuduhake.dtn.AuthorRetriever;
+import br.uff.pse.destroythenuduhake.dtn.DTNService;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.files.FileManager;
 
@@ -136,7 +138,6 @@ public class FreehandDrawingActivity extends Activity {
 				if(oldGA.isOriginal()){
 					String newAssetPath = FileManager.getAvaiableFilepath(ctx,getFilesDir().getAbsolutePath(),true);
 					newGA = oldGA.makeCopy(AuthorRetriever.getAuthor(), newAssetPath);
-					FileManager.addAsset(newGA, ctx);
 				}
 				else
 					newGA = oldGA;
@@ -144,6 +145,12 @@ public class FreehandDrawingActivity extends Activity {
 				save = Bitmap.createBitmap(save);
 				//newGA.setBitmap(save);
 				newGA.editBitmap(save);
+				FileManager.addAsset(newGA, ctx);					
+
+				DTNService.assetToSendViaDtn = newGA;
+				alertServiceToSend();
+
+				
 //				FileManager.saveListFile(FreehandDrawingActivity.this);
 				
 				finish();
@@ -188,6 +195,24 @@ public class FreehandDrawingActivity extends Activity {
         builder.setView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.width_picker_dialog, null));        
         alert = builder.create();
     }
+
+	public void alertServiceToSend()
+	{
+		try
+		{
+
+			Intent i = new Intent(this, DTNService.class);
+			i.setAction(DTNService.SEND_BUNDLE_INTENT);
+			startService(i);
+			i = new Intent(this, DTNService.class);
+
+		}
+		catch (Exception e)
+		{
+
+		}
+	
+	}
         
 //    
 //    void setCustomBackground(DrawView v) {

@@ -18,7 +18,10 @@ import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter;
 import br.uff.pse.files.FileManager;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.view.View;
@@ -113,7 +116,8 @@ public class DisplayAssetsActivity extends Activity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
+		IntentFilter filter2 = new IntentFilter(FileManager.REFRESH);
+		registerReceiver(mDataReceiver, filter2);
 		setContentView(R.layout.displayassetslayout);
 		listView = (ListView)findViewById(R.id.listView1);				
 		listView.setOnItemClickListener(listener);
@@ -179,5 +183,15 @@ public class DisplayAssetsActivity extends Activity
 	public static void setAsset(Asset asset) {
 		DisplayAssetsActivity.asset = asset;
 	}
+	private BroadcastReceiver mDataReceiver = new BroadcastReceiver()
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			showContents();
+
+		}
+	};
+
 
 }

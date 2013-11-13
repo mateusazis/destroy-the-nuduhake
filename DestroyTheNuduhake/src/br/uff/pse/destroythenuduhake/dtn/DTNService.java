@@ -55,13 +55,14 @@ public class DTNService extends IntentService implements ShareService
 
 	// this intent send out a PING message
 	public static final String SEND_BUNDLE_INTENT = "uff.br.infouffdtn.PING";
+	public static Asset assetToSendViaDtn;
 
 	// indicates updated data to other components
 	public static final String DATA_UPDATED = "uff.br.infouffdtn.DATA_UPDATED";
 	public static final String PAYLOAD_UPDATED = "uff.br.infouffdtn.PAYLOAD_UPDATED";
 	public static final String REFRESH = "uff.br.infouffdtn.REFRESH";
 	// group EID of this app
-	public static final GroupEndpoint PING_GROUP_EID = new GroupEndpoint("dtn://broadcast.dtn/ping");
+	public static final GroupEndpoint PING_GROUP_EID = new GroupEndpoint("dtn://broadcast.dtn/Nuduhake");
 
 	// This is the object that receives interactions from clients. See
 	// RemoteService for a more complete example.
@@ -122,25 +123,25 @@ public class DTNService extends IntentService implements ShareService
 	{
 
 		
-			ArrayList<Asset> files = FileManager.getFilesToSend(this);
+		//	ArrayList<Asset> files = FileManager.getFilesToSend(this);
 		
 		
 			try
 			{
-				List<Node> neighbours = mClient.getDTNService().getNeighbors();
-				for (int i = 0; i < neighbours.size(); i++)
-				{
-					String destAddress = neighbours.get(i).endpoint.toString() + "/nuduhake";
-					SingletonEndpoint destination = new SingletonEndpoint(destAddress);
+//				List<Node> neighbours = mClient.getDTNService().getNeighbors();
+//				for (int i = 0; i < neighbours.size(); i++)
+//				{
+//					String destAddress = neighbours.get(i).endpoint.toString() + "/nuduhake";
+					//SingletonEndpoint destination = PING_GROUP_EID;
 	
 					// create a new bundle
 					Bundle b = new Bundle();
 	
 					// set the destination of the bundle
-					b.setDestination(destination);
+					b.setDestination(PING_GROUP_EID);
 	
 					// limit the lifetime of the bundle to 60 seconds
-					b.setLifetime(120L);
+					b.setLifetime(60*60*24L);
 					
 	
 					// set status report requests for bundle reception
@@ -165,12 +166,10 @@ public class DTNService extends IntentService implements ShareService
 						// send the bundle
 						//BundleID ret = s.send(b, payload.getBytes());
 						
-						for(int j = 0 ; j < files.size(); j++)
-						{
 							
 							try 
 							{
-							  byte[] contentBytes = FileManager.prepareAssetToSend(files.get(j),this);
+							  byte[] contentBytes = FileManager.prepareAssetToSend(assetToSendViaDtn,this);
 							  BundleID ret = s.send(b, contentBytes);
 							  
 							  	if (ret == null)
@@ -193,7 +192,6 @@ public class DTNService extends IntentService implements ShareService
 							{
 
 							}													
-						}
 						
 					}
 					catch (SessionDestroyedException e)
@@ -206,7 +204,7 @@ public class DTNService extends IntentService implements ShareService
 						Log.e(TAG, "could not send the message", e);
 						
 					}
-				}
+//				}
 			}
 			catch (Exception e)
 			{
@@ -357,6 +355,7 @@ public class DTNService extends IntentService implements ShareService
 		// terminate the DTN service
 		mClient.terminate();
 		mClient = null;
+		assetToSendViaDtn = null;
 
 		super.onDestroy();
 	}
@@ -433,8 +432,8 @@ public class DTNService extends IntentService implements ShareService
 					{
 
 					  Asset c = FileManager.getAssetFromBytes(streamBytes,DTNService.this);
-					  if(c!=null)
-					  FileManager.writeAsset(c, DTNService.this);
+					  //if(c!=null)
+					  FileManager.addAsset(c, DTNService.this);
 					  
 
 
