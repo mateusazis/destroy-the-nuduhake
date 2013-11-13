@@ -41,7 +41,6 @@ public class Coin extends LevelObject{
 	
 	@Override
 	public void onOverlap(LevelObject other){
-		Gdx.app.log("", "Overlap " + other.getClass());
 		if(other instanceof Player){
 			Player p = (Player)other;
 			p.addScore(1);
