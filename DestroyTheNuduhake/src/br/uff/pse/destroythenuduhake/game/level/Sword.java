@@ -4,9 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
@@ -29,9 +31,10 @@ public class Sword extends LevelObject{
 	
 	private Set<Enemy> hitEnemies = new HashSet<Enemy>();
 	private Player owner;
+	private SoundAsset swordSound;
 	
 	
-	public Sword(Player owner, GraphicAsset swordAsset){
+	public Sword(Player owner, GraphicAsset swordAsset, SoundAsset swordSound){
 		super(0, 0, swordAsset);
 		this.owner = owner;
 //		r = new TextureRegion(swordAsset.getTexture());
@@ -44,6 +47,7 @@ public class Sword extends LevelObject{
 		Rectangle r = getRect();
 		r.height = getHeight() * getScaleY();
 		r.width = r.height;
+		this.swordSound = swordSound;
 	}
 	
 	@Override
@@ -92,8 +96,10 @@ public class Sword extends LevelObject{
 					state = State.RESTORE;
 					elapsed = 0;
 				}
-				else 
+				else{
 					setRotation(lerp(backAngle, frontAngle, elapsed / SWING_FRONT_DURATION));
+					swordSound.play();
+				}
 				break;
 			case RESTORE:
 				elapsed += delta;

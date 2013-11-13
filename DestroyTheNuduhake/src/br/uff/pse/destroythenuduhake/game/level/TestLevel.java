@@ -4,6 +4,7 @@ import br.uff.pse.destroythenuduhake.game.Physics;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
+import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
@@ -66,7 +67,7 @@ public class TestLevel extends Level {
 
 		Vector2 playerPos = map.getPlayerPosition();
 		player = new Player(playerPos.x, playerPos.y, playerTex,
-				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_SWORD));
+				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_SWORD), b.<SoundAsset> getAsset(AssetDatabase.SOUND_SWORD));
 		addActor(player);
 		player.setupPhysics(world);
 		

@@ -40,7 +40,7 @@ public class MainMenu extends Level implements TextListener{
 		
 		f = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), false);
 		
-		float middle = Gdx.graphics.getWidth() / 2f;
+		float middle = 400f;
 		
 		bg = new LevelObject(0, 0, bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_DRAGON));
 		addActor(bg);
