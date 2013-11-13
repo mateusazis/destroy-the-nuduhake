@@ -18,7 +18,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 	private List<LevelObject> disposeList, activeList;
 	
 	public Level(){
-		super();
+		super(800, 480, false, null);
 		disposeList = new LinkedList<LevelObject>();
 		activeList = new LinkedList<LevelObject>();
 	}
@@ -75,15 +75,20 @@ public abstract class Level extends Stage implements ApplicationListener{
 
 	@Override
 	public void render() {
+		
 		if(disposeList.size() > 0){
 			for(LevelObject obj : disposeList)
 				obj.dispose();
 			disposeList.clear();
 		}
 		
-		checkOverlaps();
-		
+		checkOverlaps();//
+//		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		Gdx.app
+//		super.setViewport(800, 480, false);
+//		super.setViewport(800, 480, false, 0, 0, 800, 480);
 		draw();
+		
 	}
 	
 	/**
@@ -113,7 +118,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 
 	@Override
 	public void resize(int width, int height) {
-		super.setViewport(width, height, true);
+//		super.setViewport(width, height, false);
 	}
 
 	@Override

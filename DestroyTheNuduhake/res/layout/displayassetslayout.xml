@@ -18,7 +18,7 @@
          android:layout_width="match_parent"
          android:layout_height="348dp"
          android:layout_weight="0.38"
-         android:cacheColorHint="#00000000" >
+         android:scrollingCache="false" >
 
      </ListView>
 

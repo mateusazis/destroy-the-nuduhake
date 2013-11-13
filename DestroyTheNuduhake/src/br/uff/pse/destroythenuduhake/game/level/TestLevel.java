@@ -118,8 +118,9 @@ public class TestLevel extends Level {
 	@Override
 	public void render() {
 		super.render();
-		defaultController.update();
 		camera.position.set(player.getX(), camera.position.y, 0);
+		defaultController.update();
+		
 		// camera.position.set(player.getX(), player.getY(), 0);
 		world.step(1 / 60f, 6, 2);
 		pListener.processContacts();
