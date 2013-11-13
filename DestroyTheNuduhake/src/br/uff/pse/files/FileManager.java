@@ -26,9 +26,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.Toast;
 import br.uff.pse.destroythenuduhake.R;
 import br.uff.pse.destroythenuduhake.dtn.Author;
 import br.uff.pse.destroythenuduhake.dtn.BundleReceiver;
+import br.uff.pse.destroythenuduhake.dtn.DTNService;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.AudioAsset;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
@@ -67,6 +69,8 @@ public class FileManager extends Activity implements BundleReceiver
 		saveListFile(list,ctx);
 		Intent i = new Intent(REFRESH);
 		ctx.sendBroadcast(i);
+
+		  
 	}
 	
 	public static void writeAsset(Asset asset,  Context ctx) 

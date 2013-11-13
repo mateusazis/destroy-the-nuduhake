@@ -25,6 +25,7 @@ import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.Toast;
 import de.tubs.ibr.dtn.api.Block;
 import de.tubs.ibr.dtn.api.Bundle;
 import de.tubs.ibr.dtn.api.Bundle.ProcFlags;
@@ -218,6 +219,7 @@ public class DTNService extends IntentService implements ShareService
 	protected void onHandleIntent(Intent intent)
 	{
 		String action = intent.getAction();
+		
 
 		if (de.tubs.ibr.dtn.Intent.RECEIVE.equals(action))
 		{
@@ -496,4 +498,5 @@ public class DTNService extends IntentService implements ShareService
 		// TODO Auto-generated method stub
 		
 	}
+
 }
