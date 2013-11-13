@@ -4,6 +4,7 @@ import br.uff.pse.destroythenuduhake.game.Physics;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
+import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
@@ -66,7 +67,7 @@ public class TestLevel extends Level {
 
 		Vector2 playerPos = map.getPlayerPosition();
 		player = new Player(playerPos.x, playerPos.y, playerTex,
-				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_SWORD));
+				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_SWORD), b.<SoundAsset> getAsset(AssetDatabase.SOUND_SWORD));
 		addActor(player);
 		player.setupPhysics(world);
 		
@@ -95,6 +96,11 @@ public class TestLevel extends Level {
 
 			manager.addEnemies(ball);
 		}
+		
+		for (Rectangle r : map.findObjects("coin")) {
+			Coin c = new Coin(r.x, r.y, b);
+			addActor(c);
+		}
 
 		addActor(new Coin(player.getX() + 200, player.getY(), b));
 
@@ -119,14 +125,14 @@ public class TestLevel extends Level {
 	@Override
 	public void render() {
 		super.render();
-		camera.position.set(player.getX(), camera.position.y, 0);
+//		camera.position.set(player.getX(), camera.position.y, 0);
+		camera.position.set(player.getX(), player.getY(), 0);
 		defaultController.update();
 		
 		// camera.position.set(player.getX(), player.getY(), 0);
 		world.step(1 / 60f, 6, 2);
 		pListener.processContacts();
-		// r.render(world, camera.combined.scale(Physics.BOX_TO_WORLD,
-		// Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD));
+//		 r.render(world, camera.combined.scale(Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD));
 		
 		lifeManager.update();
 		coinManager.update();

@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 public class MainMenu extends Level implements TextListener{
 
@@ -39,13 +40,14 @@ public class MainMenu extends Level implements TextListener{
 		
 		f = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), false);
 		
-		float middle = Gdx.graphics.getWidth() / 2f;
+		float middle = 400f;
 		
 		bg = new LevelObject(0, 0, bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_DRAGON));
 		addActor(bg);
 		
 		title = new Text(f, "Destroy The Nuduhake", middle, 350);
 		title.setScale(2.0f);
+		title.setTouchable(Touchable.disabled);
 		
 		startText = new Text(0, f, "Start", middle, 225, this);
 		editText = new Text(1, f, "Edit Assets", middle, 150, this);

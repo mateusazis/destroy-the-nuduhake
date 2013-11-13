@@ -47,7 +47,10 @@ public final class AssetDatabase {
 	
 	//musics
 	MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", ""),
-	MUSIC_LEVEL = new AssetID(0x0201, "Level BGM", "");
+	MUSIC_LEVEL = new AssetID(0x0201, "Level BGM", ""),
+	
+	//sounds
+	SOUND_SWORD = new AssetID(0x0300, "Sword atack", "");
 	
 
 //	public static AssetID[] getAllIDs(){
@@ -78,6 +81,8 @@ public final class AssetDatabase {
 				new GraphicAsset(AssetDatabase.SPRITE_HEART_BG, "images/heart_bg.png"),
 				
 				new MusicAsset(AssetDatabase.MUSIC_OPENING, "musics/opening.mp3"),
+				
+				new SoundAsset(AssetDatabase.SOUND_SWORD, "sounds/sword.ogg"),
 			};
 		return privateAssets;
 	}

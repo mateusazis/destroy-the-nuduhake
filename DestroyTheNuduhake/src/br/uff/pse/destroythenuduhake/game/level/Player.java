@@ -1,6 +1,7 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -12,8 +13,9 @@ public class Player extends ControlableEntity {
 	private GraphicAsset swordAsset;
 	private Vector2 swordRelativePos, currentSwordPos = new Vector2();
 	private Vector2 swordPos = new Vector2(0,0);
+	private SoundAsset swordSound;
 	
-	public Player(float x, float y, GraphicAsset asset, GraphicAsset swordAsset) {
+	public Player(float x, float y, GraphicAsset asset, GraphicAsset swordAsset, SoundAsset swordSound) {
 		super(x, y, asset);
 		setLife(6);
 		setMaxMoveVelocity(3f);
@@ -21,6 +23,7 @@ public class Player extends ControlableEntity {
 		currentSwordPos.set(swordRelativePos); 
 		
 		this.swordAsset = swordAsset;
+		this.swordSound = swordSound;
 		turnedLeft = false;
 	}
 	
@@ -36,7 +39,7 @@ public class Player extends ControlableEntity {
 	public void act(float delta) {
 		super.act(delta);
 		if(s == null){
-			s = new Sword(this, swordAsset);
+			s = new Sword(this, swordAsset, swordSound);
 			getParent().addActor(s);
 			s.setZIndex(getZIndex() - 1);
 		}

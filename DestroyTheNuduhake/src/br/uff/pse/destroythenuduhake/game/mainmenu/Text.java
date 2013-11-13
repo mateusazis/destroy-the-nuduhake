@@ -5,8 +5,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 
-public class Text extends Actor{
+public class Text extends Actor implements EventListener{
 
 	private String content;
 	private BitmapFont font;
@@ -40,30 +44,32 @@ public class Text extends Actor{
 		this.listener = listener;
 		
 		setBounds(centerX - bounds.width / 2f, centerY - bounds.height / 2f, bounds.width, bounds.height);
+		
+		addListener(this);
 	}
 	
 	
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		bounds = font.draw(batch, content, getX(), getY());
+		bounds = font.draw(batch, content, getX(), getY() + bounds.height);
 	}
 	
 	@Override
 	public void act(float delta) {
 		
 		switch(state){
-		case IDLE:
-			if(bounds != null && Gdx.input.justTouched()){
-				int x = Gdx.input.getX(), y = Gdx.input.getY();
-				
-				Actor hitActor = hit(x - getX(), Gdx.graphics.getHeight() - y - getY() + getHeight(), false);
-				if(hitActor == this && listener != null){
-					state = State.BLINKING;
-					blinkElapsed = 0;
-				}
-			}
-			break;
+//		case IDLE:
+//			if(bounds != null && Gdx.input.justTouched()){
+//				int x = Gdx.input.getX(), y = Gdx.input.getY();
+//				
+//				Actor hitActor = hit(x - getX(), Gdx.graphics.getHeight() - y - getY() + getHeight(), false);
+//				if(hitActor == this && listener != null){
+//					state = State.BLINKING;
+//					blinkElapsed = 0;
+//				}
+//			}
+//			break;
 			
 		case BLINKING:
 			blinkElapsed += delta;
@@ -77,6 +83,17 @@ public class Text extends Actor{
 			}
 			break;
 		}
+	}
+
+	@Override
+	public boolean handle(Event event) {
+		InputEvent e = (InputEvent)event;
+		Type t = e.getType();
+		if(t.equals(Type.touchDown))
+		{
+			state = State.BLINKING;
+		}
+		return false;
 	}
 	
 }

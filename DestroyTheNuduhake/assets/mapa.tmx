@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="256" height="16" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="256" height="128" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32">
   <image source="tiles.png" width="32" height="32"/>
  </tileset>
@@ -9,14 +9,35 @@
    <terrain name="Novo Terreno" tile="-1"/>
   </terraintypes>
  </tileset>
- <layer name="Camada de Tiles 1" width="256" height="16">
+ <layer name="Camada de Tiles 1" width="256" height="128">
   <data encoding="base64" compression="zlib">
-   eJzt2EEKg0AQBMAFf2NiDpr/vy0GEhAFPTgsOlsFfZpLXxqWLQUAAAAAAMimn/MIzLNufeCEcc4UmHfd+sAJ9g/tsn9ol/1Du+60/5p/lf3BHTK40/6/XbvA7HUdD+6QQdb9r3vZP2xF7f+/qVeJfaMvM1TsOvzukFnE/iPf5FcLZPYBgVs4Gw==
+   eJzt3cFu00AUBdBI/A2lLEphAezY0P//IWxFEchybDKe8R3X50h3VSmatO+mo3HiXC4AAAAAAADAe/FxyFPFfNp3+cAGL0O+VMzrvssHNtD/Yxn3a9PfOZTS/2OZ+3tBqSP1v/ZZxRHPMPSfmo7U/3GtHyrl25Afd/Kz4XPYSv+p6b32f7qu6c/Hdf4a8nsmbw2fw1b6T033+vJobo/z+dJuX/5cYZ23td76fzT6T0237m95Dai1J98z+g/rvU/3tMf+P3oOWfM8Uf+paanntfrf0+vKv+cUJf2fu/6+55mI/lPTUhdL+9rrfmLayUf7X9J9/adnNc7Teu177f6XXivRf3pV0uWeO/6//S+5TrHl+kPpOcH0rOGRNcCa3v6vt95/lD6P1vuke/uELe/PgDV7zPXRsmfn9Z+kdNdE/8lJz7zoPznpmRf9Jyc986L/5KRnXvSfnPTMi/6Tk575M2XpniP37jui/7SU7sSZMv5/n7vfyNJ9R/SfltKdOFNKPgeg/7SU7sSZov/0Jt2JM0X/6U26E2eK/tObdCfOFP2nN+lOnClr9xyY+/y//tNSuhPyN97/w97SMy/6T0565kX/yUnPvOg/OemZF/0nJz3zov/kpGde9J+c9MyL/pOTnnnRf3LSMy/6T0565kX/yUnPvOg/OemZF/0nJz3zov/kpGde9J+c9MyL/pOTnnnRf3LSMy/XjN8NMvf9H9+HfC18TFiTnnu5ZunegKV7AFiTnnvRf3LScy/6T0567kX/yUnPveg/Oem5F/0nJz33ov/kpOderln6bqDnwscEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFjyBwjSGvA=
   </data>
  </layer>
- <objectgroup name="Camada de Objetos 1" width="256" height="16">
+ <objectgroup name="Camada de Objetos 1" width="256" height="128">
   <object name="O1" type="shooter" x="1862" y="216" width="64" height="124"/>
-  <object name="O2" type="ball_shooter" x="2233" y="193" width="68" height="153"/>
+  <object name="O2" type="ball_shooter" x="2804" y="354" width="68" height="153"/>
   <object type="player" x="700" y="262" width="88" height="176"/>
+  <object type="coin" x="1248" y="384" width="32" height="32"/>
+  <object type="coin" x="1313" y="384" width="32" height="32"/>
+  <object type="coin" x="1187" y="385" width="32" height="32"/>
+  <object type="coin" x="2051" y="604" width="32" height="32"/>
+  <object type="coin" x="2051" y="545" width="32" height="32"/>
+  <object type="coin" x="2116" y="547" width="32" height="32"/>
+  <object type="coin" x="2115" y="604" width="32" height="32"/>
+  <object type="coin" x="2180" y="545" width="32" height="32"/>
+  <object type="coin" x="2177" y="605" width="32" height="32"/>
+  <object name="O1" type="shooter" x="3018" y="1016" width="64" height="124"/>
+  <object type="coin" x="3203" y="768" width="32" height="32"/>
+  <object type="coin" x="3203" y="899" width="32" height="32"/>
+  <object type="coin" x="3201" y="832" width="32" height="32"/>
+  <object type="coin" x="3292" y="1224" width="32" height="32"/>
+  <object type="coin" x="3293" y="1313" width="32" height="32"/>
+  <object type="coin" x="3297" y="1421" width="32" height="32"/>
+  <object type="coin" x="3295" y="1505" width="32" height="32"/>
+  <object type="coin" x="3295" y="1600" width="32" height="32"/>
+  <object type="coin" x="3231" y="1919" width="32" height="32"/>
+  <object type="coin" x="3296" y="1919" width="32" height="32"/>
+  <object type="coin" x="3265" y="1857" width="32" height="32"/>
  </objectgroup>
 </map>
