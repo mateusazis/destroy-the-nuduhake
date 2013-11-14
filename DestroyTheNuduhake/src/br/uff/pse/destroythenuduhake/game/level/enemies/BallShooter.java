@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.level.Enemy;
 import br.uff.pse.destroythenuduhake.game.level.Player;
@@ -19,6 +20,8 @@ public class BallShooter extends Enemy {
 	private float elapsed = 0;
 	private GraphicAsset ballAsset, smokeAsset;
 	private GraphicAsset asset3, asset2, asset1;
+	private SoundAsset attackedSound;
+	private SoundAsset explosionSound;
 	private float bodyX;
 	
 	public BallShooter(float x, float y, AssetBundle bundle) {
@@ -29,6 +32,8 @@ public class BallShooter extends Enemy {
 		asset1 = bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BALL_SHOOTER_1);
 		this.ballAsset = bundle.getAsset(AssetDatabase.SPRITE_BALL);
 		this.smokeAsset = bundle.getAsset(AssetDatabase.SPRITE_SMOKE);
+		this.attackedSound = bundle.<SoundAsset>getAsset(AssetDatabase.SOUND_IMPACT);
+		this.explosionSound = bundle.<SoundAsset>getAsset(AssetDatabase.SOUND_BALL_EXPLOSION);;
 	}
 	
 	@Override
@@ -46,6 +51,7 @@ public class BallShooter extends Enemy {
 			setGraphic(asset1);
 			rebuildShape();
 		}
+		attackedSound.play();
 	}
 	
 	@Override
@@ -91,7 +97,7 @@ public class BallShooter extends Enemy {
 		Vector2 shootPos = new Vector2(-ballAsset.getWidth() - 30,getHeight() - ballAsset.getHeight());
 		shootPos = localToStageCoordinates(shootPos);
 		float jumpVelocity = getLife() * 2f;
-		Ball b = new Ball(shootPos.x, shootPos.y, jumpVelocity, ballAsset, smokeAsset);
+		Ball b = new Ball(shootPos.x, shootPos.y, jumpVelocity, ballAsset, smokeAsset, explosionSound);
 		b.setupPhysics(getBody().getWorld());
 		getParent().addActor(b);
 		getManager().addEnemies(b);

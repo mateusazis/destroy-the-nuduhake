@@ -1,6 +1,7 @@
 package br.uff.pse.destroythenuduhake.game.level.enemies;
 
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 import br.uff.pse.destroythenuduhake.game.level.Enemy;
 
@@ -9,13 +10,15 @@ public class Ball extends Shot{
 	private boolean firstGroundTouched = false;
 	private static final float SPEED = 1f;
 	private boolean goingLeft = true;
+	private SoundAsset explosionSound;
 	
-	public Ball(float x, float y, float jumpVelocity, GraphicAsset asset, GraphicAsset smokeAsset) {
+	public Ball(float x, float y, float jumpVelocity, GraphicAsset asset, GraphicAsset smokeAsset, SoundAsset explosionSound) {
 		super(x, y, asset, smokeAsset);
 		setJumpVelocity(jumpVelocity);
 		setVelocity(SPEED);
 		setMaxMoveVelocity(SPEED);
 		setState(State.WALKING);
+		this.explosionSound = explosionSound;
 	}
 	
 	@Override
@@ -48,5 +51,11 @@ public class Ball extends Shot{
 			b.onAtacked(1);
 			die();
 		}
+	}
+	
+	@Override
+	public void die(){
+		super.die();
+		explosionSound.play();
 	}
 }

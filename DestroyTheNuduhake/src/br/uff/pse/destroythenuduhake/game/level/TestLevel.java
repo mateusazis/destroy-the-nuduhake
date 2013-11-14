@@ -22,7 +22,6 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class TestLevel extends Level {
 
-	private GraphicAsset playerTex;
 	private Player player;
 	private DefaultController defaultController;
 	private OrthographicCamera camera;
@@ -62,18 +61,14 @@ public class TestLevel extends Level {
 		addActor(map);
 
 		// setup assets
-		playerTex = b.getAsset(AssetDatabase.SPRITE_MARIO);
 		// setup objects
 
 		Vector2 playerPos = map.getPlayerPosition();
-		player = new Player(playerPos.x, playerPos.y, playerTex,
-				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_SWORD), b.<SoundAsset> getAsset(AssetDatabase.SOUND_SWORD));
+		player = new Player(playerPos.x, playerPos.y, b);
 		addActor(player);
 		player.setupPhysics(world);
 		
-		lifeManager = new LifeManager(b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_FULL), 
-				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_HALF), b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_EMPTY), 
-				b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_HEART_BG), player);
+		lifeManager = new LifeManager(b, player);
 		
 		coinManager = new CoinManager(b.<GraphicAsset> getAsset(AssetDatabase.SPRITE_COIN_BG), player);
 

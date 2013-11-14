@@ -2,6 +2,7 @@ package br.uff.pse.destroythenuduhake.game.level.enemies;
 
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
+import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.level.Enemy;
 
@@ -10,6 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 public class ShooterEnemy extends Enemy {
 
 	private GraphicAsset bulletAsset, smokeAsset;
+	private SoundAsset shotSound;
+	private SoundAsset attackedSound;
 	
 	private float elapsed = 0;
 	private float PATROL_TIME = 0.5f;
@@ -18,9 +21,11 @@ public class ShooterEnemy extends Enemy {
 	private static float AIMING_TIME = 1f;
 
 	public ShooterEnemy(float x, float y, AssetBundle bundle) {
-		super(x, y, bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_SHOOTER), 200);
+		super(x, y, bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_SHOOTER), 300);
 		this.bulletAsset = bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_BULLET);
 		this.smokeAsset = bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_SMOKE);
+		this.shotSound =  bundle.<SoundAsset>getAsset(AssetDatabase.SOUND_SHOT);
+		attackedSound = bundle.<SoundAsset>getAsset(AssetDatabase.SOUND_IMPACT);
 		setMaxMoveVelocity(1f);
 	}
 
@@ -38,8 +43,8 @@ public class ShooterEnemy extends Enemy {
 		Bullet bullet = new Bullet(shootPos.x, shootPos.y, bulletAsset, smokeAsset, isTurnedLeft());
 		bullet.setupPhysics(this.getBody().getWorld());
 		getParent().addActor(bullet);
-		
 		getManager().addEnemies(bullet);
+		shotSound.play();
 	}
 
 	@Override
@@ -80,5 +85,11 @@ public class ShooterEnemy extends Enemy {
 			else
 				moveRight();
 		}
+	}
+	
+	@Override
+	public void onAtacked(int atackPower){
+		super.onAtacked(atackPower);
+		attackedSound.play();
 	}
 }
