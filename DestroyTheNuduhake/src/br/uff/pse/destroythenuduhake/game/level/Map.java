@@ -74,7 +74,7 @@ public class Map extends Actor {
 		CellCoords first = new CellCoords(), last = new CellCoords();
 		
 		//USAR ARRAY LIST!
-		//para hashset, está deixando alguns elementos sobrarem na cena!
+		//para hashset, estï¿½ deixando alguns elementos sobrarem na cena!
 		ArrayList<Map.CellCoords> cells = new ArrayList<Map.CellCoords>();
 		
 		for(int i = 0; i < rows; i++){
@@ -130,7 +130,7 @@ public class Map extends Actor {
 				for(int i = minCell.i; i <= maxCell.i; i++){
 					testCell.set(i, j);
 					if(!cells.contains(testCell))
-						break minCellLeft; //achou buraco na linha à esquerda, cancela
+						break minCellLeft; //achou buraco na linha ï¿½ esquerda, cancela
 				}
 				//remove os tiles da coluna
 				for(int i = minCell.i; i <= maxCell.i; i++){

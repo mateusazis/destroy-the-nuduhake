@@ -37,6 +37,8 @@ public class TestLevel extends Level {
 	private Box2DDebugRenderer r;
 
 	private Physics.LevelContactListener pListener;
+	
+	private boolean isInputEnabled = true;
 
 	private static final float CAMERA_SIZE = 1f;
 
@@ -109,6 +111,17 @@ public class TestLevel extends Level {
 		
 		music = b.<MusicAsset>getAsset(AssetDatabase.MUSIC_LEVEL);
 		music.play();
+		
+		StageIntroAnim anim =new StageIntroAnim(b); 
+		addActor(anim);
+		anim.setZIndex(10000);
+		anim.setPosition(player.getX(), player.getY());
+		setInputEnabled(false);
+	}
+
+	public void setInputEnabled(boolean enabled) {
+		this.isInputEnabled = enabled;
+		
 	}
 
 	@Override
@@ -122,7 +135,9 @@ public class TestLevel extends Level {
 		super.render();
 //		camera.position.set(player.getX(), camera.position.y, 0);
 		camera.position.set(player.getX(), player.getY(), 0);
-		defaultController.update();
+		
+		if(isInputEnabled)
+			defaultController.update();
 		
 		// camera.position.set(player.getX(), player.getY(), 0);
 		world.step(1 / 60f, 6, 2);

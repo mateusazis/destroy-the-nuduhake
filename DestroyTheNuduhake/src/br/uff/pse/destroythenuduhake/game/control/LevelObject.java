@@ -35,7 +35,7 @@ public class LevelObject extends Actor{
 	}
 	
 	/**
-	 * Se setar como true, estará sujeito a verificações de sobreposição do seu rect a cada gameloop.
+	 * Se setar como true, estarï¿½ sujeito a verificaï¿½ï¿½es de sobreposiï¿½ï¿½o do seu rect a cada gameloop.
 	 * @param overlapable
 	 */
 	public void setOverlapable(boolean overlapable){
