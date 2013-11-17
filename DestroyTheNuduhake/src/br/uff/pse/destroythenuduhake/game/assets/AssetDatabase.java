@@ -59,15 +59,6 @@ public final class AssetDatabase {
 	SOUND_IMPACT = new AssetID(0x0302, "Impact", ""),
 	SOUND_SHOT = new AssetID(0x0303, "Shot", "");
 	
-
-//	public static AssetID[] getAllIDs(){
-//		return new AssetID[]{
-//				SPRITE_MARIO, SPRITE_SHELL, SPRITE_GROUND, SPRITE_DRAGON, SPRITE_BALL, SPRITE_BALL_SHOOTER,
-//				SPRITE_SMOKE, SPRITE_SWORD,
-//				
-//				MUSIC_OPENING, SPRITE_BULLET, SPRITE_SHOOTER, 
-//		};
-//	}
 	public static Asset[] getPrivateBuiltinAssets(){
 		if(privateAssets == null)
 			privateAssets =  new Asset[]{
@@ -118,7 +109,7 @@ public final class AssetDatabase {
 				new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER_1, "images/ball_shooter_1.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_COIN, "images/coin.png"),
 				
-				new MusicAsset(AssetDatabase.MUSIC_LEVEL, "musics/5.Never Back Down.mp3"),
+				new MusicAsset(AssetDatabase.MUSIC_LEVEL, "musics/5.Never Back Down.ogg"),
 			};
 		return editableAssets;
 	}
