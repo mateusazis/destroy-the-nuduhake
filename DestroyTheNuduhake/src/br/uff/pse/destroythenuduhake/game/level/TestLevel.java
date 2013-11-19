@@ -146,6 +146,11 @@ public class TestLevel extends Level {
 		
 		lifeManager.update();
 		coinManager.update();
+		
+		if (player.isDead()){
+			getParent().changeLevel(getParent().getCurrentLevel());
+		}
+		
 	}
 
 }
