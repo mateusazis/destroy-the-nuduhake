@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -69,6 +70,15 @@ public class FreehandDrawingActivity extends Activity {
 			drawView.getViewTreeObserver().addOnGlobalLayoutListener(list);
 		}
         drawView.requestFocus();
+        Button colorButton = (Button)findViewById(R.id.color_button);
+        colorButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				drawView.colorPicker();
+			}
+		});
+        
         Button widthButton = (Button)findViewById(R.id.width_button);
         widthButton.setOnClickListener(new OnClickListener() {
 		
@@ -79,7 +89,7 @@ public class FreehandDrawingActivity extends Activity {
 	            seekBar = (SeekBar)alert.findViewById(R.id.seek_bar);
 	            circle.setWid(drawView.getWid());
 	            circle.setPaintFill(drawView.paint);
-	            seekBar.setProgress(drawView.getWid());
+	            seekBar.setProgress((int)drawView.getWid());
 				
 		        seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 		            CircleView circle = (CircleView)alert.findViewById(R.id.circle_view);
@@ -103,18 +113,10 @@ public class FreehandDrawingActivity extends Activity {
 				        });				
 			}
 		});
-        Button colorButton = (Button)findViewById(R.id.color_button);
-        colorButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				drawView.colorPicker();
-			}
-		});
+        
         Button saveButton = (Button)findViewById(R.id.save_button);
         saveButton.setOnClickListener(new OnClickListener() {
 			
-			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub				
@@ -126,10 +128,7 @@ public class FreehandDrawingActivity extends Activity {
 				drawView.draw(c);
 				drawView.showAsset = Bitmap.createBitmap(work);
 				Canvas saveCanvas = new Canvas(save);
-				if(getResources().getConfiguration().orientation == drawView.initialOrientation)
-					saveCanvas.drawBitmap(drawView.showAsset, drawView.inverseInitialTransformation, null);
-				else
-					saveCanvas.drawBitmap(drawView.showAsset, drawView.inverseAnotherTransformation, null);
+				saveCanvas.drawBitmap(drawView.showAsset, drawView.nullMatrix, null);
 				
 				Context ctx = FreehandDrawingActivity.this;
 				
@@ -156,16 +155,18 @@ public class FreehandDrawingActivity extends Activity {
 				finish();
 			}
 		});
+        
         Button undoButton = (Button)findViewById(R.id.undo_button);
         undoButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				drawView.erase = true;
-				//drawView.undo();
+				//drawView.erase = true;
+				drawView.undo();
 				
 			}
 		});
+        
         Button clearButton = (Button)findViewById(R.id.clear_button);
         clearButton.setOnClickListener(new OnClickListener() {
 			
@@ -174,13 +175,14 @@ public class FreehandDrawingActivity extends Activity {
 				drawView.clearScreen();
 			}
 		});
+        
         builder = new AlertDialog.Builder(this);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				int progress = seekBar.getProgress();
-				drawView.setWid(progress);
+				drawView.setWid(progress, drawView.paint);
 			}
 		});
 
