@@ -79,7 +79,8 @@ public class MainAndroid extends AndroidApplication {
     	startActivityForResult(i, CODE_GET_ASSET_BUNDLE);
     }
     
-    public void openDTNModule(){
+    public void showCredits(){
+    	//TROCAR AQUI PELA ACTIVITY DOS CRÉDITOS
     	Class<? extends Activity> c = br.uff.pse.destroythenuduhake.MainActivity.class;
     	Intent i = new Intent(this, c);
     	startActivity(i);

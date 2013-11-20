@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 public class MainMenu extends Level implements TextListener{
 
 	private static final boolean SKIP_INTRO = false;
-	private Text title, startText, editText;
+	private Text title, startText, editText, creditsText;
 	private LevelObject bg;
 	private MusicAsset music;
 	private BitmapFont f;
@@ -49,11 +49,13 @@ public class MainMenu extends Level implements TextListener{
 		title.setScale(2.0f);
 		title.setTouchable(Touchable.disabled);
 		
-		startText = new Text(0, f, "Start", middle, 150, this);
-		editText = new Text(1, f, "Edit Assets", middle, 80, this);
+		startText = new Text(0, f, "Start", middle, 220, this);
+		editText = new Text(1, f, "Edit Assets", middle, 150, this);
+		creditsText = new Text(2, f, "Credits", middle, 80, this);
 		addActor(title);
 		addActor(startText);
 		addActor(editText);
+		addActor(creditsText);
 		
 		music = bundle.<MusicAsset>getAsset(AssetDatabase.MUSIC_OPENING);
 		music.play();
@@ -93,8 +95,9 @@ public class MainMenu extends Level implements TextListener{
 		getParent().openAssetModule();
 	}
 	
-	public void doDTN(){
-		getParent().openDTNModule();
+	public void showCredits(){
+		getParent().showCredits();
+		
 	}
 
 	
@@ -123,7 +126,8 @@ public class MainMenu extends Level implements TextListener{
 			editAssets();
 			break;
 		case 2:
-			doDTN();
+//			doDTN();
+			showCredits();
 			break;
 		}
 	}

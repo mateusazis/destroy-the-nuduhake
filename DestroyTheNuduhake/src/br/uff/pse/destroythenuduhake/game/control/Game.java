@@ -31,8 +31,8 @@ public class Game implements ApplicationListener {
 		changeLevel(1);
 	}
 		
-	public void openDTNModule(){
-		MainAndroid.instance.openDTNModule();
+	public void showCredits(){
+		MainAndroid.instance.showCredits();
 	}
 	
 	public void openAssetModule(){
