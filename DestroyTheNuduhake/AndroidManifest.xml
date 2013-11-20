@@ -41,7 +41,7 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name="br.uff.pse.destroythenuduhake.ShowAssetActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"  android:screenOrientation="portrait"></activity>
          <activity android:name="br.uff.pse.destroythenuduhake.AssetsWorkshopActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"  android:screenOrientation="portrait"></activity>
-        
+        <activity android:name="br.uff.pse.destroythenuduhake.CreditsActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"  android:screenOrientation="portrait"></activity>
         <activity 
             android:label="Nuduhake"
             android:name="br.uff.pse.destroythenuduhake.game.MainAndroid"
