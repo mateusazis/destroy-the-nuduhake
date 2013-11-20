@@ -11,13 +11,13 @@
  </tileset>
  <layer name="Camada de Tiles 1" width="256" height="128">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <objectgroup name="Camada de Objetos 1" width="256" height="128">
   <object name="O1" type="shooter" x="1862" y="216" width="64" height="124"/>
   <object name="O2" type="ball_shooter" x="2804" y="354" width="68" height="153"/>
-  <object type="player" x="700" y="262" width="88" height="176"/>
+  <object type="player" x="738" y="242" width="88" height="176"/>
   <object type="coin" x="1248" y="384" width="32" height="32"/>
   <object type="coin" x="1313" y="384" width="32" height="32"/>
   <object type="coin" x="1187" y="385" width="32" height="32"/>
@@ -40,5 +40,49 @@
   <object type="coin" x="3296" y="1919" width="32" height="32"/>
   <object type="coin" x="3265" y="1857" width="32" height="32"/>
   <object type="heart" x="3396" y="576" width="29" height="33"/>
+  <object name="O1" type="shooter" x="4512" y="928" width="64" height="124"/>
+  <object name="O1" type="shooter" x="4325" y="281" width="64" height="124"/>
+  <object name="O1" type="shooter" x="4793" y="481" width="64" height="124"/>
+  <object name="O1" type="shooter" x="4992" y="485" width="64" height="124"/>
+  <object name="O1" type="shooter" x="6393" y="437" width="64" height="124"/>
+  <object name="O2" type="ball_shooter" x="5504" y="164" width="68" height="153"/>
+  <object name="O2" type="ball_shooter" x="6018" y="380" width="68" height="153"/>
+  <object type="heart" x="4929" y="320" width="29" height="33"/>
+  <object type="heart" x="3836" y="670" width="29" height="33"/>
+  <object type="heart" x="6146" y="480" width="29" height="33"/>
+  <object name="O2" type="ball_shooter" x="3894" y="1632" width="68" height="153"/>
+  <object type="coin" x="3912" y="1436" width="32" height="32"/>
+  <object type="coin" x="4026" y="1440" width="32" height="32"/>
+  <object type="coin" x="4864" y="352" width="32" height="32"/>
+  <object type="coin" x="4864" y="288" width="32" height="32"/>
+  <object type="coin" x="4928" y="256" width="32" height="32"/>
+  <object type="coin" x="4992" y="288" width="32" height="32"/>
+  <object type="coin" x="4992" y="352" width="32" height="32"/>
+  <object type="coin" x="5760" y="544" width="32" height="32"/>
+  <object type="coin" x="6976" y="192" width="32" height="32"/>
+  <object type="coin" x="6976" y="224" width="32" height="32"/>
+  <object type="coin" x="6976" y="288" width="32" height="32"/>
+  <object type="coin" x="6976" y="256" width="32" height="32"/>
+  <object type="coin" x="7008" y="288" width="32" height="32"/>
+  <object type="coin" x="7040" y="288" width="32" height="32"/>
+  <object type="coin" x="7104" y="192" width="32" height="32"/>
+  <object type="coin" x="7040" y="256" width="32" height="32"/>
+  <object type="coin" x="7040" y="224" width="32" height="32"/>
+  <object type="coin" x="7040" y="192" width="32" height="32"/>
+  <object type="coin" x="7104" y="224" width="32" height="32"/>
+  <object type="coin" x="7104" y="256" width="32" height="32"/>
+  <object type="coin" x="7104" y="288" width="32" height="32"/>
+  <object type="coin" x="7136" y="192" width="32" height="32"/>
+  <object type="coin" x="7168" y="192" width="32" height="32"/>
+  <object type="coin" x="7136" y="256" width="32" height="32"/>
+  <object type="coin" x="7264" y="256" width="32" height="32"/>
+  <object type="coin" x="7232" y="224" width="32" height="32"/>
+  <object type="coin" x="7296" y="192" width="32" height="32"/>
+  <object type="coin" x="7232" y="288" width="32" height="32"/>
+  <object type="coin" x="7264" y="192" width="32" height="32"/>
+  <object type="coin" x="7232" y="192" width="32" height="32"/>
+  <object type="coin" x="7232" y="256" width="32" height="32"/>
+  <object type="coin" x="3616" y="384" width="32" height="32"/>
+  <object type="coin" x="3616" y="320" width="32" height="32"/>
  </objectgroup>
 </map>
