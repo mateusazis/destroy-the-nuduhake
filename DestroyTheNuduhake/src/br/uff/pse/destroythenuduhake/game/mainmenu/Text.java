@@ -1,6 +1,5 @@
 package br.uff.pse.destroythenuduhake.game.mainmenu;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -57,21 +56,7 @@ public class Text extends Actor implements EventListener{
 	
 	@Override
 	public void act(float delta) {
-		
-		switch(state){
-//		case IDLE:
-//			if(bounds != null && Gdx.input.justTouched()){
-//				int x = Gdx.input.getX(), y = Gdx.input.getY();
-//				
-//				Actor hitActor = hit(x - getX(), Gdx.graphics.getHeight() - y - getY() + getHeight(), false);
-//				if(hitActor == this && listener != null){
-//					state = State.BLINKING;
-//					blinkElapsed = 0;
-//				}
-//			}
-//			break;
-			
-		case BLINKING:
+		if(state.equals(State.BLINKING)){
 			blinkElapsed += delta;
 			boolean visible = Math.floor(blinkElapsed / ON_DURATION) % 2 == 1;
 			setVisible(visible);
@@ -81,7 +66,6 @@ public class Text extends Actor implements EventListener{
 				listener.onTouched(id);
 				setVisible(true);
 			}
-			break;
 		}
 	}
 

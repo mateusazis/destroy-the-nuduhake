@@ -48,7 +48,7 @@ public class StageIntroAnim extends Group{
 		
 		l = new Label("Stage 1", new Label.LabelStyle(f, Color.WHITE));
 		addActor(l);
-		l.setVisible(false);
+		l.setVisible(false);	
 	}
 	
 	@Override
@@ -69,15 +69,18 @@ public class StageIntroAnim extends Group{
 			if(value == 1f){
 				state = State.STAY;
 				interpolator.reset(STAY_DURATION);
+				updateText(TEXT_SCALE);
 				l.setVisible(true);
 			}
 			break;
 		case STAY:
 			int div = (int)(10f * value / 0.4f);
-			l.setFontScale(div % 2 == 0? TEXT_SCALE : TEXT_SCALE * 1.1f);
+//			l.setFontScale(div % 2 == 0? TEXT_SCALE : TEXT_SCALE * 1.1f);
+//			
+//			TextBounds bounds = l.getTextBounds();
+//			l.setPosition(- bounds.width / 4f, -bounds.height / 2f);
 			
-			TextBounds bounds = l.getTextBounds();
-			l.setPosition(- bounds.width / 4f, -bounds.height / 2f);
+			updateText(div % 2 == 0? TEXT_SCALE : TEXT_SCALE * 1.1f);
 			
 			
 			if(value == 1f){
@@ -106,5 +109,12 @@ public class StageIntroAnim extends Group{
 	
 	private static float lerp(float value, float from, float to){
 		return from + (to - from) * value;
+	}
+	
+	private void updateText(float scale){
+		l.setFontScale(scale);
+		
+		TextBounds bounds = l.getTextBounds();
+		l.setPosition(- bounds.width / 4f, -bounds.height / 2f);
 	}
 }

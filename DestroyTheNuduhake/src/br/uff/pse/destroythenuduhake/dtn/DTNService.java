@@ -2,16 +2,7 @@ package br.uff.pse.destroythenuduhake.dtn;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-
-
-
-import br.uff.pse.destroythenuduhake.DisplayAssetsActivity;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 
@@ -34,7 +25,6 @@ import de.tubs.ibr.dtn.api.DTNClient;
 import de.tubs.ibr.dtn.api.DTNClient.Session;
 import de.tubs.ibr.dtn.api.DataHandler;
 import de.tubs.ibr.dtn.api.GroupEndpoint;
-import de.tubs.ibr.dtn.api.Node;
 import de.tubs.ibr.dtn.api.Registration;
 import de.tubs.ibr.dtn.api.ServiceNotAvailableException;
 import de.tubs.ibr.dtn.api.SessionConnection;

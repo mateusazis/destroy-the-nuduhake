@@ -4,16 +4,13 @@ import br.uff.pse.destroythenuduhake.game.Physics;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
-import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 import br.uff.pse.destroythenuduhake.game.control.Level;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 import br.uff.pse.destroythenuduhake.game.level.enemies.BallShooter;
 import br.uff.pse.destroythenuduhake.game.level.enemies.ShooterEnemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -97,6 +94,11 @@ public class TestLevel extends Level {
 		for (Rectangle r : map.findObjects("coin")) {
 			Coin c = new Coin(r.x, r.y, b);
 			addActor(c);
+		}
+		
+		for (Rectangle r : map.findObjects("heart")) {
+			HeartItem h = new HeartItem(r.x, r.y, b);
+			addActor(h);
 		}
 
 		addActor(new Coin(player.getX() + 200, player.getY(), b));

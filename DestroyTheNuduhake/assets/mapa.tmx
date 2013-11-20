@@ -39,5 +39,6 @@
   <object type="coin" x="3231" y="1919" width="32" height="32"/>
   <object type="coin" x="3296" y="1919" width="32" height="32"/>
   <object type="coin" x="3265" y="1857" width="32" height="32"/>
+  <object type="heart" x="3396" y="576" width="29" height="33"/>
  </objectgroup>
 </map>

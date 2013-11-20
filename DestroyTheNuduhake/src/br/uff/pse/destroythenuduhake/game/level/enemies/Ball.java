@@ -8,7 +8,7 @@ import br.uff.pse.destroythenuduhake.game.level.Enemy;
 public class Ball extends Shot{
 
 	private boolean firstGroundTouched = false;
-	private static final float SPEED = 1f;
+	private static final float SPEED = 1.5f;
 	private boolean goingLeft = true;
 	private SoundAsset explosionSound;
 	

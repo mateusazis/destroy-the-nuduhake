@@ -7,8 +7,6 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
@@ -119,7 +117,6 @@ public class Sword extends LevelObject{
 	
 	public void onOverlap(Enemy e){
 		if(!hitEnemies.contains(e)){
-			Gdx.app.log("", "enemy attacked!");
 			hitEnemies.add(e);
 			e.onAtacked(owner.getAtackPower());
 		}

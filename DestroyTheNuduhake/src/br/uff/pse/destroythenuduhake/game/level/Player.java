@@ -1,6 +1,6 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
-import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
+import static br.uff.pse.destroythenuduhake.game.assets.AssetDatabase.*;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.SoundAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
@@ -10,25 +10,34 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Player extends ControlableEntity {
 
+	private static final int MAX_LIFE = 6;
 	private int score = 0;
 	private Sword s;
 	private GraphicAsset swordAsset;
 	private Vector2 swordRelativePos, currentSwordPos = new Vector2();
 	private Vector2 swordPos = new Vector2(0,0);
-	private SoundAsset swordSound;
-	private SoundAsset attackedSound;
+	private SoundAsset swordSound, attackedSound, landSound, jumpSound;
 	
 	public Player(float x, float y, AssetBundle bundle) {
-		super(x, y, bundle.<GraphicAsset>getAsset(AssetDatabase.SPRITE_MARIO));
-		setLife(6);
+		super(x, y, bundle.<GraphicAsset>getAsset(SPRITE_MARIO));
+		setLife(MAX_LIFE);
 		setMaxMoveVelocity(3f);
 		swordRelativePos = new Vector2(getWidth() -10, getHeight() / 2f - 5);;
 		currentSwordPos.set(swordRelativePos); 
 		
-		this.swordAsset = bundle.<GraphicAsset> getAsset(AssetDatabase.SPRITE_SWORD);
-		this.swordSound = bundle.<SoundAsset> getAsset(AssetDatabase.SOUND_SWORD);
-		attackedSound = bundle.<SoundAsset>getAsset(AssetDatabase.SOUND_IMPACT);
+		this.swordAsset = bundle.getAsset(SPRITE_SWORD);
+		this.swordSound = bundle.getAsset(SOUND_SWORD);
+		this.landSound = bundle.getAsset(SOUND_LAND);
+		this.jumpSound = bundle.getAsset(SOUND_JUMP);
+		this.attackedSound = bundle.getAsset(SOUND_IMPACT);
+		
 		turnedLeft = false;
+	}
+	
+	@Override
+	public void touchGround() {
+		super.touchGround();
+		landSound.play();
 	}
 	
 	public int getScore(){
@@ -57,8 +66,6 @@ public class Player extends ControlableEntity {
 	public void turnLeft() {
 		super.turnLeft();
 		s.setFlipped(true);
-//		swordRelativePos.x = -s.getWidth();
-		float originX = getOriginX();
 		currentSwordPos.set(swordRelativePos.x -getWidth(), swordRelativePos.y);
 	}
 	
@@ -79,8 +86,24 @@ public class Player extends ControlableEntity {
 	}
 	
 	@Override
+	public void jump() {
+		if(!getState().equals(State.JUMPING))
+			jumpSound.play();
+		super.jump();
+		
+	}
+	
+	@Override
 	public void onAtacked(int atackPower){
 		super.onAtacked(atackPower);
 		attackedSound.play();
+	}
+	
+	public void addLife(int lifeToAdd){
+		int life = getLife();
+		life += lifeToAdd;
+		life = Math.min(MAX_LIFE, life);
+		life = Math.max(0, life);
+		setLife(life);
 	}
 }

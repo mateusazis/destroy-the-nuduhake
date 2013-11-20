@@ -57,7 +57,12 @@ public final class AssetDatabase {
 	SOUND_SWORD = new AssetID(0x0300, "Sword atack", ""),
 	SOUND_BALL_EXPLOSION = new AssetID(0x0301, "Ball explosion", ""),
 	SOUND_IMPACT = new AssetID(0x0302, "Impact", ""),
-	SOUND_SHOT = new AssetID(0x0303, "Shot", "");
+	SOUND_SHOT = new AssetID(0x0303, "Shot", ""),
+	SOUND_JUMP = new AssetID(0x0304, "Jump", ""),
+	SOUND_COIN = new AssetID(0x0305, "Coin", ""),
+	SOUND_LAND = new AssetID(0x0306, "Land", ""),
+	SOUND_BALL_SHOOTER_SHOOT = new AssetID(0x0307, "Ball Shooter Shoot", ""),
+	SOUND_HEART = new AssetID(0x0308, "Heart", "");
 	
 	public static Asset[] getPrivateBuiltinAssets(){
 		if(privateAssets == null)
@@ -88,6 +93,12 @@ public final class AssetDatabase {
 				new SoundAsset(AssetDatabase.SOUND_BALL_EXPLOSION, "sounds/ball_explosion.wav"),
 				new SoundAsset(AssetDatabase.SOUND_IMPACT, "sounds/impact.wav"),
 				new SoundAsset(AssetDatabase.SOUND_SHOT, "sounds/shot.wav"),
+				new SoundAsset(AssetDatabase.SOUND_SHOT, "sounds/shot.wav"),
+				new SoundAsset(AssetDatabase.SOUND_JUMP, "sounds/jump.wav"),
+				new SoundAsset(AssetDatabase.SOUND_COIN, "sounds/coin.wav"),
+				new SoundAsset(AssetDatabase.SOUND_LAND, "sounds/land.wav"),
+				new SoundAsset(AssetDatabase.SOUND_BALL_SHOOTER_SHOOT, "sounds/ball_shooter_shoot.wav"),
+				new SoundAsset(AssetDatabase.SOUND_HEART, "sounds/heart.wav"),
 			};
 		return privateAssets;
 	}

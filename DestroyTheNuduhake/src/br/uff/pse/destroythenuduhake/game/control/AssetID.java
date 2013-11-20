@@ -2,8 +2,6 @@ package br.uff.pse.destroythenuduhake.game.control;
 
 import java.io.Serializable;
 
-import android.util.Log;
-
 public class AssetID implements Serializable{
 
 	/**

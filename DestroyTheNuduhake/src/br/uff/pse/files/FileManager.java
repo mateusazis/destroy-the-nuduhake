@@ -25,14 +25,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
-import android.widget.Toast;
 import br.uff.pse.destroythenuduhake.R;
-import br.uff.pse.destroythenuduhake.dtn.Author;
 import br.uff.pse.destroythenuduhake.dtn.BundleReceiver;
-import br.uff.pse.destroythenuduhake.dtn.DTNService;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
-import br.uff.pse.destroythenuduhake.game.assets.AudioAsset;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.Asset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
@@ -611,7 +606,6 @@ public class FileManager extends Activity implements BundleReceiver
 	{
 		ArrayList<Asset> list = loadListFile(ctx);
 		ArrayList<Asset> ret = new ArrayList<Asset>();
-		ArrayList<String> types = new ArrayList<String>();		
 		for(int i = 0;i<list.size();i++)
 		{
 			if(!list.get(i).isOriginal())
@@ -637,7 +631,6 @@ public class FileManager extends Activity implements BundleReceiver
 		  out.writeObject(c);
 		  cBytes = bos.toByteArray();
 		  byte[] intBytes = ByteBuffer.allocate(4).putInt(cBytes.length).array();
-		  int x = byteArrayToInt(intBytes);
 		  if(c instanceof GraphicAsset)
 			  bmBytes = ((GraphicAsset) c).getBitmapBytes(ctx);
 		  else
@@ -723,7 +716,6 @@ public class FileManager extends Activity implements BundleReceiver
 		}
 		catch(Exception e)
 		{
-			Exception x = e;
 		}
 
 		return null;

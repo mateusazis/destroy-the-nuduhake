@@ -9,7 +9,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 
 public abstract class Level extends Stage implements ApplicationListener{
 	private AssetBundle usedBundle;
@@ -92,7 +91,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 	}
 	
 	/**
-	 * Verifica sobreposição entre os retângulos dos LevelObjects.
+	 * Verifica sobreposiï¿½ï¿½o entre os retï¿½ngulos dos LevelObjects.
 	 */
 	private void checkOverlaps(){
 		for(int i = 0; i < activeList.size() - 1; i++){

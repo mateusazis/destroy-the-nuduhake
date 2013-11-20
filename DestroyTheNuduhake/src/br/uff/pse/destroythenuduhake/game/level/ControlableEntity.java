@@ -3,9 +3,7 @@ package br.uff.pse.destroythenuduhake.game.level;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -17,9 +15,7 @@ public class ControlableEntity extends LevelObject {
 	private int life = 3;
 	private int atackPower = 1;
 	private float velocity;
-	private Fixture fixture;
 
-	Rectangle bounds = new Rectangle();
 	private State state = State.IDLE;
 	protected boolean turnedLeft = true;
 	private Blinker blinker;
@@ -37,7 +33,7 @@ public class ControlableEntity extends LevelObject {
 		blinker = new Blinker(1.5f, 8);
 //		if(turnedLeft){
 //			r.flip(true, false);
-//		} Está comentado porque acabei fazendo o inimigo olhando pra direita, ai ia ficar estranho
+//		} Estï¿½ comentado porque acabei fazendo o inimigo olhando pra direita, ai ia ficar estranho
 	}
 
 	public void setJumpVelocity(float value) {
@@ -89,12 +85,9 @@ public class ControlableEntity extends LevelObject {
 		}
 	}
 
-	public void atack() {
-
-	}
+	public void atack() {	}
 
 	public void onAtacked(int atackPower) {
-		Gdx.app.log("", "on atacked");
 		if(!blinker.isBlinking()){
 			blinker.start();
 			this.life = Math.max(0, this.life - atackPower);

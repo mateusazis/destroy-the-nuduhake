@@ -16,12 +16,11 @@ import br.uff.pse.destroythenuduhake.game.level.Player;
 
 public class BallShooter extends Enemy {
 
-	private static float SHOOT_INTERVAL = 2f;
+	private static float SHOOT_INTERVAL = 3f;
 	private float elapsed = 0;
 	private GraphicAsset ballAsset, smokeAsset;
 	private GraphicAsset asset3, asset2, asset1;
-	private SoundAsset attackedSound;
-	private SoundAsset explosionSound;
+	private SoundAsset attackedSound, explosionSound, shootSound;
 	private float bodyX;
 	
 	public BallShooter(float x, float y, AssetBundle bundle) {
@@ -33,7 +32,8 @@ public class BallShooter extends Enemy {
 		this.ballAsset = bundle.getAsset(AssetDatabase.SPRITE_BALL);
 		this.smokeAsset = bundle.getAsset(AssetDatabase.SPRITE_SMOKE);
 		this.attackedSound = bundle.<SoundAsset>getAsset(AssetDatabase.SOUND_IMPACT);
-		this.explosionSound = bundle.<SoundAsset>getAsset(AssetDatabase.SOUND_BALL_EXPLOSION);;
+		this.explosionSound = bundle.<SoundAsset>getAsset(AssetDatabase.SOUND_BALL_EXPLOSION);
+		this.shootSound = bundle.getAsset(AssetDatabase.SOUND_BALL_SHOOTER_SHOOT);
 	}
 	
 	@Override
@@ -94,6 +94,7 @@ public class BallShooter extends Enemy {
 	}
 	
 	private void shoot(){
+		shootSound.play();
 		Vector2 shootPos = new Vector2(-ballAsset.getWidth() - 30,getHeight() - ballAsset.getHeight());
 		shootPos = localToStageCoordinates(shootPos);
 		float jumpVelocity = getLife() * 2f;
