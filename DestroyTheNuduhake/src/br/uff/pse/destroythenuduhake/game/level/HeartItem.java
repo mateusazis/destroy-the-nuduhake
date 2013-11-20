@@ -8,7 +8,7 @@ import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 public class HeartItem extends StageItem{
 	
 	public HeartItem(float x, float y, AssetBundle b) {
-		super(x, y, b.<GraphicAsset>getAsset(SPRITE_HEART_FULL), b.<SoundAsset>getAsset(SOUND_HEART));
+		super(x, y, b.<GraphicAsset>getAsset(SPRITE_IN_GAME_HEART), b.<SoundAsset>getAsset(SOUND_HEART));
 	}
 	
 	@Override

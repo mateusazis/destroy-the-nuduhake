@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
@@ -85,6 +86,18 @@ public class DisplayAssetsActivity extends Activity
 		}
 		
 	};
+	
+	
+	@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	if(keyCode == KeyEvent.KEYCODE_BACK){
+    		setResult(RESULT_CANCELED);
+    		finish();
+    		return false;
+    	}
+    	return super.onKeyDown(keyCode, event);
+    }
+	
 	private OnItemLongClickListener llistener = new OnItemLongClickListener()
 	{
 
@@ -111,6 +124,12 @@ public class DisplayAssetsActivity extends Activity
 		}
 		
 	};
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(mDataReceiver);
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -142,9 +161,8 @@ public class DisplayAssetsActivity extends Activity
 					}
 				}
 				MainAndroid.chosenBundle = bundle;
-				setResult(MainAndroid.CODE_GET_ASSET_BUNDLE);      
+				setResult(RESULT_OK);      
 				finish();
-				
 			}
 		});
 		

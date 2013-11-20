@@ -15,7 +15,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
 public class MainAndroid extends AndroidApplication {
 	
-	public static final int CODE_GET_ASSET_BUNDLE = 0x200;
+	private static final int CODE_GET_ASSET_BUNDLE = 0x200;
 	public static AssetBundle chosenBundle;
 	
 	public static MainAndroid instance;
@@ -65,7 +65,7 @@ public class MainAndroid extends AndroidApplication {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);
     	log("", "request code: " + requestCode + " result code " + resultCode);
-    	if(requestCode == CODE_GET_ASSET_BUNDLE){
+    	if(requestCode == CODE_GET_ASSET_BUNDLE && resultCode == RESULT_OK){
     		for(Asset a : AssetDatabase.getPrivateBuiltinAssets())
     			chosenBundle.addAsset(a);
     		g.startGame(chosenBundle);

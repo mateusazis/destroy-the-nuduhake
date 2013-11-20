@@ -135,13 +135,16 @@ public class TestLevel extends Level {
 	@Override
 	public void render() {
 		super.render();
-//		camera.position.set(player.getX(), camera.position.y, 0);
 		camera.position.set(player.getX(), player.getY(), 0);
+		
+		/* posição Y da câmera deve ser inteira para o tilemap ficar certo.
+		Ver: http://www.reddit.com/r/gamedev/comments/1euvrs/libgdx_tiledmap_linesgaps_between_tiles/ 	*/
+		camera.position.y = Math.round(camera.position.y);
 		
 		if(isInputEnabled)
 			defaultController.update();
 		
-		// camera.position.set(player.getX(), player.getY(), 0);
+		
 		world.step(1 / 60f, 6, 2);
 		pListener.processContacts();
 //		 r.render(world, camera.combined.scale(Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD, Physics.BOX_TO_WORLD));

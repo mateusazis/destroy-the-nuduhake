@@ -9,16 +9,14 @@ public final class AssetDatabase {
 	
 	//sprites
 	public static final AssetID
-		SPRITE_MARIO = new AssetID(0x0000, "Mario", "TESTE"),
-		SPRITE_SHELL = new AssetID(0x0001, "Shell", "TESTE"),
-		SPRITE_GROUND = new AssetID(0x0002, "Ground", "TESTE"),
+		SPRITE_MARIO = new AssetID(0x0000, "Ngilangi", "O grande guerreiro que deve enfrentar Nuduhake!"),
 		SPRITE_DRAGON = new AssetID(0x0003, "Dragon", "TESTE"),
-		SPRITE_BALL_SHOOTER_3 = new AssetID(0x0004, "Ball Shooter 3", "TESTE"),
-		SPRITE_BALL = new AssetID(0x0005, "Ball", "TESTE"),
+		SPRITE_BALL_SHOOTER_3 = new AssetID(0x0004, "Torre atiradora 3", "Atira bolas perigosas em você!"),
+		SPRITE_BALL = new AssetID(0x0005, "Bola explosiva", "Atirado pelas torres. Explodem quando entram em contato. Dizem que também captura Pokémons."),
 		SPRITE_SMOKE = new AssetID(0x0006, "Smoke", "TESTE"),
-		SPRITE_BULLET = new AssetID(0x0007, "Bullet", "TESTE"),
-		SPRITE_SHOOTER = new AssetID(0x0008, "Shooter", "TESTE"),
-		SPRITE_SWORD = new AssetID(0x0009, "Sword", "TESTE"),
+		SPRITE_BULLET = new AssetID(0x0007, "Tiro", "Acertou, tá morto! ... ou pelo menos perde umas vidas..."),
+		SPRITE_SHOOTER = new AssetID(0x0008, "Atirador", "Atirador impiedoso que você nunca viu antes em outro jogo."),
+		SPRITE_SWORD = new AssetID(0x0009, "Nudukira", "Espada mágica montada nas forjas infernais da 25 de Março."),
 		
 		//input
 		SPRITE_INPUT_SLIDER = new AssetID(0x000A, "Input Slider", "TESTE"),
@@ -28,15 +26,15 @@ public final class AssetDatabase {
 		SPRITE_INPUT_JUMP = new AssetID(0x000E, "Input Jump", "TESTE"),
 		SPRITE_INPUT_JUMP_PRESSED = new AssetID(0x000F, "Input Jump Pressed", "TESTE"),
 		
-		SPRITE_BACKGROUND = new AssetID(0x0010, "Background", "TESTE"),
-		SPRITE_BALL_SHOOTER_2 = new AssetID(0x0011, "Ball Shooter 2", "TESTE"),
-		SPRITE_BALL_SHOOTER_1 = new AssetID(0x0012, "Ball Shooter 1", "TESTE"),
+		SPRITE_BACKGROUND = new AssetID(0x0010, "Floresta javanesa", "Lá se faz café. E apps Android."),
+		SPRITE_BALL_SHOOTER_2 = new AssetID(0x0011, "Torre atiradora 2", "Torre que atira mais baixo!"),
+		SPRITE_BALL_SHOOTER_1 = new AssetID(0x0012, "Torre atiradora 1", "Restinho de torre que ainda atira!"),
 		
 		SPRITE_HEART_FULL = new AssetID(0x0013, "Heart full", "TESTE"),
 		SPRITE_HEART_HALF = new AssetID(0x0014, "Heart half", "TESTE"),
 		SPRITE_HEART_EMPTY = new AssetID(0x0015, "Heart empty", "TESTE"),
 		
-		SPRITE_COIN = new AssetID(0x0016, "Coin", "TESTE"),
+		SPRITE_COIN = new AssetID(0x0016, "Moeda", "Vale dinheiro."),
 		SPRITE_COIN_SHINE = new AssetID(0x0017, "Coin Shine", "TESTE"),
 		
 		//GUI
@@ -47,11 +45,13 @@ public final class AssetDatabase {
 		SPRITE_INTRO_BAR_MIDDLE = new AssetID(0x001B, "Intro bar middle", "TESTE"),
 		SPRITE_INTRO_BAR_BOTTOM = new AssetID(0x001C, "Intro bar bottom", "TESTE"),
 		
+		SPRITE_IN_GAME_HEART = new AssetID(0x001D, "Coração", "Recupera sua vida. Mas você não vai precisar disso, né?"),
+		
 		
 	
 	//musics
-	MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", ""),
-	MUSIC_LEVEL = new AssetID(0x0201, "Level BGM", ""),
+	MUSIC_OPENING = new AssetID(0x0200, "Opening BGM", "Música de abertura"),
+	MUSIC_LEVEL = new AssetID(0x0201, "Level BGM", "Música da fase 1"),
 	
 	//sounds
 	SOUND_SWORD = new AssetID(0x0300, "Sword atack", ""),
@@ -68,6 +68,7 @@ public final class AssetDatabase {
 		if(privateAssets == null)
 			privateAssets =  new Asset[]{
 				new GraphicAsset(AssetDatabase.SPRITE_SMOKE, "images/smoke1.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_DRAGON, "images/dragon.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_INPUT_SLIDER, "images/Input_slider.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_INPUT_SLIDER_PRESSED, "images/Input_slider_pressed.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_INPUT_JUMP, "images/jump_icon.png"),
@@ -107,9 +108,6 @@ public final class AssetDatabase {
 		if(editableAssets == null)
 			editableAssets =  new Asset[]{
 				new GraphicAsset(AssetDatabase.SPRITE_MARIO, "images/mario.png"),
-				new GraphicAsset(AssetDatabase.SPRITE_SHELL, "images/shell.png"),
-				new GraphicAsset(AssetDatabase.SPRITE_GROUND, "images/ground.png"),
-				new GraphicAsset(AssetDatabase.SPRITE_DRAGON, "images/dragon.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_BALL, "images/ball.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER_3, "images/ball_shooter_3.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_BULLET, "images/bullet.png"),
@@ -119,6 +117,7 @@ public final class AssetDatabase {
 				new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER_2, "images/ball_shooter_2.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER_1, "images/ball_shooter_1.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_COIN, "images/coin.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_IN_GAME_HEART, "images/heart_full.png"),
 				
 				new MusicAsset(AssetDatabase.MUSIC_LEVEL, "musics/5.Never Back Down.ogg"),
 			};

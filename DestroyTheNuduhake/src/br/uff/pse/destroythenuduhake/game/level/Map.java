@@ -6,6 +6,7 @@ import br.uff.pse.destroythenuduhake.game.Physics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -28,7 +29,8 @@ public class Map extends Actor {
 	
 	
 	public Map(String fileName, float x, float y, World w, OrthographicCamera c){
-		map = (new TmxMapLoader()).load("mapa.tmx");
+		TmxMapLoader loader = new TmxMapLoader();
+		map = loader.load("mapa.tmx");
 		this.camera = c;
 		renderer = new OrthogonalTiledMapRenderer(map, 1);
 		this.world = w;

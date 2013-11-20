@@ -25,7 +25,7 @@
     <TextView
         android:id="@+id/textView1"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:padding="5dp"
         android:text="Descrição" />
@@ -34,7 +34,6 @@
         android:id="@+id/goButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
         android:text="Proceed" />
 
 </LinearLayout>
