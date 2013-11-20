@@ -6,6 +6,7 @@ import java.util.List;
 import br.uff.pse.destroythenuduhake.game.Configs;
 import br.uff.pse.destroythenuduhake.game.MainAndroid;
 import br.uff.pse.destroythenuduhake.game.level.TestLevel;
+import br.uff.pse.destroythenuduhake.game.mainmenu.FinalScreen;
 import br.uff.pse.destroythenuduhake.game.mainmenu.MainMenu;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -69,6 +70,8 @@ public class Game implements ApplicationListener {
 	public void create() {
 		addLevel(new MainMenu());
 		addLevel(new TestLevel());
+		addLevel(new FinalScreen());
+
 		
 		changeLevel(0);
 	}

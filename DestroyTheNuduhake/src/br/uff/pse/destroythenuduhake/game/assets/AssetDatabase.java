@@ -47,6 +47,8 @@ public final class AssetDatabase {
 		
 		SPRITE_IN_GAME_HEART = new AssetID(0x001D, "Coração", "Recupera sua vida. Mas você não vai precisar disso, né?"),
 		
+		SPRITE_CAPSULE = new AssetID(0x001E, "Cápsula", "Uma cápsula misteriosa, TIPO a do Megaman."),
+		
 		
 	
 	//musics
@@ -118,6 +120,7 @@ public final class AssetDatabase {
 				new GraphicAsset(AssetDatabase.SPRITE_BALL_SHOOTER_1, "images/ball_shooter_1.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_COIN, "images/coin.png"),
 				new GraphicAsset(AssetDatabase.SPRITE_IN_GAME_HEART, "images/heart_full.png"),
+				new GraphicAsset(AssetDatabase.SPRITE_CAPSULE, "images/capsule.png"),
 				
 				new MusicAsset(AssetDatabase.MUSIC_LEVEL, "musics/5.Never Back Down.ogg"),
 			};

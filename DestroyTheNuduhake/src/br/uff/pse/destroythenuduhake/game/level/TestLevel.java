@@ -100,6 +100,10 @@ public class TestLevel extends Level {
 			HeartItem h = new HeartItem(r.x, r.y, b);
 			addActor(h);
 		}
+		
+		for (Rectangle r : map.findObjects("capsule")) {
+			addActor(new EndCapsule(r, b));
+		}
 
 		addActor(new Coin(player.getX() + 200, player.getY(), b));
 

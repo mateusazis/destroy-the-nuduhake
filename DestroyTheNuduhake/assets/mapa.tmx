@@ -17,7 +17,7 @@
  <objectgroup name="Camada de Objetos 1" width="256" height="128">
   <object name="O1" type="shooter" x="1862" y="216" width="64" height="124"/>
   <object name="O2" type="ball_shooter" x="2804" y="354" width="68" height="153"/>
-  <object type="player" x="736" y="256" width="88" height="176"/>
+  <object type="player" x="697" y="253" width="88" height="176"/>
   <object type="coin" x="1248" y="384" width="32" height="32"/>
   <object type="coin" x="1313" y="384" width="32" height="32"/>
   <object type="coin" x="1187" y="385" width="32" height="32"/>
@@ -84,5 +84,6 @@
   <object type="coin" x="7232" y="256" width="32" height="32"/>
   <object type="coin" x="3616" y="384" width="32" height="32"/>
   <object type="coin" x="3616" y="320" width="32" height="32"/>
+  <object type="capsule" x="7744" y="160" width="48" height="92"/>
  </objectgroup>
 </map>
