@@ -121,14 +121,13 @@ public class FreehandDrawingActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub				
 				Bitmap save = Bitmap.createBitmap(drawView.image.getWidth(), drawView.image.getHeight(), Config.ARGB_8888);
-				Bitmap work = Bitmap.createBitmap(drawView.getWidth(), drawView.getHeight(), Config.ARGB_8888);
-				Canvas c = new Canvas(work);
-				drawView.draw(c);
+//				Bitmap work = Bitmap.createBitmap(drawView.getWidth(), drawView.getHeight(), Config.ARGB_8888);
+				Canvas c = new Canvas(save);
+				//drawView.draw(c);
 				drawView.save();
 				drawView.draw(c);
-				drawView.showAsset = Bitmap.createBitmap(work);
-				Canvas saveCanvas = new Canvas(save);
-				saveCanvas.drawBitmap(drawView.showAsset, drawView.nullMatrix, null);
+//				Canvas saveCanvas = new Canvas(save);
+				//c.drawBitmap(drawView.showAsset, drawView.nullMatrix, null);
 				
 				Context ctx = FreehandDrawingActivity.this;
 				
@@ -141,7 +140,7 @@ public class FreehandDrawingActivity extends Activity {
 				else
 					newGA = oldGA;
 				
-				save = Bitmap.createBitmap(save);
+//				save = Bitmap.createBitmap(save);
 				//newGA.setBitmap(save);
 				newGA.editBitmap(save);
 				FileManager.addAsset(newGA, ctx);					

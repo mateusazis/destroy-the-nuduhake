@@ -314,10 +314,10 @@ public class DrawView extends View implements OnTouchListener {
 		} else {
 			canvas.drawColor(0, Mode.CLEAR);
 			if(image != null){
-				if(getResources().getConfiguration().orientation == initialOrientation)
-					canvas.concat(inverseInitialTransformation);
-				 else 
-					canvas.concat(inverseAnotherTransformation);	
+//				if(getResources().getConfiguration().orientation == initialOrientation)
+//					canvas.concat(inverseInitialTransformation);
+//				 else 
+//					canvas.concat(inverseAnotherTransformation);	
 				canvas.drawBitmap(image, nullMatrix, null);
 			}
 				for(int i = 0; i < pathList.size(); i++)
