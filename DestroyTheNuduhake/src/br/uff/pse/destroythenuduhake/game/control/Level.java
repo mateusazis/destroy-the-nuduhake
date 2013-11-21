@@ -1,5 +1,6 @@
 package br.uff.pse.destroythenuduhake.game.control;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,17 +11,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 
 public abstract class Level extends Stage implements ApplicationListener{
 	private AssetBundle usedBundle;
 	private Game parent;
 	private Set<AssetID> requiredAssets;
 	private List<LevelObject> disposeList, overlapableList;
+	private Array<Rectangle> rects;
 	
 	public Level(){
 		super(800, 480, false, null);
 		disposeList = new LinkedList<LevelObject>();
-		overlapableList = new LinkedList<LevelObject>();
+		overlapableList = new ArrayList<LevelObject>();
+		rects = new Array<Rectangle>();
 	}
 	
 	public void setRequiredAssets(AssetID...ids){
@@ -95,12 +99,21 @@ public abstract class Level extends Stage implements ApplicationListener{
 	 * Verifica sobreposi��o entre os ret�ngulos dos LevelObjects.
 	 */
 	private void checkOverlaps(){
+//		if(rects == null || rects.length != overlapableList.size())
+//			rects = new 
+		
+		
+		for(int i = 0; i < overlapableList.size(); i++){
+			rects.set(i, overlapableList.get(i).getRect());
+		}
+		
+		
 		for(int i = 0; i < overlapableList.size() - 1; i++){
 			LevelObject oI = overlapableList.get(i);
-			Rectangle r = oI.getRect();
+			Rectangle r = rects.get(i);
 			for(int j = i+1; j < overlapableList.size(); j++){
 				LevelObject oJ = overlapableList.get(j);
-				if(r.overlaps(oJ.getRect())){
+				if(r.overlaps(rects.get(j))){
 					oI.onOverlap(oJ);
 					oJ.onOverlap(oI);
 				}
@@ -113,8 +126,10 @@ public abstract class Level extends Stage implements ApplicationListener{
 		super.addActor(actor);
 		if(actor instanceof LevelObject){
 			LevelObject obj = (LevelObject)actor;
-			if(obj.isOverlapable())
+			if(obj.isOverlapable()){
 				overlapableList.add(obj);
+				rects.add(obj.getRect());
+			}
 		}
 	}
 
