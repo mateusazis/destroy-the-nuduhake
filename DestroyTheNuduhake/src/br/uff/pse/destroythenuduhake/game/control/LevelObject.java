@@ -28,7 +28,6 @@ public class LevelObject extends Actor{
 	
 	public LevelObject(float x, float y, GraphicAsset asset){
 		super();
-		setOverlapable(false);
 		r = new Rectangle();
 		region = new TextureRegion();
 		setPosition(x, y);

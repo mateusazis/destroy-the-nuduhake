@@ -30,7 +30,7 @@ public class DefaultController {
 		this.player = player;
 		final float ITEMS_HEIGHT = -240;
 		
-		InputSlider slider = new InputSlider(-400, ITEMS_HEIGHT, b, this);
+		InputSlider slider = new InputSlider(-400, ITEMS_HEIGHT, b, this, l.getCamera());
 		l.addActor(slider);
 		
 		JumpButton jmp = new JumpButton(280, ITEMS_HEIGHT, b, this);
@@ -52,7 +52,7 @@ public class DefaultController {
 		}
 
 		public void rightPressed() {
-			Gdx.app.log("", "right pressed");
+//			Gdx.app.log("", "right pressed");
 			leftReleased();
 			keys.get(keys.put(Keys.RIGHT, true));
 		}

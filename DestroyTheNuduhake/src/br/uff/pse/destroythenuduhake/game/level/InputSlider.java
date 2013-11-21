@@ -5,19 +5,20 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Vector3;
 
 public class InputSlider extends InputActor {
 
-	private Vector2 touchPos;
+	private Vector3 touchPos;
+	private Camera camera;
 	
-	public InputSlider(float screenX, float screenY, AssetBundle b, DefaultController controller){
+	public InputSlider(float screenX, float screenY, AssetBundle b, DefaultController controller, Camera c){
 		super(screenX, screenY, b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_INPUT_SLIDER), 
 				b.<GraphicAsset>getAsset(AssetDatabase.SPRITE_INPUT_SLIDER_PRESSED), 
 				controller);
-		
-		touchPos = new Vector2();
+		camera = c;
+		touchPos = new Vector3();
 	}
 	
 	@Override
@@ -33,19 +34,19 @@ public class InputSlider extends InputActor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		Stage parent = getStage();
 		
 		if(isPressed()){
 			DefaultController ctrl = getController();
 			
-			touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-//			touchPos = parent.screenToStageCoordinates(touchPos);
+			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(touchPos);
 			
 			float x = touchPos.x;
-			if(x - Gdx.graphics.getWidth()/2f > getScreenpos().x + getWidth() * getScaleX() / 2f)
+			if(x > getX() + (getWidth() / 2f) * getScaleX())
 				ctrl.rightPressed();
 			else
 				ctrl.leftPressed();
+			
 		}
 	}
 }

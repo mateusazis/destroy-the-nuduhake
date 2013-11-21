@@ -14,7 +14,8 @@ public class InputActor extends FixedObject implements EventListener {
 	
 	public InputActor(float screenX, float screenY, GraphicAsset normalAsset, GraphicAsset pressedAsset, DefaultController controller){
 		super(screenX, screenY, normalAsset);
-		
+
+		setOverlapable(false);
 		this.ctrl = controller;
 		
 		normalTex = normalAsset;

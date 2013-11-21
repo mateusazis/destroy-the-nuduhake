@@ -20,7 +20,6 @@ public class Player extends ControlableEntity {
 	
 	public Player(float x, float y, AssetBundle bundle) {
 		super(x, y, bundle.<GraphicAsset>getAsset(SPRITE_MARIO));
-		setOverlapable(true);
 		setLife(MAX_LIFE);
 		setMaxMoveVelocity(3f);
 		swordRelativePos = new Vector2(getWidth() -10, getHeight() / 2f - 5);;
