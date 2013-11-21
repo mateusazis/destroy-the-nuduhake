@@ -120,11 +120,11 @@ public class TestLevel extends Level {
 		music = b.<MusicAsset>getAsset(AssetDatabase.MUSIC_LEVEL);
 		music.play();
 		
-//		StageIntroAnim anim =new StageIntroAnim(b); 
-//		addActor(anim);
-//		anim.setZIndex(10000);
-//		anim.setPosition(player.getX(), player.getY());
-//		setInputEnabled(false);
+		StageIntroAnim anim =new StageIntroAnim(b); 
+		addActor(anim);
+		anim.setZIndex(10000);
+		anim.setPosition(player.getX(), player.getY());
+		setInputEnabled(false);
 	}
 
 	public void setInputEnabled(boolean enabled) {
