@@ -10,6 +10,7 @@ import br.uff.pse.destroythenuduhake.game.control.LevelObject;
 import br.uff.pse.destroythenuduhake.game.level.enemies.BallShooter;
 import br.uff.pse.destroythenuduhake.game.level.enemies.ShooterEnemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -91,21 +92,22 @@ public class TestLevel extends Level {
 			manager.addEnemies(ball);
 		}
 		
+		// Itens----------------------------------------------------------------------------------
+		ItemManager itemManager = new ItemManager();
+		addActor(itemManager);
 		for (Rectangle r : map.findObjects("coin")) {
-			Coin c = new Coin(r.x, r.y, b);
-			addActor(c);
+			Coin c = new Coin(r.x, r.y, b, camera);
+			addActor(itemManager.add(c));
 		}
 		
 		for (Rectangle r : map.findObjects("heart")) {
-			HeartItem h = new HeartItem(r.x, r.y, b);
-			addActor(h);
+			HeartItem h = new HeartItem(r.x, r.y, b, camera);
+			addActor(itemManager.add(h));
 		}
 		
 		for (Rectangle r : map.findObjects("capsule")) {
 			addActor(new EndCapsule(r, b));
 		}
-
-		addActor(new Coin(player.getX() + 200, player.getY(), b));
 
 		addActor(manager);
 
@@ -118,11 +120,11 @@ public class TestLevel extends Level {
 		music = b.<MusicAsset>getAsset(AssetDatabase.MUSIC_LEVEL);
 		music.play();
 		
-		StageIntroAnim anim =new StageIntroAnim(b); 
-		addActor(anim);
-		anim.setZIndex(10000);
-		anim.setPosition(player.getX(), player.getY());
-		setInputEnabled(false);
+//		StageIntroAnim anim =new StageIntroAnim(b); 
+//		addActor(anim);
+//		anim.setZIndex(10000);
+//		anim.setPosition(player.getX(), player.getY());
+//		setInputEnabled(false);
 	}
 
 	public void setInputEnabled(boolean enabled) {

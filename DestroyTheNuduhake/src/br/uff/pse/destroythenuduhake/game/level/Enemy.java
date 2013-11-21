@@ -10,6 +10,7 @@ public class Enemy extends ControlableEntity {
 
 	public Enemy(float x, float y, GraphicAsset asset) {
 		this(x, y, asset, 300);
+		setOverlapable(true);
 	}
 
 	public Enemy(float x, float y, GraphicAsset asset, float minXPlayerDistance) {

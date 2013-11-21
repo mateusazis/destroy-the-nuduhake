@@ -19,6 +19,10 @@ public class FixedObject extends LevelObject {
 		setOverlapable(false);
 	}
 	
+	public Vector2 getScreenpos(){
+		return screenPos;
+	}
+	
 	@Override
 	public void act(float delta) {
 		super.act(delta);

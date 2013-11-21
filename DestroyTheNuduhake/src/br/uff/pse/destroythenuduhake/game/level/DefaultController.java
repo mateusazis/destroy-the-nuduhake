@@ -52,6 +52,7 @@ public class DefaultController {
 		}
 
 		public void rightPressed() {
+			Gdx.app.log("", "right pressed");
 			leftReleased();
 			keys.get(keys.put(Keys.RIGHT, true));
 		}

@@ -46,6 +46,7 @@ public class Sword extends LevelObject{
 		r.height = getHeight() * getScaleY();
 		r.width = r.height;
 		this.swordSound = swordSound;
+		setOverlapable(true);
 	}
 	
 	@Override

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -14,12 +15,12 @@ public abstract class Level extends Stage implements ApplicationListener{
 	private AssetBundle usedBundle;
 	private Game parent;
 	private Set<AssetID> requiredAssets;
-	private List<LevelObject> disposeList, activeList;
+	private List<LevelObject> disposeList, overlapableList;
 	
 	public Level(){
 		super(800, 480, false, null);
 		disposeList = new LinkedList<LevelObject>();
-		activeList = new LinkedList<LevelObject>();
+		overlapableList = new LinkedList<LevelObject>();
 	}
 	
 	public void setRequiredAssets(AssetID...ids){
@@ -68,7 +69,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 			usedBundle.dispose();
 			usedBundle = null;
 		}
-		activeList.clear();
+		overlapableList.clear();
 		disposeList.clear();
 	}
 
@@ -94,15 +95,14 @@ public abstract class Level extends Stage implements ApplicationListener{
 	 * Verifica sobreposi��o entre os ret�ngulos dos LevelObjects.
 	 */
 	private void checkOverlaps(){
-		for(int i = 0; i < activeList.size() - 1; i++){
-			LevelObject oI = activeList.get(i);
-			if(oI.isOverlapable()){
-				for(int j = i+1; j < activeList.size(); j++){
-					LevelObject oJ = activeList.get(j);
-					if(oJ.isOverlapable() && oI.getRect().overlaps(oJ.getRect())){
-						oI.onOverlap(oJ);
-						oJ.onOverlap(oI);
-					}
+		for(int i = 0; i < overlapableList.size() - 1; i++){
+			LevelObject oI = overlapableList.get(i);
+			Rectangle r = oI.getRect();
+			for(int j = i+1; j < overlapableList.size(); j++){
+				LevelObject oJ = overlapableList.get(j);
+				if(r.overlaps(oJ.getRect())){
+					oI.onOverlap(oJ);
+					oJ.onOverlap(oI);
 				}
 			}
 		}
@@ -111,8 +111,11 @@ public abstract class Level extends Stage implements ApplicationListener{
 	@Override
 	public void addActor(Actor actor) {
 		super.addActor(actor);
-		if(actor instanceof LevelObject)
-			activeList.add((LevelObject)actor);
+		if(actor instanceof LevelObject){
+			LevelObject obj = (LevelObject)actor;
+			if(obj.isOverlapable())
+				overlapableList.add(obj);
+		}
 	}
 
 	@Override
@@ -130,6 +133,6 @@ public abstract class Level extends Stage implements ApplicationListener{
 
 	public void addToDisposeList(LevelObject levelObject) {
 		disposeList.add(levelObject);
-		activeList.remove(levelObject);
+		overlapableList.remove(levelObject);
 	}
 }
