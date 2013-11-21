@@ -110,7 +110,7 @@ public class DTNService extends IntentService implements ShareService
 		return null;
 	}
 
-	private synchronized void sendContent()
+	private synchronized void sendAsset()
 	{
 
 		
@@ -160,7 +160,7 @@ public class DTNService extends IntentService implements ShareService
 							
 							try 
 							{
-							  byte[] contentBytes = FileManager.prepareAssetToSend(assetToSendViaDtn,this);
+							  byte[] contentBytes = FileManager.convertAssetToBytes(assetToSendViaDtn,this);
 							  BundleID ret = s.send(b, contentBytes);
 							  
 							  	if (ret == null)
@@ -266,7 +266,7 @@ public class DTNService extends IntentService implements ShareService
 						// SingletonEndpoint(intent.getStringExtra("destination"));
 
 						// send out the ping
-						sendContent();
+						sendAsset();
 					}
 	}
 

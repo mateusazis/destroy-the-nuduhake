@@ -53,61 +53,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v)
 			{				
-				//Asset um = new Asset("Capacete1","Capacete","Jurema");
-				//Asset dois = new Asset("Ombreira2","Ombreira","Zï¿½");
-				//Asset tres = new Asset("Terreno Boladex","Terreno","Dieguin");
-				//FileManager.writeAsset(um, um.name, MainActivity.this);
-				//FileManager.writeAsset(dois, dois.name, MainActivity.this);
-				
-//				FileManager.deleteAllFiles(MainActivity.this);
-				
-				//FileManager.saveBuiltInAssets(MainActivity.this);
-				
-				GraphicAsset kibe = new GraphicAsset(AssetDatabase.SPRITE_MARIO,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath(),true));
-//				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
-//			
-//				byte[] b = FileManager.prepareAssetToSend(kibe, MainActivity.this);
-//				
-//				Asset x = FileManager.getAssetFromBytes(b, MainActivity.this);
-//				((GraphicAsset)x).getBitmap(MainActivity.this);
-//												
-//				FileManager.writeAsset(kibe, MainActivity.this);
-				
-				kibe = kibe.makeCopy(new Author("JosÃ©", "0"), FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath(),true));
-				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
-				FileManager.writeAsset(kibe, MainActivity.this);
-				
-				kibe = kibe.makeCopy(new Author("Guilherme", "1"), FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath(),true));
-				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
-				FileManager.writeAsset(kibe, MainActivity.this);
-				
-				//sendTestDtnBundle();
-//				GraphicAsset dragonkibe = new GraphicAsset(AssetDatabase.SPRITE_DRAGON,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
-//				dragonkibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.square));
-//				FileManager.writeAsset(dragonkibe, MainActivity.this);
-//				
-//
-//				kibe = new GraphicAsset(AssetDatabase.SPRITE_SHELL,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
-//				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.wifipacket));
-//				FileManager.writeAsset(kibe, MainActivity.this);
-//				
-//				
-//				dragonkibe = dragonkibe.makeCopy("Jeremias", FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
-//				dragonkibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.square));
-//				FileManager.writeAsset(dragonkibe, MainActivity.this);
-//				
-//				kibe = new GraphicAsset(AssetDatabase.SPRITE_GROUND,FileManager.getAvaiableFilepath(MainActivity.this,getFilesDir().getAbsolutePath()));
-//				kibe.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.dtnpacket));
-//				FileManager.writeAsset(kibe, MainActivity.this);
-				
-				
-				
-				//FileManager.writeAsset(kibe,  MainActivity.this);
-			//	byte[] b = FileManager.prepareContentToSend(kibe);
-		
-			//	FileManager.writeAssetFromBytes(b, MainActivity.this);
-			//	GraphicAsset chapoca = (GraphicAsset) FileManager.getAssetFromBytes(b, MainActivity.this);
-			//	imview.setImageBitmap(chapoca.getBitmap());
+
 			}
 		});
 		Button b3 = (Button) findViewById(R.id.button3);
