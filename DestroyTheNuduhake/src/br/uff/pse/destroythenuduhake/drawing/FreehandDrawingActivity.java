@@ -114,6 +114,15 @@ public class FreehandDrawingActivity extends Activity {
 			}
 		});
         
+        Button eraserButton = (Button)findViewById(R.id.eraser_button);
+        eraserButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				drawView.eraser();				
+			}
+		});
+        
         Button saveButton = (Button)findViewById(R.id.save_button);
         saveButton.setOnClickListener(new OnClickListener() {
 			
@@ -160,7 +169,6 @@ public class FreehandDrawingActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				//drawView.erase = true;
 				drawView.undo();
 				
 			}

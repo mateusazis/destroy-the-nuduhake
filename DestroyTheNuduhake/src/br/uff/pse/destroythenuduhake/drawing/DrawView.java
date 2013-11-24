@@ -18,6 +18,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
+import android.graphics.Xfermode;
 import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
@@ -67,6 +68,9 @@ public class DrawView extends View implements OnTouchListener {
 	float[] rightmostPoint;
 	float x = 0;
 	float y = 0;
+//	Bitmap backgroud = Bitmap.createBitmap(getWidth(), getHeight(), Config.ARGB_8888);
+//	Paint porterDuffBlend = new Paint();
+	Xfermode eraserMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
 	//attributes relative to transformation
 	float imageWidth;
@@ -177,7 +181,11 @@ public class DrawView extends View implements OnTouchListener {
 		paint.setStyle(Paint.Style.STROKE);
 	    paint.setColor(Color.WHITE);
 	    paint.setStrokeCap(Paint.Cap.ROUND);
-		setBackgroundColor(Color.TRANSPARENT);
+//	    porterDuffBlend.setXfermode(new PorterDuffXfermode(Mode.OVERLAY));
+//	    porterDuffBlend.setStyle(Paint.Style.FILL_AND_STROKE);
+//	    porterDuffBlend.setColor(Color.WHITE);
+//	    porterDuffBlend.setStrokeCap(Paint.Cap.ROUND);
+		setBackgroundColor(Color.WHITE);
 		setFocusable(true);
 		setFocusableInTouchMode(true);
 		this.setOnTouchListener(this);
@@ -288,8 +296,9 @@ public class DrawView extends View implements OnTouchListener {
 	@Override
 	public void onDraw(Canvas canvas) {
 //	    clipBounds_canvas = canvas.getClipBounds();
-//		if(erase){
-//			paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+		if(erase){
+			
+			paint.setXfermode(eraserMode);
 //			if(image != null)
 //				if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
 //					mCanvas.drawBitmap(image, inverseRotate, null);
@@ -299,7 +308,7 @@ public class DrawView extends View implements OnTouchListener {
 //				mCanvas.drawPath(pathList.get(i), paintList.get(i));
 //			}
 //			canvas.drawBitmap(workingBitmap, new Matrix(), null);
-//		}
+		}
 		if(!save){
 			canvas.drawColor(Color.WHITE);
 			if(image != null){
@@ -341,6 +350,10 @@ public class DrawView extends View implements OnTouchListener {
 		
 	public void save(){
 		save = true;
+	}
+	
+	public void eraser(){
+		erase = true;
 	}
 	
 	@Override
