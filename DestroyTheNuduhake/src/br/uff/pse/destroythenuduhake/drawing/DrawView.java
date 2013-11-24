@@ -294,9 +294,7 @@ public class DrawView extends View implements OnTouchListener {
 	@Override
 	public void onDraw(Canvas canvas) {
 //	    clipBounds_canvas = canvas.getClipBounds();
-		if(erase){
-			
-			paint.setXfermode(eraserMode);
+		
 //			if(image != null)
 //				if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
 //					mCanvas.drawBitmap(image, inverseRotate, null);
@@ -306,7 +304,6 @@ public class DrawView extends View implements OnTouchListener {
 //				mCanvas.drawPath(pathList.get(i), paintList.get(i));
 //			}
 //			canvas.drawBitmap(workingBitmap, new Matrix(), null);
-		}
 		if(!save){
 			canvas.drawColor(Color.WHITE);
 			if(image != null){
@@ -381,6 +378,11 @@ public class DrawView extends View implements OnTouchListener {
 //	    	leftmostPoint[1] = (y-wid)/2;
 //	    else if(y > rightmostPoint[1])
 //	    	rightmostPoint[1] = (y+wid)/2;
+	    
+	    if(erase)
+			paint.setXfermode(eraserMode);
+		else
+			paint.setXfermode(null);
 	    
 	    switch (event.getAction()) {
 	    case MotionEvent.ACTION_DOWN:
