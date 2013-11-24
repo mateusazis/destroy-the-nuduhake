@@ -1,5 +1,6 @@
 package br.uff.pse.destroythenuduhake.game.mainmenu;
 
+import br.uff.pse.destroythenuduhake.game.Configs;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.destroythenuduhake.game.assets.MusicAsset;
@@ -51,11 +52,15 @@ public class MainMenu extends Level implements TextListener{
 		
 		startText = new Text(0, f, "Start", middle, 220, this);
 		editText = new Text(1, f, "Edit Assets", middle, 150, this);
-		creditsText = new Text(2, f, "Credits", middle, 80, this);
+		
 		addActor(title);
 		addActor(startText);
 		addActor(editText);
-		addActor(creditsText);
+		
+		if(Configs.isAndroid()){
+			creditsText = new Text(2, f, "Credits", middle, 80, this);
+			addActor(creditsText);
+		}
 		
 		music = bundle.<MusicAsset>getAsset(AssetDatabase.MUSIC_OPENING);
 		music.play();

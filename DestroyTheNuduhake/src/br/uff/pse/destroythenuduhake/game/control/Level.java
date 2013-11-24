@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -107,13 +108,13 @@ public abstract class Level extends Stage implements ApplicationListener{
 			rects.set(i, overlapableList.get(i).getRect());
 		}
 		
-		
 		for(int i = 0; i < overlapableList.size() - 1; i++){
 			LevelObject oI = overlapableList.get(i);
 			Rectangle r = rects.get(i);
 			for(int j = i+1; j < overlapableList.size(); j++){
-				LevelObject oJ = overlapableList.get(j);
+				
 				if(r.overlaps(rects.get(j))){
+					LevelObject oJ = overlapableList.get(j);
 					oI.onOverlap(oJ);
 					oJ.onOverlap(oI);
 				}
@@ -135,7 +136,7 @@ public abstract class Level extends Stage implements ApplicationListener{
 
 	@Override
 	public void resize(int width, int height) {
-//		super.setViewport(width, height, false);
+		
 	}
 
 	@Override
@@ -149,5 +150,6 @@ public abstract class Level extends Stage implements ApplicationListener{
 	public void addToDisposeList(LevelObject levelObject) {
 		disposeList.add(levelObject);
 		overlapableList.remove(levelObject);
+		rects.removeValue(levelObject.getRect(), true);
 	}
 }
