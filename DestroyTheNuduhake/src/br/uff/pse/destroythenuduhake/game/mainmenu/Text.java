@@ -1,5 +1,7 @@
 package br.uff.pse.destroythenuduhake.game.mainmenu;
 
+import br.uff.pse.destroythenuduhake.game.level.Blinker;
+
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,13 +20,11 @@ public class Text extends Actor implements EventListener{
 	private int id;
 	
 	//blinking info
-	private enum State{
-		IDLE, BLINKING;
-	}
-	private State state = State.IDLE;
-	private float blinkElapsed = 0;
-	private static final float BLINK_DURATION = 2f, ON_DURATION = 0.1f;
+	private static final float BLINK_DURATION = 2f;
+	private static final int BLINK_TIMES = 10;
 	
+	private Blinker b;
+	public boolean touched = false;
 	
 	public Text(BitmapFont font, String content, float x, float y){
 		this(0, font, content, x, y, null);
@@ -45,9 +45,9 @@ public class Text extends Actor implements EventListener{
 		setBounds(centerX - bounds.width / 2f, centerY - bounds.height / 2f, bounds.width, bounds.height);
 		
 		addListener(this);
+		
+		b = new Blinker(BLINK_DURATION, BLINK_TIMES);
 	}
-	
-	
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
@@ -56,13 +56,11 @@ public class Text extends Actor implements EventListener{
 	
 	@Override
 	public void act(float delta) {
-		if(state.equals(State.BLINKING)){
-			blinkElapsed += delta;
-			boolean visible = Math.floor(blinkElapsed / ON_DURATION) % 2 == 1;
-			setVisible(visible);
-			
-			if(blinkElapsed >= BLINK_DURATION){
-				state = State.IDLE;
+		if(touched){
+			if(b.isBlinking()){
+				b.update(delta);
+				setVisible(b.isVisible());
+			} else { //foi clicado e terminou de piscar
 				listener.onTouched(id);
 				setVisible(true);
 			}
@@ -73,11 +71,10 @@ public class Text extends Actor implements EventListener{
 	public boolean handle(Event event) {
 		InputEvent e = (InputEvent)event;
 		Type t = e.getType();
-		if(t.equals(Type.touchDown))
-		{
-			state = State.BLINKING;
+		if(t.equals(Type.touchDown)){
+			touched = true;
+			b.start();
 		}
 		return false;
 	}
-	
 }

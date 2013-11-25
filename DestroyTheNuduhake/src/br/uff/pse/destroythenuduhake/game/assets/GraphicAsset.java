@@ -57,10 +57,6 @@ public class GraphicAsset extends Asset{
 		texture.dispose();
 	}
 	
-	public void render(SpriteBatch batch, float x, float y){
-		batch.draw(texture, x, y);
-	}
-	
 	public void render(SpriteBatch batch, LevelObject a){
 		TextureRegion region = a.getTextureRegion();
 		

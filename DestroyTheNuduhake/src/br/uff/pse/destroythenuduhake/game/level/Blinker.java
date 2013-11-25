@@ -2,19 +2,19 @@ package br.uff.pse.destroythenuduhake.game.level;
 
 public class Blinker {
 
-	private float elapsed, duration, delta;
+	private float delta;
 	private boolean active = false;
+	private Interpolator interpolator;
 	
 	public Blinker(float duration, int times){
-		this.elapsed = 0;
-		this.duration = duration;
-		this.delta = duration / (2f * times);
+		interpolator = new Interpolator(duration);
+		this.delta = 1 / (2f * times);
 	}
 	
 	public void update(float delta){
 		if(active){
-			elapsed += delta;
-			if(elapsed >= duration)
+			interpolator.update(delta);
+			if(interpolator.getValue() >= 1.0f)
 				active = false;
 		}
 	}
@@ -24,13 +24,12 @@ public class Blinker {
 	}
 	
 	public boolean isVisible(){
-		int stepCount = (int)(elapsed / delta);
-		return stepCount % 2 == 1 || !active; //visível ser for ímpar
+		int stepCount = (int)(interpolator.getValue() / delta);
+		return stepCount % 2 == 1 || !active; //visï¿½vel ser for ï¿½mpar
 	}
 	
 	public void start(){
-		elapsed = 0;
+		interpolator.reset();
 		active = true;
 	}
-	
 }

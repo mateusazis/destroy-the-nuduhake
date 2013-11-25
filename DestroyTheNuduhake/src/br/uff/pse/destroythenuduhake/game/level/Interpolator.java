@@ -12,6 +12,10 @@ public class Interpolator {
 		this.elapsed = 0;
 	}
 	
+	public void reset(){
+		reset(duration);
+	}
+	
 	public void update(float delta){
 		elapsed = Math.min(elapsed + delta, duration);
 	}
