@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import br.uff.pse.destroythenuduhake.dtn.AuthorRetriever;
 import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
-import br.uff.pse.destroythenuduhake.game.control.Asset;
-import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
-import br.uff.pse.destroythenuduhake.game.control.Game;
+import br.uff.pse.destroythenuduhake.game.control.*;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;

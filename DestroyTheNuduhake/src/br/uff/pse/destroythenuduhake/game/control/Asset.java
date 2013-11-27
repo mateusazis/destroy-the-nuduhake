@@ -2,7 +2,7 @@ package br.uff.pse.destroythenuduhake.game.control;
 
 import java.io.Serializable;
 
-import br.uff.pse.destroythenuduhake.dtn.Author;
+import br.uff.pse.destroythenuduhake.game.control.Author;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;

@@ -1,8 +1,6 @@
 package br.uff.pse.destroythenuduhake.game.assets;
 
-import br.uff.pse.destroythenuduhake.dtn.Author;
-import br.uff.pse.destroythenuduhake.game.control.Asset;
-import br.uff.pse.destroythenuduhake.game.control.AssetID;
+import br.uff.pse.destroythenuduhake.game.control.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;

@@ -8,10 +8,7 @@ import java.io.InputStream;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import br.uff.pse.destroythenuduhake.dtn.Author;
-import br.uff.pse.destroythenuduhake.game.control.Asset;
-import br.uff.pse.destroythenuduhake.game.control.AssetID;
-import br.uff.pse.destroythenuduhake.game.control.LevelObject;
+import br.uff.pse.destroythenuduhake.game.control.*;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;

@@ -1,4 +1,4 @@
-package br.uff.pse.destroythenuduhake.dtn;
+package br.uff.pse.destroythenuduhake.game.control;
 
 import br.uff.pse.destroythenuduhake.R;
 import android.app.Activity;

@@ -22,7 +22,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import br.uff.pse.destroythenuduhake.AssetsWorkshopActivity;
 import br.uff.pse.destroythenuduhake.R;
-import br.uff.pse.destroythenuduhake.dtn.AuthorRetriever;
+import br.uff.pse.destroythenuduhake.game.control.AuthorRetriever;
 import br.uff.pse.destroythenuduhake.dtn.DTNService;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.files.FileManager;

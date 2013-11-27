@@ -1,4 +1,4 @@
-package br.uff.pse.destroythenuduhake.dtn;
+package br.uff.pse.destroythenuduhake.game.control;
 
 import java.io.Serializable;
 
