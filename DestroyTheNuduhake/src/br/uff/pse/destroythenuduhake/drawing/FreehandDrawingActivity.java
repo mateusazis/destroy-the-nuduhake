@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,7 +28,7 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.files.FileManager;
 
 public class FreehandDrawingActivity extends Activity {
-	private static final String TAG = "FreehandDrawing";
+//	private static final String TAG = "FreehandDrawing";
 	DrawView drawView;
 	SeekBar seekBar;
     AlertDialog.Builder builder;

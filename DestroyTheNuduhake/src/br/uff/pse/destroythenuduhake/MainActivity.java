@@ -3,16 +3,12 @@ package br.uff.pse.destroythenuduhake;
 
 //V de viadÃƒÂ£o
 
-import br.uff.pse.destroythenuduhake.dtn.Author;
 import br.uff.pse.destroythenuduhake.dtn.DTNService;
-import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
-import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 import br.uff.pse.files.FileManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;

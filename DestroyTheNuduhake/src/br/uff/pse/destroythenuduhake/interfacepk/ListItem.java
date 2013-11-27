@@ -6,7 +6,6 @@ import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter.RowType;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 

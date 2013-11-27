@@ -1,8 +1,6 @@
 package br.uff.pse.destroythenuduhake.interfacepk;
 
 import br.uff.pse.destroythenuduhake.R;
-import br.uff.pse.destroythenuduhake.R.id;
-import br.uff.pse.destroythenuduhake.R.layout;
 import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter.RowType;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -3,7 +3,6 @@ package br.uff.pse.destroythenuduhake.drawing;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.graphics.Cubemap;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
@@ -25,7 +24,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,7 +33,7 @@ import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
 @SuppressLint("NewApi")
 public class DrawView extends View implements OnTouchListener {
-	private static final String TAG = "DrawView";
+//	private static final String TAG = "DrawView";
 	
 	Path path = new Path();
 	List<Path> pathList= new ArrayList<Path>();

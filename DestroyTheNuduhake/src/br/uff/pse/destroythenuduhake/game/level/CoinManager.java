@@ -1,6 +1,5 @@
 package br.uff.pse.destroythenuduhake.game.level;
 
-import android.graphics.Bitmap;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
 
 import com.badlogic.gdx.graphics.Color;

@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
@@ -20,16 +19,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
 import br.uff.pse.destroythenuduhake.drawing.FreehandDrawingActivity;
-import br.uff.pse.destroythenuduhake.game.MainAndroid;
-import br.uff.pse.destroythenuduhake.game.assets.AssetDatabase;
 import br.uff.pse.destroythenuduhake.game.assets.AudioAsset;
 import br.uff.pse.destroythenuduhake.game.assets.GraphicAsset;
-import br.uff.pse.destroythenuduhake.game.control.Asset;
-import br.uff.pse.destroythenuduhake.game.control.AssetBundle;
-import br.uff.pse.destroythenuduhake.game.control.AssetID;
 import br.uff.pse.destroythenuduhake.interfacepk.Item;
 import br.uff.pse.destroythenuduhake.interfacepk.ListItem;
 import br.uff.pse.destroythenuduhake.interfacepk.TwoTextArrayAdapter;
@@ -83,7 +76,7 @@ public class AssetsWorkshopActivity extends Activity
 			catch(Exception e)
 			{
 				
-				Exception x = e;
+//				Exception x = e;
 			}
 
 		}
@@ -137,7 +130,7 @@ public class AssetsWorkshopActivity extends Activity
 			}
 			catch (Exception e)
 			{
-				Exception x = e;
+//				Exception x = e;
 			}
 
 			
