@@ -41,11 +41,7 @@ public class FreehandDrawingActivity extends Activity {
         super.onCreate(savedInstanceState);
         // Set full screen view
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
-        // lock screen orientation (stops screen clearing when rotating phone)
-        //setRequestedOrientation(getResources().getConfiguration().orientation);
-        
+        requestWindowFeature(Window.FEATURE_NO_TITLE);        
         
         setContentView(R.layout.freehand_drawing_main);
         drawView = (DrawView)findViewById(R.id.draw_view);
@@ -129,13 +125,9 @@ public class FreehandDrawingActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub				
 				Bitmap save = Bitmap.createBitmap(drawView.image.getWidth(), drawView.image.getHeight(), Config.ARGB_8888);
-//				Bitmap work = Bitmap.createBitmap(drawView.getWidth(), drawView.getHeight(), Config.ARGB_8888);
 				Canvas c = new Canvas(save);
-				//drawView.draw(c);
 				drawView.save();
 				drawView.draw(c);
-//				Canvas saveCanvas = new Canvas(save);
-				//c.drawBitmap(drawView.showAsset, drawView.nullMatrix, null);
 				
 				Context ctx = FreehandDrawingActivity.this;
 				
@@ -148,17 +140,12 @@ public class FreehandDrawingActivity extends Activity {
 				else
 					newGA = oldGA;
 				
-//				save = Bitmap.createBitmap(save);
-				//newGA.setBitmap(save);
 				newGA.editBitmap(save);
 				FileManager.addAsset(newGA, ctx);					
 
 				DTNService.assetToSendViaDtn = newGA;
 				alertServiceToSend();
 
-				
-//				FileManager.saveListFile(FreehandDrawingActivity.this);
-				
 				finish();
 			}
 		});
@@ -221,75 +208,4 @@ public class FreehandDrawingActivity extends Activity {
 		}
 	
 	}
-        
-//    
-//    void setCustomBackground(DrawView v) {
-//    	Intent fileChooserIntent = new Intent();
-//    	fileChooserIntent.addCategory(Intent.CATEGORY_OPENABLE);
-//    	fileChooserIntent.setType("image/*");
-//    	fileChooserIntent.setAction(Intent.ACTION_GET_CONTENT);
-//    	startActivityForResult(Intent.createChooser(fileChooserIntent, "Select Picture"), 1);
-//    	/*
-//    	// menu option for setting a custom background
-//    	String Url = "http://www.google.ca";	// http://www.google.ca
-//    	Intent fileChooserIntent = new Intent(Intent.ACTION_CHOOSER, Uri.parse(Url));
-//    	this.startActivity(fileChooserIntent);
-//    	*/
-//    }
-//    
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//    	// if statement prevents force close error when picture isn't selected
-//    	if (resultCode == RESULT_OK)
-//    	{
-//	    	Uri resultUri = data.getData();
-//	    	//String resultString = data.getData().toString();
-//	    	
-//	    	String drawString = resultUri.getPath();
-//	    	String galleryString = getGalleryPath(resultUri);
-//	    	
-//	    	// if Gallery app was used
-//	    	if (galleryString != null)
-//	    	{
-//	    		Log.d(TAG, galleryString);
-//	    		drawString = galleryString;
-//	    	}
-//	    	// else another file manager was used
-//	    	else
-//	    	{
-//	    		Log.d(TAG, drawString);
-//		    	//File Manager: "content://org.openintents.cmfilemanager/mimetype//mnt/sdcard/DCIM/Camera/IMG_20110909_210412.jpg"
-//		    	//ASTRO:        "file:///mnt/sdcard/DCIM/Camera/IMG_20110924_133324.jpg"
-//		    	if (drawString.contains("//"))
-//		    	{
-//		    		drawString = drawString.substring(drawString.lastIndexOf("//"));
-//		    	}
-//	    	}
-//	    	
-//	    	// set the background to the selected picture
-//	    	if (drawString.length() > 0)
-//	    	{
-//	    		Drawable drawBackground = Drawable.createFromPath(drawString);
-//	    		drawView.setBackgroundDrawable(drawBackground);
-//	    	}
-//	    	
-//    	}
-//    }
-    
-//    // used when trying to get an image path from the URI returned by the Gallery app
-//    public String getGalleryPath(Uri uri) {
-//    	String[] projection = { MediaColumns.DATA };
-//    	Cursor cursor = managedQuery(uri, projection, null, null, null);
-//    	
-//    	if (cursor != null)
-//    	{
-//    		int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
-//    		cursor.moveToFirst();
-//    		return cursor.getString(column_index);
-//    	}
-//    	
-//    	
-//    	return null;
-//    }
-
 }

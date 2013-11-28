@@ -3,13 +3,12 @@ package br.uff.pse.destroythenuduhake.drawing;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -17,11 +16,10 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
-import android.graphics.Xfermode;
-import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.Xfermode;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Display;
@@ -39,9 +37,6 @@ public class DrawView extends View implements OnTouchListener {
 	List<Path> pathList= new ArrayList<Path>();
 	List<Path> transformedPathList= new ArrayList<Path>();
 	List<Paint> paintList= new ArrayList<Paint>();
-	//HashMap<Path, Paint> pathList = new LinkedHashMap<Path, Paint>();
-//	List<List<Point>> drawing = new ArrayList<List<Point>>();
-//	List<Point> points = new ArrayList<Point>();
 	private GraphicAsset graphicAsset;
 	Bitmap image = null;
 	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -66,11 +61,9 @@ public class DrawView extends View implements OnTouchListener {
 	float[] rightmostPoint;
 	float x = 0;
 	float y = 0;
-//	Bitmap backgroud = Bitmap.createBitmap(getWidth(), getHeight(), Config.ARGB_8888);
-//	Paint porterDuffBlend = new Paint();
 	Xfermode eraserMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
-	//attributes relative to transformation
+	//attributes relatives to transformation
 	float imageWidth;
 	float imageHeight;
 	float initialX;
@@ -122,21 +115,9 @@ public class DrawView extends View implements OnTouchListener {
 			delta = size.y - y;
 		}
 		
-//		boolean rotate = false;
+
 		initialRatio = Math.min(ratioX, ratioY);
-//		if(ratio < 1)
-//			ratio = (x*y)/(imageHeight*imageWidth);
-//		if(imageHeight < imageWidth){
-//			float aux = imageHeight;
-//			imageHeight = imageWidth;
-//			imageWidth = aux;
-//		}
-		
-		
-//		initialOrientationTransformation.postTranslate(imageWidth, 0);
-//		initialOrientationTransformation.invert(inverseRotate);
 		initialOrientationTransformation.setScale(initialRatio, initialRatio);
-//		initialOrientationTransformation.postTranslate((x - imageWidth*initialRatio)/2, (y - imageHeight*initialRatio)/2);
 		
 		initialOrientationTransformation.invert(inverseInitialTransformation);
 		
@@ -145,7 +126,6 @@ public class DrawView extends View implements OnTouchListener {
 		
 		ratioX = newX/imageWidth;
 		ratioY = newY/imageHeight;
-//		boolean rotate = false;
 		anotherRatio = Math.min(ratioX, ratioY);
 		
 		anotherOrientationTransformation.setScale(anotherRatio, anotherRatio);
@@ -174,15 +154,9 @@ public class DrawView extends View implements OnTouchListener {
 	
 	public DrawView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// set default colour to white
-//		col_mode = 0;
 		paint.setStyle(Paint.Style.STROKE);
 	    paint.setColor(Color.WHITE);
 	    paint.setStrokeCap(Paint.Cap.ROUND);
-//	    porterDuffBlend.setXfermode(new PorterDuffXfermode(Mode.OVERLAY));
-//	    porterDuffBlend.setStyle(Paint.Style.FILL_AND_STROKE);
-//	    porterDuffBlend.setColor(Color.WHITE);
-//	    porterDuffBlend.setStrokeCap(Paint.Cap.ROUND);
 		setBackgroundColor(Color.WHITE);
 		setFocusable(true);
 		setFocusableInTouchMode(true);
@@ -200,37 +174,6 @@ public class DrawView extends View implements OnTouchListener {
 			initialOrientation = getResources().getConfiguration().orientation;
 		}
 	}
-	
-	@Override
-	protected void onConfigurationChanged(Configuration newConfig) {
-		// TODO Auto-generated method stub
-		super.onConfigurationChanged(newConfig);
-//		if(newConfig.orientation != initialOrientation){
-//			if(firstTime){
-//				firstTime = false;
-//				for(int i = 0; i < pathList.size(); i++){
-//					pathList.get(i).transform(anotherOrientationTransformation, transformedPathList.get(i));
-//					setWid(wid*anotherRatio/initialRatio, paintList.get(i));
-//				}
-//			} else {
-//				for(int i = 0; i < transformedPathList.size(); i++){
-//					transformedPathList.get(i).transform(anotherOrientationTransformation);
-//					setWid(wid*anotherRatio/initialRatio, paintList.get(i));
-//				}
-//			}
-//		} else {
-//			for(int i = 0; i < transformedPathList.size(); i++){
-//				transformedPathList.get(i).transform(initialOrientationTransformation);
-//				setWid(wid*initialRatio/anotherRatio, paintList.get(i));
-//			}
-//		}
-//		pathList.clear();
-		
-		//setDrawingCacheEnabled(true);
-		//image = Bitmap.createBitmap(getDrawingCache(), clipBounds.left, clipBounds.top, clipBounds.right, clipBounds.bottom, inverseInitialTransformation, false);
-		//setDrawingCacheEnabled(false);
-	}
-	
 	
 	// used to clear the screen
 	public void clearScreen () {
@@ -293,17 +236,6 @@ public class DrawView extends View implements OnTouchListener {
 	
 	@Override
 	public void onDraw(Canvas canvas) {
-//	    clipBounds_canvas = canvas.getClipBounds();
-		
-//			if(image != null)
-//				if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-//					mCanvas.drawBitmap(image, inverseRotate, null);
-//				else
-//					mCanvas.drawBitmap(image, transformation, null);
-//			for (int i = 0; i < pathList.size(); i++) {
-//				mCanvas.drawPath(pathList.get(i), paintList.get(i));
-//			}
-//			canvas.drawBitmap(workingBitmap, new Matrix(), null);
 		if(!save){
 			canvas.drawColor(Color.WHITE);
 			if(image != null){
@@ -318,28 +250,10 @@ public class DrawView extends View implements OnTouchListener {
 		} else {
 			canvas.drawColor(0, Mode.CLEAR);
 			if(image != null){
-//				if(getResources().getConfiguration().orientation == initialOrientation)
-//					canvas.concat(inverseInitialTransformation);
-//				 else 
-//					canvas.concat(inverseAnotherTransformation);	
 				canvas.drawBitmap(image, nullMatrix, null);
 			}
 				for(int i = 0; i < pathList.size(); i++)
 					canvas.drawPath(pathList.get(i), paintList.get(i));
-//			if(image != null)
-//				if(getResources().getConfiguration().orientation == initialOrientation){
-//					canvas.drawBitmap(image, initialOrientationTransformation, null);
-//					for (int i = 0; i < pathList.size(); i++) {
-//						pathList.get(i).transform(initialOrientationTransformation, transformedPathList.get(i));
-//						canvas.drawPath(transformedPathList.get(i), paintList.get(i));
-//					}
-//				} else {
-//					canvas.drawBitmap(image, anotherOrientationTransformation, null);
-//					for (int i = 0; i < pathList.size(); i++) {
-//						pathList.get(i).transform(anotherOrientationTransformation, transformedPathList.get(i));
-//						canvas.drawPath(transformedPathList.get(i), paintList.get(i));
-//					}
-//				}
 		}
 	}
 		
@@ -353,8 +267,6 @@ public class DrawView extends View implements OnTouchListener {
 	
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {
-//	    x = event.getX();
-//	    y = event.getY();
 	    if(getResources().getConfiguration().orientation == initialOrientation){
 	    	zoomFactor = initialRatio;
 	    	currentMeasureX = initialX;
@@ -367,17 +279,6 @@ public class DrawView extends View implements OnTouchListener {
 	    }
 		float x = event.getX() / zoomFactor;// - currentMeasureX/2; //- currentMeasureX)*2;// + clipBounds_canvas.left;
 	    float y = event.getY() / zoomFactor;// - currentMeasureY/2;// - (imageHeight*zoomFactor);// - currentMeasureY)*2;// clipBounds_canvas.top;
-
-	    
-//	    if((x-wid)/2 < leftmostPoint[0])
-//	    	leftmostPoint[0] = (x-wid)/2;
-//	    else if((x-wid)/2 > rightmostPoint[0])
-//	    	rightmostPoint[0] = (x+wid)/2;
-//	    
-//	    if((y+wid)/2 < leftmostPoint[1])
-//	    	leftmostPoint[1] = (y-wid)/2;
-//	    else if(y > rightmostPoint[1])
-//	    	rightmostPoint[1] = (y+wid)/2;
 	    
 	    if(erase)
 			paint.setXfermode(eraserMode);
