@@ -14,9 +14,7 @@ public class Main extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		Class<? extends Activity> c = null;
-		if(loadDTN)
-			c = MainActivity.class;
-		else
+
 			c = br.uff.pse.destroythenuduhake.game.MainAndroid.class;
 		
 		Intent i = new Intent(this, c);

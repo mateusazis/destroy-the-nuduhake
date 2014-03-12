@@ -32,7 +32,7 @@ import de.tubs.ibr.dtn.api.SessionDestroyedException;
 import de.tubs.ibr.dtn.api.SingletonEndpoint;
 import de.tubs.ibr.dtn.api.TransferMode;
 
-public class DTNService extends IntentService implements ShareService
+public class DTNService extends IntentService 
 {
 
 	// This TAG is used to identify this class (e.g. for debugging)
@@ -483,10 +483,6 @@ public class DTNService extends IntentService implements ShareService
 	};
 
 
-	@Override
-	public void start(BundleReceiver receiver, AssetBundle[] bundles) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 }
